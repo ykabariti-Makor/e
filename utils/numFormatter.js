@@ -7,8 +7,6 @@ const magnitudeUnits = {
   3: "G",
 };
 
-//overallDigitLimit = 10, decimalDigitLimit = 2
-
 const numFormatter = (numToFormat) => {
   const isFloatingPoint = String(numToFormat).includes(".") ? 1 : 0;
   let processedNumber;
