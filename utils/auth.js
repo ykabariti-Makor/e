@@ -135,6 +135,5 @@ const escapeRegExp = (string) => string.replace(/[-.*+?^${}()|[\]\\]/g, '\\$&')
 
 module.exports = {
   URLValidator,
-  isURLValid,
   passwordValidation,
 }
