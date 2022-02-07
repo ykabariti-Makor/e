@@ -27,7 +27,7 @@ const tagsSeparator = (string, separators) => {
     // No separator supllied
     const regSeparatorCandidates = /\W/g;
 
-    // Capturing special characers- these are the candidates for the separator (with dupicates)
+    // Capturing special characers- these are the candidates for the separator (with dupicate
     let specialChars = [...string.matchAll(regSeparatorCandidates)].map(
       (item) => item[0]
     );
