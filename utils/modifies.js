@@ -77,7 +77,7 @@ const magnitudeUnits = {
 }
 
 const numFormatter = (numToFormat) => {
-  console.log(config)
+  console.log(overallDigitLimit, decimalDigitLimit)
   const isFloatingPoint = String(numToFormat).includes('.') ? 1 : 0
   let processedNumber
   //!floating point cutting
