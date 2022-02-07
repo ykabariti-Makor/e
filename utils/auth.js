@@ -1,5 +1,4 @@
 const { config } = require('../config')
-// const { passwordStrengthOptions } = require('../models/auth')
 
 const passwordStrengthOptions = [
   {

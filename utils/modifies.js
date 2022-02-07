@@ -1,71 +1,137 @@
-// tags function
-// const tagsSeparator = (string, separators) => {
-//   let inferredSeparator = ''
-//   let options = []
+const { config } = require('../config')
 
-//   if (separators?.length) {
-//     const reg = /\W/
+const tagsSeparator = (string, separators) => {
+  let inferredSeparator = ''
+  let options = []
 
-//     separators.forEach((separator) => {
-//       // Check separators validity
-//       if (!reg.test(separator)) {
-//         throw new Error('Separators may only include special characters')
-//       }
-//     })
+  if (separators?.length) {
+    const reg = /\W/
 
-//     // Check items length
-//     if (separators.length === 1) {
-//       inferredSeparator = separators[0]
-//     } else {
-//       options = [...separators]
-//     }
-//   }
+    separators.forEach((separator) => {
+      // Check separators validity
+      if (!reg.test(separator)) {
+        throw new Error('Separators may only include special characters')
+      }
+    })
 
-//   if (!separators || separators.length > 1) {
-//     // No separator supllied
-//     const regSeparatorCandidates = /\W/g
+    // Check items length
+    if (separators.length === 1) {
+      inferredSeparator = separators[0]
+    } else {
+      options = [...separators]
+    }
+  }
 
-//     // Capturing special characers- these are the candidates for the separator (with dupicates)
-//     let specialChars = [...string.matchAll(regSeparatorCandidates)].map((item) => item[0])
+  if (!separators || separators.length > 1) {
+    // No separator supllied
+    const regSeparatorCandidates = /\W/g
 
-//     if (separators?.length > 1) {
-//       // If user supplied legit array of separtor options (more than 1) - the candidates for selected separator will only include user options
-//       specialChars = specialChars.filter((char) => options.includes(char))
-//     }
+    // Capturing special characers- these are the candidates for the separator (with dupicates)
+    let specialChars = [...string.matchAll(regSeparatorCandidates)].map((item) => item[0])
 
-//     // Counting frequncy for each candidate
-//     const count = specialChars.reduce((accumulator, current) => {
-//       accumulator[current] = accumulator[current] ? (accumulator[current] += 1) : (accumulator[current] = 1)
-//       return accumulator
-//     }, {})
+    if (separators?.length > 1) {
+      // If user supplied legit array of separtor options (more than 1) - the candidates for selected separator will only include user options
+      specialChars = specialChars.filter((char) => options.includes(char))
+    }
 
-//     const countsArr = Object.entries(count)
+    // Counting frequncy for each candidate
+    const count = specialChars.reduce((accumulator, current) => {
+      accumulator[current] = accumulator[current] ? (accumulator[current] += 1) : (accumulator[current] = 1)
+      return accumulator
+    }, {})
 
-//     if (countsArr.length > 1) {
-//       // If there are several candidates for separators - sort according to count
-//       countsArr.sort((a, b) => b[1] - a[1])
-//     }
+    const countsArr = Object.entries(count)
 
-//     // Saving either the only candidate or the candidate with highest count
-//     inferredSeparator = countsArr[0][0]
-//   }
+    if (countsArr.length > 1) {
+      // If there are several candidates for separators - sort according to count
+      countsArr.sort((a, b) => b[1] - a[1])
+    }
 
-//   // Moving from the separator as a string to a regex that represents it correctly
-//   const specialChars = ['.', '*', '?', '$', '^', '(', ')']
-//   let inferredReg
+    // Saving either the only candidate or the candidate with highest count
+    inferredSeparator = countsArr[0][0]
+  }
 
-//   if (inferredSeparator === ' ') {
-//     inferredReg = /\s/
-//   } else if (specialChars.includes(inferredSeparator)) {
-//     // Add backslash
-//     inferredReg = new RegExp(`\\${inferredSeparator}`)
-//   } else {
-//     inferredReg = new RegExp(inferredSeparator)
-//   }
+  // Moving from the separator as a string to a regex that represents it correctly
+  const specialChars = ['.', '*', '?', '$', '^', '(', ')']
+  let inferredReg
 
-//   const tags = string.split(inferredReg)
+  if (inferredSeparator === ' ') {
+    inferredReg = /\s/
+  } else if (specialChars.includes(inferredSeparator)) {
+    // Add backslash
+    inferredReg = new RegExp(`\\${inferredSeparator}`)
+  } else {
+    inferredReg = new RegExp(inferredSeparator)
+  }
 
-//   return tags
-// }
+  const tags = string.split(inferredReg)
 
-// export default { tagsSeparator }
+  return tags
+}
+
+const { overallDigitLimit, decimalDigitLimit } = config.numsFormater
+const magnitudeUnits = {
+  1: 'K',
+  2: 'M',
+  3: 'G',
+}
+
+const formatNumber = (input) => {
+  let processedNumber
+  let unitSuffix
+
+  // Check if input has point
+  const inputHasPoint = input.includes('.') ? 1 : 0
+
+  // Cut input point
+  if (inputHasPoint) processedNumber = input.toFixed(decimalDigitLimit)
+
+  if (processedNumber.length - inputHasPoint > overallDigitLimit) {
+    // Format processedNumber
+    overallHandlement = inputModifier(processedNumber, overallDigitLimit, inputHasPoint)
+
+    processedNumber = overallHandlement.num
+    unitSuffix = overallHandlement.unitSuffix
+  }
+
+  // Add commas
+  const [left, right] = processedNumber.split('.')
+
+  return left.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (right ? '.' + right : '') + (unitSuffix ?? '')
+}
+
+const inputModifier = (num, limit, inputHasPoint) => {
+  let thousandsSliced, remainder
+
+  // Slice right point
+  while (num.length - inputHasPoint > limit) {
+    num = num.substring(0, num.length - 1)
+
+    if (num.length - inputHasPoint === limit) {
+      return { num }
+    }
+
+    if (num.charAt(num.length - 1) === '.') {
+      num = num.substring(0, num.length - 1)
+      break
+    }
+  }
+
+  // Slice left point block of 3's
+  while (num.length > limit) {
+    remainder = num.substring(num.length - 3)
+    num = num.substring(0, num.length - 3)
+
+    thousandsSliced++
+  }
+
+  return {
+    num: num + (limit - num.length ? '.' : '') + remainder.substring(0, limit - num.length),
+    unitSuffix: magnitudeUnits[thousandsSliced],
+  }
+}
+
+module.exports = {
+  formatNumber,
+  tagsSeparator,
+}
