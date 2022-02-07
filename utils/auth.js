@@ -24,7 +24,7 @@ const URLValidator = (url, domainOnly = false, pathIncluded = true) => {
   return url
 }
 
-export const isURLValid = (url) => {
+const isURLValid = (url) => {
   // Checks for URL validity
   const pattern = new RegExp(
     '^(https?:\\/\\/)?' + // protocol
