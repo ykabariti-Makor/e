@@ -1,6 +1,4 @@
-import auth from './utils/auth'
-import modifies from './utils/modifies'
+const { URLValidator, isURLValid, passwordValidation, passwordStrength } = require('./utils/auth')
+const { tagsSeparator } = require('./utils/modifies')
 
-export const x = () => {
-  return 1
-}
+export { URLValidator, isURLValid, passwordStrength, passwordValidation, tagsSeparator }
