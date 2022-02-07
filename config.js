@@ -60,7 +60,7 @@ const setConfig = (configName, parameters) => {
       config.numsFormater.overallDigitLimit = parameters.overallDigitLimit
       config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit
       break
-    case 'url':
+    case 'url' || 'URL':
       config.URL.domainOnly = parameters.domainOnly
       config.URL.pathIncluded = parameters.pathIncluded
       break
