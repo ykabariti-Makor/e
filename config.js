@@ -50,9 +50,11 @@ const setConfig = (configName, parameters) => {
         lowerCase: parameters.lowerCase === null || parameters.lowerCase === undefined || parameters.lowerCase === 0 ? undefined : parameters.lowerCase,
         num: parameters.num === null || parameters.num === undefined || parameters.num === 0 ? undefined : parameters.num,
         symbol: parameters.symbol === null || parameters.symbol === undefined || parameters.symbol === '' ? undefined : parameters.symbol,
-        strengthOptions: parameters.strengthOptions,
+        strengthOptions: parameters.strengthOptions.map((opt, index) => ({
+          ...opt,
+          id: index,
+        })),
       };
-
       break;
 
     case 'formatter':
@@ -60,8 +62,8 @@ const setConfig = (configName, parameters) => {
       config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit;
       break;
     case 'url' || 'URL':
-      config.URL.domainOnly = parameters.domainOnly;
-      config.URL.pathIncluded = parameters.pathIncluded;
+      if (parameters.domainOnly !== undefined) config.URL.domainOnly = parameters.domainOnly;
+      if (parameters.pathIncluded !== undefined) config.URL.pathIncluded = parameters.pathIncluded;
       break;
     case 'tags':
       config.tags.specialChars = parameters.specialChars;
