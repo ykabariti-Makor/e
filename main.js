@@ -1,5 +1,5 @@
-import { URLValidator, isURLValid, passwordValidation } from './utils/auth'
-import { tagsSeparator } from './utils/modifies'
-import { setConfig } from './config'
+const { setConfig } = require('./config')
+const { tagsSeparator } = require('./utils/modifies')
+const { URLValidator, isURLValid, passwordValidation } = require('./utils/auth')
 
-export default { URLValidator, isURLValid, passwordValidation, tagsSeparator, setConfig }
+module.exports = { URLValidator, isURLValid, passwordValidation, tagsSeparator, setConfig }

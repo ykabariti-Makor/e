@@ -1,5 +1,5 @@
-import { config } from '../config'
-import { passwordStrengthOptions } from '../models/auth'
+const { config } = require('../config')
+const { passwordStrengthOptions } = require('../models/auth')
 
 /**
  * Get URL, and 2 optional parameters
@@ -134,7 +134,7 @@ const passwordStrength = (password, options = passwordStrengthOptions, allowedSy
 
 const escapeRegExp = (string) => string.replace(/[-.*+?^${}()|[\]\\]/g, '\\$&')
 
-export default {
+module.exports = {
   URLValidator,
   isURLValid,
   passwordValidation,
