@@ -19,8 +19,11 @@ The actual separator will be the option that shows up most frequently in the pas
 
 ## examples: 
 tagSplitter("moon,sun, earth!")  -> separator : "," 
+
 tagSplitter("moon,sun, earth!", [" "])  -> separator : " " 
+
 tagSplitter("moon,sun, earth!", ["!", " "])  -> separator : " " 
+
 tagSplitter("moon,sun, earth!", ["!", "0"])  -> Error
 
 
