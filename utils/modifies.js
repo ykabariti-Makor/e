@@ -68,4 +68,4 @@ const tagsSeparator = (string, separators) => {
   return tags
 }
 
-module.exports = { tagsSeparator }
+export default { tagsSeparator }
