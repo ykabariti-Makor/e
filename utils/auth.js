@@ -83,10 +83,10 @@ const passwordValidation = (password) => {
     return { ...validator, valid: Boolean(validator.re.test(password)) }
   })
   validation = actualValidation
-  return { validation, strength: passwordStrength(password) }
+  return { validation, strength: passwordStrength(password, config.password.strengthOptions, config.password.symbol) }
 }
 
-const passwordStrength = (password, options = config.password.passwordStrengthOptions, allowedSymbols = config.password.symbol) => {
+const passwordStrength = (password, options, allowedSymbols) => {
   let passwordCopy = password || ''
 
   ;(options[0].minDiversity = 0), (options[0].minLength = 0)
