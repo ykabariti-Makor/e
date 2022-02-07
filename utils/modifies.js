@@ -69,68 +69,76 @@ const tagsSeparator = (string, separators) => {
   return tags
 }
 
-const formatNumber = (input) => {
-  const { overallDigitLimit, decimalDigitLimit } = config.numsFormater
-  let processedNumber
-  let unitSuffix
+const magnitudeUnits = {
+  1: 'K',
+  2: 'M',
+  3: 'G',
+};
 
-  // Check if input has point
-  const inputHasPoint = input.includes('.') ? 1 : 0
+const numFormatter = (numToFormat, { overallDigitLimit = 10, decimalDigitLimit = 2 }) => {
+  const isFloatingPoint = String(numToFormat).includes('.') ? 1 : 0;
+  let processedNumber;
+  //!floating point cutting
+  if (isFloatingPoint) processedNumber = decimalHandler(numToFormat, decimalDigitLimit);
 
-  // Cut input point
-  if (inputHasPoint) processedNumber = input.toFixed(decimalDigitLimit)
+  processedNumber = String(processedNumber);
 
-  if (processedNumber.length - inputHasPoint > overallDigitLimit) {
-    // Format processedNumber
-    overallHandlement = inputModifier(processedNumber, overallDigitLimit, inputHasPoint)
+  let unitSuffix;
+  if (processedNumber.length - isFloatingPoint > overallDigitLimit) {
+    //!main numer formatting
+    overallHandlement = overallHandler(processedNumber, overallDigitLimit, isFloatingPoint);
 
-    processedNumber = overallHandlement.num
-    unitSuffix = overallHandlement.unitSuffix
+    processedNumber = overallHandlement.num;
+    unitSuffix = overallHandlement.unitSuffix;
   }
 
-  // Add commas
-  const [left, right] = processedNumber.split('.')
+  //!adding commas
 
-  return left.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (right ? '.' + right : '') + (unitSuffix ?? '')
-}
+  const [left, right] = processedNumber.split('.');
 
-const inputModifier = (num, limit, inputHasPoint) => {
-  const magnitudeUnits = {
-    1: 'K',
-    2: 'M',
-    3: 'G',
-  }
-  let thousandsSliced, remainder
+  return left.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (right ? '.' + right : '') + (unitSuffix ?? '');
+};
 
-  // Slice right point
-  while (num.length - inputHasPoint > limit) {
-    num = num.substring(0, num.length - 1)
+//////////////////! DECIMAL LIMITER
+const decimalHandler = (numToFormat, decimalDigitLimit) => {
+  //!DONE WITH
+  return numToFormat.toFixed(decimalDigitLimit);
+};
 
-    if (num.length - inputHasPoint === limit) {
-      return { num }
+//////////////////! OVERALL LIMITER - MATH BASED
+const overallHandler = (num, limit, isFloatingPoint) => {
+  //!slice away right of point
+  while (num.length - isFloatingPoint > limit) {
+    num = num.substring(0, num.length - 1);
+
+    if (num.length - isFloatingPoint === limit) {
+      return { num }; //!probably need to get rid of floating point
     }
-
     if (num.charAt(num.length - 1) === '.') {
-      num = num.substring(0, num.length - 1)
-      break
+      num = num.substring(0, num.length - 1);
+      break;
     }
   }
 
-  // Slice left point block of 3's
-  while (num.length > limit) {
-    remainder = num.substring(num.length - 3)
-    num = num.substring(0, num.length - 3)
+  // //!check if meets requirement - then return
 
-    thousandsSliced++
+  let thousandsSliced = 0,
+    remainder;
+  //!keep slicing away left of point - by block of 3's
+  while (num.length > limit) {
+    remainder = num.substring(num.length - 3);
+    num = num.substring(0, num.length - 3);
+
+    thousandsSliced++;
   }
 
   return {
     num: num + (limit - num.length ? '.' : '') + remainder.substring(0, limit - num.length),
     unitSuffix: magnitudeUnits[thousandsSliced],
-  }
-}
+  };
+};
 
 module.exports = {
-  formatNumber,
   tagsSeparator,
-}
+  numFormatter,
+};
