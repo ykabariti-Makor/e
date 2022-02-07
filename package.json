@@ -1,6 +1,10 @@
 {
   "name": "enigma-x-utilities",
+<<<<<<< HEAD
   "version": "1.0.36",
+=======
+  "version": "1.0.33",
+>>>>>>> refs/remotes/origin/main
   "description": "EnigmaX NPM utilities package",
   "main": "main.js",
   "scripts": {
