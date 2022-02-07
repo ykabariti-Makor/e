@@ -1,5 +1,4 @@
 const { config } = require('../config')
-const { overallDigitLimit, decimalDigitLimit } = config.numsFormater
 
 const tagsSeparator = (string, separators) => {
   let inferredSeparator = ''
@@ -77,7 +76,9 @@ const magnitudeUnits = {
 }
 
 const numFormatter = (numToFormat) => {
-  console.log(overallDigitLimit, decimalDigitLimit)
+  console.log(config.numsFormater)
+  const { overallDigitLimit, decimalDigitLimit } = config.numsFormater
+
   const isFloatingPoint = String(numToFormat).includes('.') ? 1 : 0
   let processedNumber
   //!floating point cutting
