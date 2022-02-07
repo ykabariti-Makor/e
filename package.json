@@ -16,10 +16,5 @@
   "bugs": {
     "url": "https://github.com/ykabariti-Makor/e/issues"
   },
-  "homepage": "https://github.com/ykabariti-Makor/e#readme",
-  "exports": {
-    "main": {
-      "import": "./main.js"
-    }
-  }
+  "homepage": "https://github.com/ykabariti-Makor/e#readme"
 }
