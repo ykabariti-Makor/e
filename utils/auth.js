@@ -4,7 +4,7 @@ const { passwordStrengthOptions } = require('../models/auth')
  * Get URL, and 2 optional parameters
  * @returns Modified URL
  */
-export const URLValidator = (url, domainOnly = false, pathIncluded = true) => {
+const URLValidator = (url, domainOnly = false, pathIncluded = true) => {
   const isValid = isURLValid(url)
   const urlObject = new URL(url)
 
@@ -26,7 +26,7 @@ export const URLValidator = (url, domainOnly = false, pathIncluded = true) => {
   return url
 }
 
-export const isURLValid = (url) => {
+const isURLValid = (url) => {
   // Checks for URL validity
   const pattern = new RegExp(
     '^(https?:\\/\\/)?' + // protocol
@@ -40,7 +40,7 @@ export const isURLValid = (url) => {
   return !!pattern.test(url)
 }
 
-export const passwordValidation = (password) => {
+const passwordValidation = (password) => {
   let validation = [
     config.password.characterLen !== undefined && config.password.characterLen !== 0
       ? {
@@ -132,3 +132,9 @@ const passwordStrength = (password, options = passwordStrengthOptions, allowedSy
 }
 
 const escapeRegExp = (string) => string.replace(/[-.*+?^${}()|[\]\\]/g, '\\$&')
+
+export default {
+  URLValidator,
+  isURLValid,
+  passwordValidation,
+}

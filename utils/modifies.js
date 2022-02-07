@@ -1,5 +1,5 @@
 // tags function
-export const tagsSeparator = (string, separators) => {
+const tagsSeparator = (string, separators) => {
   let inferredSeparator = ''
   let options = []
 
@@ -68,4 +68,4 @@ export const tagsSeparator = (string, separators) => {
   return tags
 }
 
-//
+export default tagsSeparator
