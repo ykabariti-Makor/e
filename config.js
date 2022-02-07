@@ -63,12 +63,8 @@ const setConfig = (configName, parameters) => {
       }
       break
     case 'formatter':
-      try {
-        config.numsFormater.overallDigitLimit = parameters.overallDigitLimit
-        config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit
-      } catch (error) {
-        throw new Error('errorrr !!!! ')
-      }
+      config.numsFormater.overallDigitLimit = parameters.overallDigitLimit
+      config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit
       break
     case 'url' || 'URL':
       if (parameters.domainOnly !== undefined) config.URL.domainOnly = parameters.domainOnly
