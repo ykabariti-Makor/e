@@ -1,4 +1,5 @@
-const { URLValidator, isURLValid, passwordValidation, passwordStrength } = require('./utils/auth')
+const { URLValidator, isURLValid, passwordValidation } = require('./utils/auth')
 const { tagsSeparator } = require('./utils/modifies')
+const { setConfig } = require('./config')
 
-export { URLValidator, isURLValid, passwordStrength, passwordValidation, tagsSeparator }
+export { URLValidator, isURLValid, passwordValidation, tagsSeparator, setConfig }

@@ -87,7 +87,7 @@ export const passwordValidation = (password) => {
   return { validation, strength: passwordStrength(password) }
 }
 
-export const passwordStrength = (password, options = passwordStrengthOptions, allowedSymbols = '!@#$%^&*') => {
+const passwordStrength = (password, options = passwordStrengthOptions, allowedSymbols = '!@#$%^&*') => {
   let passwordCopy = password || ''
 
   ;(options[0].minDiversity = 0), (options[0].minLength = 0)
