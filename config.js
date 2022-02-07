@@ -1,24 +1,21 @@
 const config = {
   // PROGRAMERS NOTICE: intital your own Object/array according to your functions in the code above
   password: {
-    passwordStrengthOptions: [
+    strengthOptions: [
       {
-        id: 0,
         value: 'Weak',
         minDiversity: 1,
-        minLength: 8,
+        minLength: config.password.characterLen,
       },
       {
-        id: 1,
         value: 'Strong',
         minDiversity: 2,
-        minLength: 8,
+        minLength: config.password.characterLen + 1,
       },
       {
-        id: 2,
         value: 'Very Strong',
         minDiversity: 4,
-        minLength: 10,
+        minLength: config.password.characterLen + 2,
       },
     ],
     characterLen: 8,
@@ -39,7 +36,7 @@ const config = {
     overallDigitLimit: 100,
     decimalDigitLimit: 100,
   },
-}
+};
 
 const setConfig = (configName, parameters) => {
   /**
@@ -53,21 +50,23 @@ const setConfig = (configName, parameters) => {
         lowerCase: parameters.lowerCase === null || parameters.lowerCase === undefined || parameters.lowerCase === 0 ? undefined : parameters.lowerCase,
         num: parameters.num === null || parameters.num === undefined || parameters.num === 0 ? undefined : parameters.num,
         symbol: parameters.symbol === null || parameters.symbol === undefined || parameters.symbol === '' ? undefined : parameters.symbol,
-      }
-      break
+        strengthOptions: [parameters.strengthOptions],
+      };
+
+      break;
 
     case 'formatter':
-      config.numsFormater.overallDigitLimit = parameters.overallDigitLimit
-      config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit
-      break
+      config.numsFormater.overallDigitLimit = parameters.overallDigitLimit;
+      config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit;
+      break;
     case 'url' || 'URL':
-      config.URL.domainOnly = parameters.domainOnly
-      config.URL.pathIncluded = parameters.pathIncluded
-      break
+      config.URL.domainOnly = parameters.domainOnly;
+      config.URL.pathIncluded = parameters.pathIncluded;
+      break;
     case 'tags':
-      config.tags.specialChars = parameters.specialChars
-      break
+      config.tags.specialChars = parameters.specialChars;
+      break;
   }
-}
+};
 
-module.exports = { config, setConfig }
+module.exports = { config, setConfig };
