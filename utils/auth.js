@@ -2,7 +2,7 @@
  * Get URL, and 2 optional parameters
  * @returns Modified URL
  */
-export const URLValidator = (url, domainOnly = false, pathIncluded = true) => {
+const URLValidator = (url, domainOnly = false, pathIncluded = true) => {
   const isValid = isURLValid(url)
   const urlObject = new URL(url)
 
@@ -36,4 +36,9 @@ export const isURLValid = (url) => {
     'i'
   ) // fragment locator
   return !!pattern.test(url)
+}
+
+module.exports = {
+  URLValidator,
+  isURLValid,
 }
