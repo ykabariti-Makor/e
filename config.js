@@ -28,8 +28,8 @@ const config = {
     symbol: '#?!@$%^&*-',
   },
   URL: {
-    pathIncluded: true,
     domainOnly: false,
+    pathIncluded: true,
   },
   phones: {},
   tags: {
@@ -61,8 +61,8 @@ const setConfig = (configName, parameters) => {
       config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit
       break
     case 'url' || 'URL':
-      config.URL.domainOnly = parameters.domainOnly
-      config.URL.pathIncluded = parameters.pathIncluded
+      if (parameters.domainOnly) config.URL.domainOnly = parameters.domainOnly
+      if (parameters.pathIncluded) config.URL.pathIncluded = parameters.pathIncluded
       break
     case 'tags':
       config.tags.specialChars = parameters.specialChars
