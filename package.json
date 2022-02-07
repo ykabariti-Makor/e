@@ -1,12 +1,20 @@
 {
   "name": "enigma-x-utilities",
-  "version": "1.0.3",
-  "description": "Hey",
+  "version": "1.0.5",
+  "description": "EnigmaX NPM utilities package",
   "main": "urlValidator.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ykabariti-Makor/e.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ykabariti-Makor/e/issues"
+  },
+  "homepage": "https://github.com/ykabariti-Makor/e#readme"
 }
