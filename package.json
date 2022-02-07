@@ -1,0 +1,24 @@
+{
+  "name": "enigma-x-utilities",
+<<<<<<< HEAD
+  "version": "1.0.36",
+=======
+  "version": "1.0.33",
+>>>>>>> refs/remotes/origin/main
+  "description": "EnigmaX NPM utilities package",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ykabariti-Makor/e.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ykabariti-Makor/e/issues"
+  },
+  "homepage": "https://github.com/ykabariti-Makor/e#readme"
+}
