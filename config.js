@@ -62,10 +62,13 @@ const setConfig = (configName, parameters) => {
         strengthOptions: parameters.strengthOptions,
       }
       break
-
     case 'formatter':
-      config.numsFormater.overallDigitLimit = parameters.overallDigitLimit
-      config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit
+      try {
+        config.numsFormater.overallDigitLimit = parameters.overallDigitLimit
+        config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit
+      } catch (error) {
+        throw new Error('errorrr !!!! ')
+      }
       break
     case 'url' || 'URL':
       if (parameters.domainOnly !== undefined) config.URL.domainOnly = parameters.domainOnly
