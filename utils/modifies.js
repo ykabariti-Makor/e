@@ -10,7 +10,7 @@ const tagsSeparator = (string, separators) => {
     separators.forEach((separator) => {
       // Check separators validity
       if (!reg.test(separator)) {
-        throw new Error('Separators may only include special characters')
+        return 'Separators may only include special characters'
       }
     })
 
@@ -78,7 +78,7 @@ const formatNumber = (input) => {
   const inputHasPoint = input.includes('.') ? 1 : 0
 
   // Cut input point
-  if (inputHasPoint) processedNumber = input.toFixed(decimalDigitLimit)
+  if (inputHasPoint) processedNumber = Number(input).toFixed(decimalDigitLimit)
 
   if (processedNumber.length - inputHasPoint > overallDigitLimit) {
     // Format processedNumber

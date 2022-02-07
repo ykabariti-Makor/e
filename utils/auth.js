@@ -9,20 +9,19 @@ const URLValidator = (url, domainOnly = config.URL.domainOnly, pathIncluded = co
   const urlObject = new URL(url)
 
   // Check for URL validity
-  if (!isValid) throw new Error('URL is invalid')
+  if (!isValid) return 'URL is invalid'
 
   if (domainOnly && pathIncluded) {
-    // Return URL domain & path
-    return (url = urlObject.hostname + urlObject.pathname) // figma.com/file/Dk5ed
+    // URL domain & path
+    url = urlObject.hostname + urlObject.pathname + urlObject.search
   } else if (domainOnly) {
-    // Return URL domain
-    return (url = urlObject.hostname) // figma.com
+    // URL domain
+    url = urlObject.hostname
   } else if (!domainOnly && !pathIncluded) {
-    // Return URL without path
-    return (url = urlObject.origin) // https://www.figma.com
+    // URL without path
+    url = urlObject.origin
   }
 
-  // Return full URL
   return url
 }
 
