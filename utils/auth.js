@@ -1,31 +1,10 @@
 const { config } = require('../config')
 
-const passwordStrengthOptions = [
-  {
-    id: 0,
-    value: 'Weak',
-    minDiversity: 1,
-    minLength: 8,
-  },
-  {
-    id: 1,
-    value: 'Strong',
-    minDiversity: 2,
-    minLength: 8,
-  },
-  {
-    id: 2,
-    value: 'Very Strong',
-    minDiversity: 4,
-    minLength: 10,
-  },
-]
-
 /**
  * Get URL, and 2 optional parameters
  * @returns Modified URL
  */
-const URLValidator = (url, domainOnly = false, pathIncluded = true) => {
+const URLValidator = (url, domainOnly = config.URL.domainOnly, pathIncluded = config.URL.pathIncluded) => {
   const isValid = isURLValid(url)
   const urlObject = new URL(url)
 
@@ -108,7 +87,7 @@ const passwordValidation = (password) => {
   return { validation, strength: passwordStrength(password) }
 }
 
-const passwordStrength = (password, options = passwordStrengthOptions, allowedSymbols = '!@#$%^&*') => {
+const passwordStrength = (password, options = config.password.passwordStrengthOptions, allowedSymbols = config.password.symbol) => {
   let passwordCopy = password || ''
 
   ;(options[0].minDiversity = 0), (options[0].minLength = 0)

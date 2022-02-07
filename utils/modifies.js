@@ -52,7 +52,7 @@ const tagsSeparator = (string, separators) => {
   }
 
   // Moving from the separator as a string to a regex that represents it correctly
-  const specialChars = ['.', '*', '?', '$', '^', '(', ')']
+  const specialChars = config.tags.specialChars
   let inferredReg
 
   if (inferredSeparator === ' ') {
@@ -69,14 +69,8 @@ const tagsSeparator = (string, separators) => {
   return tags
 }
 
-const { overallDigitLimit, decimalDigitLimit } = config.numsFormater
-const magnitudeUnits = {
-  1: 'K',
-  2: 'M',
-  3: 'G',
-}
-
 const formatNumber = (input) => {
+  const { overallDigitLimit, decimalDigitLimit } = config.numsFormater
   let processedNumber
   let unitSuffix
 
@@ -101,6 +95,11 @@ const formatNumber = (input) => {
 }
 
 const inputModifier = (num, limit, inputHasPoint) => {
+  const magnitudeUnits = {
+    1: 'K',
+    2: 'M',
+    3: 'G',
+  }
   let thousandsSliced, remainder
 
   // Slice right point
