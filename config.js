@@ -1,26 +1,32 @@
 const config = {
   // PROGRAMERS NOTICE: intital your own Object/array according to your functions in the code above
   password: {
-    StrengthOptions: [
+    strengthOptions: [
       {
-        id: 0,
         value: 'Weak',
+
         minDiversity: 1,
-        minLength: 8,
+
+        minLength: config.password.characterLen,
       },
+
       {
-        id: 1,
         value: 'Strong',
+
         minDiversity: 2,
-        minLength: 8,
+
+        minLength: config.password.characterLen + 1,
       },
+
       {
-        id: 2,
         value: 'Very Strong',
+
         minDiversity: 4,
-        minLength: 10,
+
+        minLength: config.password.characterLen + 2,
       },
     ],
+
     characterLen: 8,
     upperCase: 1,
     lowerCase: 1,
@@ -53,7 +59,7 @@ const setConfig = (configName, parameters) => {
         lowerCase: parameters.lowerCase === null || parameters.lowerCase === undefined || parameters.lowerCase === 0 ? undefined : parameters.lowerCase,
         num: parameters.num === null || parameters.num === undefined || parameters.num === 0 ? undefined : parameters.num,
         symbol: parameters.symbol === null || parameters.symbol === undefined || parameters.symbol === '' ? undefined : parameters.symbol,
-        StrengthOptions: parameters.StrengthOptions,
+        strengthOptions: parameters.strengthOptions,
       }
       break
 
