@@ -1,5 +1,6 @@
-const { config } = require('../config')
-const { passwordStrengthOptions } = require('../models/auth')
+import { config } from '../config'
+import { passwordStrengthOptions } from '../models/auth'
+
 /**
  * Get URL, and 2 optional parameters
  * @returns Modified URL
