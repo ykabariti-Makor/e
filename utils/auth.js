@@ -1,5 +1,26 @@
 const { config } = require('../config')
-const { passwordStrengthOptions } = require('../models/auth')
+// const { passwordStrengthOptions } = require('../models/auth')
+
+const passwordStrengthOptions = [
+  {
+    id: 0,
+    value: 'Weak',
+    minDiversity: 1,
+    minLength: 8,
+  },
+  {
+    id: 1,
+    value: 'Strong',
+    minDiversity: 2,
+    minLength: 8,
+  },
+  {
+    id: 2,
+    value: 'Very Strong',
+    minDiversity: 4,
+    minLength: 10,
+  },
+]
 
 /**
  * Get URL, and 2 optional parameters
