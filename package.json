@@ -1,6 +1,6 @@
 {
-  "name": "npm",
-  "version": "1.0.0",
+  "name": "enigma-x-utilities",
+  "version": "1.0.3",
   "description": "Hey",
   "main": "urlValidator.js",
   "scripts": {
