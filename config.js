@@ -5,17 +5,17 @@ const config = {
       {
         value: 'Weak',
         minDiversity: 1,
-        minLength: config.password.characterLen,
+        minLength: 8,
       },
       {
         value: 'Strong',
         minDiversity: 2,
-        minLength: config.password.characterLen + 1,
+        minLength: 10,
       },
       {
         value: 'Very Strong',
         minDiversity: 4,
-        minLength: config.password.characterLen + 2,
+        minLength: 12,
       },
     ],
     characterLen: 8,
