@@ -38,7 +38,7 @@ const isURLValid = (url) => {
   return !!pattern.test(url)
 }
 
-module.exports = {
+export default {
   URLValidator,
   isURLValid,
 }
