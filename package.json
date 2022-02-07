@@ -2,7 +2,7 @@
   "name": "enigma-x-utilities",
   "version": "1.0.8",
   "description": "EnigmaX NPM utilities package",
-  "main": "urlValidator.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
