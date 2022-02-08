@@ -1,6 +1,6 @@
 {
   "name": "enigma-x-utilities",
-  "version": "1.0.46",
+  "version": "1.0.47",
   "description": "EnigmaX NPM utilities package",
   "main": "main.js",
   "scripts": {
