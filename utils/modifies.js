@@ -1,12 +1,12 @@
-const { config } = require("../config");
+const { config } = require('../config')
 
 /**
  * Tags separator for tags string
- * @param string string tags
- * @param separators array indicator for format options, contains all special chars by default
+ * @param {string} string tags
+ * @param {separators} array indicator for format options, contains all special chars by default
  * @returns array
  */
-const tagsSeparator = (string, separators) => {
+ const tagsSeparator = (string, separators) => {
   let inferredSeparator = "";
   let options = [];
 
@@ -17,29 +17,32 @@ const tagsSeparator = (string, separators) => {
     // Check separators validity
     for (const separator of separators) {
       if (separator.length > 1) {
-        //"Error: Separators may only include one character each."
-        return undefined;
+        return {
+          success: false,
+          message: "Separators may only include one character each."
+        }
       }
 
       if (!reg.test(separator)) {
-        //"Error: Separators may only include special characters.";
-        return undefined;
+        return {
+          success: false,
+          message: "Separators may only include special characters."
+        }
       }
     }
 
     // Check items length
     if (separators.length === 1) {
       inferredSeparator = separators[0];
-    } else {
+    }else{
       options = [...separators];
     }
   }
 
-  if (!separators || separators.length > 1) {
-    // No separator supllied
+  if (!separators || separators.length > 1 || separators.length === 0) {
     const regSeparatorCandidates = /\W/g;
 
-    // Capturing special characers- these are the candidates for the separator (with dupicate
+    // Capturing special characers- these are the candidates for the separator (with dupicates). This will be used if no seperators are being passed or if an empty separators array is being passed
     let specialChars = [...string.matchAll(regSeparatorCandidates)].map(
       (item) => item[0]
     );
@@ -84,17 +87,21 @@ const tagsSeparator = (string, separators) => {
   } else {
     inferredReg = new RegExp(inferredSeparator);
   }
-
   const tags = string.split(inferredReg);
 
-  return tags;
+  return {
+    success: true,
+    message: "Tags array created successfully",
+    data: tags
+  } 
 };
 
+
 const magnitudeUnits = {
-  1: "K",
-  2: "M",
-  3: "G",
-};
+  1: 'K',
+  2: 'M',
+  3: 'G',
+}
 
 const isValidStringedNumber = (numToFormat) => {
   if (typeof numToFormat != "string") return false;
@@ -103,7 +110,7 @@ const isValidStringedNumber = (numToFormat) => {
 
 /**
  * Number formatter for numbers
- * @param numToFormat string
+ * @param {numToFormat} string
  * @returns string
  */
 const numFormatter = (numToFormat) => {
@@ -117,20 +124,11 @@ const numFormatter = (numToFormat) => {
   //if the number have floating point count it.
   const hasFloatingPoint = numToFormat.includes(".") ? 1 : 0;
   let processedNumber = numToFormat,
-    unitSuffix;
+    unitSuffix
 
   //if the number got floating point fixed the number accordingly
-  if (hasFloatingPoint) {
-    processedNumber = String(Number(numToFormat).toFixed(decimalDigitLimit));
-
-    //in the case the initial input to numFormatter is a decimal fraction - return promptly
-    // if (processedNumber.split(".")[0] === "0")
-    //   return {
-    //     success: true,
-    //     message: "Successfully formatted number",
-    //     data: processedNumber,
-    //   };
-  }
+  if (numberHasPoint) processedNumber = String(Number(numToFormat).toFixed(decimalDigitLimit))
+ 
 
   // if the number exceeds the limit handle it
   if (processedNumber.length - hasFloatingPoint > overallDigitLimit) {
@@ -140,13 +138,13 @@ const numFormatter = (numToFormat) => {
       hasFloatingPoint
     );
     //the processed number is the new number that has been handled + the letter represent the thousends sliced
-    processedNumber = overallHandlement.num;
-    unitSuffix = overallHandlement.unitSuffix;
+    processedNumber = overallHandlement.num
+    unitSuffix = overallHandlement.unitSuffix
   }
 
   //seperate the number by the floating point
 
-  const [left, right] = processedNumber.split(".");
+  const [left, right] = processedNumber.split('.')
 
   //returns the handled number seperated by commas, attach the right side if exist and append the letter representing the thousends sliced
 
@@ -166,91 +164,90 @@ const overallHandler = (num, limit, isFloatingPoint) => {
   // until it meets the limit or until reaching the floating point
   if (isFloatingPoint)
     while (num.length - isFloatingPoint > limit) {
-      num = num.substring(0, num.length - 1);
+      num = num.substring(0, num.length - 1)
 
       if (num.length - isFloatingPoint === limit) {
-        return { num };
+        return { num }
       }
 
-      if (num.charAt(num.length - 1) === ".") {
-        num = num.substring(0, num.length - 1);
-        break;
+      if (num.charAt(num.length - 1) === '.') {
+        num = num.substring(0, num.length - 1)
+        break
       }
     }
   //thousend sliced counter initialized with 0
   let thousandsSliced = 0,
-    remainder;
+    remainder
   //the number exceeds the limit start slicing away by thousend at each time, save the sliced digits aside and count the thousends sliced
   while (num.length > limit) {
-    remainder = num.substring(num.length - 3);
-    num = num.substring(0, num.length - 3);
+    remainder = num.substring(num.length - 3)
+    num = num.substring(0, num.length - 3)
 
-    thousandsSliced++;
+    thousandsSliced++
   }
   //return the number + floating point if needed + the chunk from the remainder the meets the limit
   //also return the letter that represent the number of thousends sliced
   return {
-    num:
-      num +
-      (limit - num.length ? "." : "") +
-      remainder.substring(0, limit - num.length),
+    num: num + (limit - num.length ? '.' : '') + remainder.substring(0, limit - num.length),
     unitSuffix: magnitudeUnits[thousandsSliced],
-  };
-};
+  }
+}
 
-// The function phoneNumberFormatter validates the phone number it receives and returns it in a certain format.
-// It expects 1-3 arguments:
-// 1. Phone numer as a string (mandatory)
-// 2. Format as a string(e.g."3-3-4-2"). The format must match in length to the phone no. length and contain country code prefix".
-//    The default format is "3-2-3-4".
-// 3. isInternational is a boolean that indicates whether the returned number should be in an inernational format or not.
+/**
+ * The function phoneNumberFormatter validates the phone number it receives and returns it in a certain format.
+   It expects 1-3 arguments:
+ * @param {string} number  Phone number is mandatory ,need to be inserted as a string.
+ * @param {string} format  The format must match in length to the phone number length and contain country code prefix".
+//    The default format is "3-2-3-4". (e.g."3-3-4-2").
+ * @param {boolean} isInternational a boolean that indicates whether the returned number should be in an international format or not.
 //     The default is true (international format).
+ * @returns object
+ */
+const phoneNumberFormatter = (number, format = config.phones.format, isInternational = config.phones.isInternational) => {
+  const regexFormat = /^([\+]?[\(]?[0-9]{1,3}[\)]?)([\s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/
+  const cleanNumber = number.replace(/[^0-9]/g, '')
+  const sum = arr.reduce((acc, item) => acc + item)
+  const arr = format.split('-').map((str) => +str)
 
-const phoneNumberFormatter = (
-  number,
-  format = config.phones.format,
-  isInternational = config.phones.isInternational
-) => {
-  // const regexFormat = /^([\+]?[\(]?[0-9]{1,3}[\)]?[\ s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/
-
-  const arr = format.split("-").map((str) => +str);
-  const sum = arr.reduce((acc, item) => acc + item);
-  const cleanNumber = number.replace(/[^0-9]/g, "");
+  if (!regexFormat.test(number)) {
+    return {
+      success: false,
+      message: 'Phone number input is invalid',
+    }
+  }
 
   if (sum !== cleanNumber.length) {
-    return `Format: ${format} does not match phone number: ${number}`;
+    return 'Format does not match no. of digits in phone no.'
   }
 
   if (cleanNumber.length >= 7 && cleanNumber.length <= 15) {
-    let formatedNumber = "";
-    let count = 0;
+    let formattedNumber = ''
+    let count = 0
 
     for (let i = 0; i < arr.length; i++) {
       if (i === 0) {
-        formatedNumber = cleanNumber.slice(0, arr[i]);
-        count += +arr[i];
+        formattedNumber = cleanNumber.slice(0, arr[i])
+        count += +arr[i]
       } else {
-        formatedNumber = formatedNumber.concat(
-          "-" + cleanNumber.slice(count, count + arr[i])
-        );
-        count += +arr[i];
+        formattedNumber = formattedNumber.concat('-' + cleanNumber.slice(count, count + arr[i]))
+        count += +arr[i]
       }
     }
 
     if (!isInternational) {
-      return formatedNumber.slice(arr[0] + 1);
+      return formattedNumber.slice(arr[0] + 1)
     }
 
-    return formatedNumber;
+    return {
+      success: true,
+      message: 'Phone number successfully formatted',
+      data: formattedNumber,
+    }
   }
-};
-
-//example for input
-// const formatted = phoneNumberFormatter("0800 563 5553 1113", "4-3-4-4" );
-// console.log(formatted);
+}
 
 module.exports = {
   numFormatter,
   tagsSeparator,
   phoneNumberFormatter,
-};
+}

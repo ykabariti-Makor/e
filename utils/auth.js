@@ -7,7 +7,9 @@ const { config } = require('../config')
  * @param pathIncluded boolean indicator for url path format, true by default
  * @returns string
  */
-const URLValidator = (url, domainOnly = config.URL.domainOnly, pathIncluded = config.URL.pathIncluded) => {
+const URLValidator = (url) => {
+  const domainOnly = config.URLValidator.domainOnly
+  const pathIncluded = config.URLValidator.pathIncluded
   // Check for URL validity
   const isValid = isURLValid(url)
   if (!isValid.success) {

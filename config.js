@@ -33,7 +33,7 @@ const config = {
     num: 1,
     symbol: '#?!@$%^&*-',
   },
-  URL: {
+  URLValidator: {
     domainOnly: false,
     pathIncluded: true,
   },
@@ -67,9 +67,9 @@ const setConfig = (configName, parameters) => {
       if (parameters.overallDigitLimit !== undefined) config.numsFormater.overallDigitLimit = parameters.overallDigitLimit
       if (parameters.decimalDigitLimit !== undefined) config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit
       break
-    case 'url' || 'URL':
-      if (parameters.domainOnly !== undefined) config.URL.domainOnly = parameters.domainOnly
-      if (parameters.pathIncluded !== undefined) config.URL.pathIncluded = parameters.pathIncluded
+    case 'URLValidator' || 'urlValidator':
+      if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly
+      if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded
       break
     case 'phones':
       if (parameters.format !== undefined) config.phones.format = parameters.format
