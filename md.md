@@ -26,8 +26,13 @@ But if you would like to modifiy the values you can use `setConfig` function.
 ```javascript
 const { setConfig } = require('enigma-x-utilities')
 
+/**
+ * setConfig for configuration
+ * @param {configName} string function to config
+ * @param {parameters} object fields to config
+ * @returns void
+ */
 setConfig('phones', {
-  //
   format: '10',
   isInternational: true,
 })
@@ -36,7 +41,7 @@ setConfig('phones', {
 ## Usage
 
 ```javascript
-import { log, tag } from 'missionlog'
+const enigma = require('enigma-x-utilities')
 
 // the imported value "tag" is populated with YOUR tags!
 log.error(tag.security, 'not authorized', statusCode)
@@ -55,18 +60,4 @@ log.init({ loader: 'ERROR', system: 'INFO' })
 
 // disable logging by clearing the callback
 log.init()
-```
-
-## Advanced Usage
-
-Create an instance with its own tags and callback.
-
-```javascript
-import { Log, tag } from 'missionlog'
-
-const myLog = new Log().init({ loader: 'INFO', security: 'ERROR' }, (level, tag, msg, params) => {
-  console.log(`${level}: [${tag}] `, msg, ...params)
-})
-
-myLog.info(tag.security, 'login successful')
 ```
