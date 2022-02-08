@@ -25,7 +25,7 @@ const URLValidator = (url) => {
   } catch (error) {
     return {
       success: false,
-      message: error,
+      message: 'URL is invalid',
     }
   }
 
