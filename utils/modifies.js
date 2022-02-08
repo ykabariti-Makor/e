@@ -6,12 +6,12 @@ const { config } = require('../config')
  * @param {separators} array indicator for format options, contains all special chars by default
  * @returns array
  */
-const tagsSeparator = (string, separators) => {
-  let inferredSeparator = ''
-  let options = []
+ const tagsSeparator = (string, separators) => {
+  let inferredSeparator = "";
+  let options = [];
 
   if (separators?.length) {
-    const reg = /\W/
+    const reg = /\W/;
 
     //separators.forEach((separator) => {
     // Check separators validity
@@ -19,80 +19,84 @@ const tagsSeparator = (string, separators) => {
       if (separator.length > 1) {
         return {
           success: false,
-          message: 'Separators may only include one character each.',
+          message: "Separators may only include one character each."
         }
       }
 
       if (!reg.test(separator)) {
         return {
           success: false,
-          message: 'Separators may only include special characters.',
+          message: "Separators may only include special characters."
         }
       }
     }
 
     // Check items length
     if (separators.length === 1) {
-      inferredSeparator = separators[0]
-    } else {
-      options = [...separators]
+      inferredSeparator = separators[0];
+    }else{
+      options = [...separators];
     }
   }
 
-  if (!separators || separators.length > 1) {
-    // No separator supllied
-    const regSeparatorCandidates = /\W/g
+  if (!separators || separators.length > 1 || separators.length === 0) {
+    // No separator supplied
+    const regSeparatorCandidates = /\W/g;
 
     // Capturing special characers- these are the candidates for the separator (with dupicate
-    let specialChars = [...string.matchAll(regSeparatorCandidates)].map((item) => item[0])
+    let specialChars = [...string.matchAll(regSeparatorCandidates)].map(
+      (item) => item[0]
+    );
 
     if (separators?.length > 1) {
       // If user supplied legit array of separtor options (more than 1) - the candidates for selected separator will only include user options
-      specialChars = specialChars.filter((char) => options.includes(char))
+      specialChars = specialChars.filter((char) => options.includes(char));
       if (specialChars.length === 0) {
         // If the separators passed by user do not exist in the passed string, push the first user separator anyway to specialChars
         //This way, the string will not be splitted later - as should happen.
-        specialChars.push(options[0])
+        specialChars.push(options[0]);
       }
     }
 
     // Counting frequncy for each candidate
     const count = specialChars.reduce((accumulator, current) => {
-      accumulator[current] = accumulator[current] ? (accumulator[current] += 1) : (accumulator[current] = 1)
-      return accumulator
-    }, {})
+      accumulator[current] = accumulator[current]
+        ? (accumulator[current] += 1)
+        : (accumulator[current] = 1);
+      return accumulator;
+    }, {});
 
-    const countsArr = Object.entries(count)
+    const countsArr = Object.entries(count);
 
     if (countsArr.length > 1) {
       // If there are several candidates for separators - sort according to count
-      countsArr.sort((a, b) => b[1] - a[1])
+      countsArr.sort((a, b) => b[1] - a[1]);
     }
     // Saving either the only candidate or the candidate with highest count
-    inferredSeparator = countsArr[0]?.[0]
+    inferredSeparator = countsArr[0]?.[0];
   }
 
   // Moving from the separator as a string to a regex that represents it correctly
-  const specialChars = config.tags.specialChars
-  let inferredReg
+  const specialChars = config.tags.specialChars;
+  let inferredReg;
 
-  if (inferredSeparator === ' ') {
-    inferredReg = /\s/
+  if (inferredSeparator === " ") {
+    inferredReg = /\s/;
   } else if (specialChars.includes(inferredSeparator)) {
     // Add backslash
-    inferredReg = new RegExp(`\\${inferredSeparator}`)
+    inferredReg = new RegExp(`\\${inferredSeparator}`);
   } else {
-    inferredReg = new RegExp(inferredSeparator)
+    inferredReg = new RegExp(inferredSeparator);
   }
-
-  const tags = string.split(inferredReg)
+  const tags = string.split(inferredReg);
 
   return {
     success: true,
-    message: 'Tags array created successfully',
-    data: tags,
-  }
-}
+    message: "Tags array created successfully",
+    data: tags
+  } 
+};
+
 
 const magnitudeUnits = {
   1: 'K',
