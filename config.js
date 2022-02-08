@@ -4,22 +4,18 @@ const config = {
     strengthOptions: [
       {
         value: 'Weak',
-
         minDiversity: 1,
-
         minLength: 8,
       },
 
       {
         value: 'Stron',
-
         minDiversity: 2,
         minLength: 10,
       },
 
       {
         value: 'Very Strong',
-
         minDiversity: 4,
         minLength: 12,
       },
@@ -72,16 +68,16 @@ const setConfig = (configName, parameters) => {
       break;
 
     case 'formatter':
-      if (parameters.overallDigitLimit !== undefined) config.numsFormater.overallDigitLimit = parameters.overallDigitLimit
-      if (parameters.decimalDigitLimit !== undefined) config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit
+      if (parameters.overallDigitLimit !== undefined) config.numsFormater.overallDigitLimit = parameters.overallDigitLimit;
+      if (parameters.decimalDigitLimit !== undefined) config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit;
       break;
     case 'URLValidator' || 'urlValidator':
-      if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly
-      if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded
+      if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly;
+      if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded;
       break;
     case 'phones':
-      if (parameters.format !== undefined) config.phones.format = parameters.format
-      if (parameters.isInternational !== undefined) config.phones.isInternational = parameters.isInternational
+      if (parameters.format !== undefined) config.phones.format = parameters.format;
+      if (parameters.isInternational !== undefined) config.phones.isInternational = parameters.isInternational;
       break;
     case 'tags':
       config.tags.specialChars = parameters.specialChars;

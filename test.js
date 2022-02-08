@@ -4,7 +4,7 @@ const { passwordValidation } = require('./utils/auth');
 setConfig('password', {
   strengthOptions: [
     {
-      value: 1,
+      value: 'Weak',
       minDiversity: 1,
       minLength: 8,
     },
@@ -22,11 +22,11 @@ setConfig('password', {
     },
   ],
 
-  characterLen: 12,
+  characterLen: 0,
   upperCase: 1,
   lowerCase: 1,
   num: 1,
-  symbol: '#?!@$%^&*-',
+  symbol: 0,
 });
 
 console.log(passwordValidation('1234$@1Aafasfasfasfas!@#$!@!@!@$'));
