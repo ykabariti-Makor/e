@@ -79,7 +79,12 @@ URLValidator('blablablablo')
 # Tags Separator
 
 ```javascript
-const { tagsSeparator } = require('enigma-x-utilities');
+const { tagsSeparator, setConfig } = require('enigma-x-utilities');
+
+//Config default values
+setConfig('tags', {
+separators: undefined
+})
 ```
 ### Description
 The function receives a string and splits it into an array of separate tags.
