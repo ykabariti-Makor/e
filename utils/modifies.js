@@ -4,7 +4,7 @@ const { config } = require("../config");
  * Tags separator for tags string
  * @param {string} string tags
  * @param {separators} array indicator for format options, contains all special chars by default
- * @returns array
+ * @returns object
  */
 const tagsSeparator = (string) => {
   const separators = config.tags.separators;
@@ -18,14 +18,14 @@ const tagsSeparator = (string) => {
       if (separator.length > 1) {
         return {
           success: false,
-          message: "Separators may only include one character each.",
+          message: "Separators may only include one character each."
         };
       }
 
       if (!reg.test(separator)) {
         return {
           success: false,
-          message: "Separators may only include special characters.",
+          message: "Separators may only include special characters."
         };
       }
     }
@@ -91,20 +91,20 @@ const tagsSeparator = (string) => {
   return {
     success: true,
     message: "Tags array created successfully",
-    data: tags,
+    data: tags
   };
 };
 
 /**
  * Number formatter for numbers
  * @param {numToFormat} string
- * @returns string
+ * @returns object
  */
 const numFormatter = (numToFormat) => {
   if (typeof numToFormat !== "number")
     return {
       success: false,
-      message: "Input is not a valid number",
+      message: "Input is not a valid number"
     };
 
   const { overallDigitLimit, decimalDigitLimit } = config.numsFormater;
@@ -141,7 +141,7 @@ const numFormatter = (numToFormat) => {
     data:
       left.replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
       (right ? "." + right : "") +
-      (unitSuffix ?? ""),
+      (unitSuffix ?? "")
   };
 };
 
@@ -175,7 +175,7 @@ const overallHandler = (num, limit, isFloatingPoint) => {
   const magnitudeUnits = {
     1: "K",
     2: "M",
-    3: "G",
+    3: "G"
   };
 
   //return the number + floating point if needed + the chunk from the remainder the meets the limit
@@ -185,18 +185,15 @@ const overallHandler = (num, limit, isFloatingPoint) => {
       num +
       (limit - num.length ? "." : "") +
       remainder.substring(0, limit - num.length),
-    unitSuffix: magnitudeUnits[thousandsSliced],
+    unitSuffix: magnitudeUnits[thousandsSliced]
   };
 };
 
 /**
- * The function phoneNumberFormatter validates the phone number it receives and returns it in a certain format.
-   It expects 1-3 arguments:
- * @param {string} number  Phone number is mandatory ,need to be inserted as a string.
- * @param {string} format  The format must match in length to the phone number length and contain country code prefix".
-//    The default format is "3-2-3-4". (e.g."3-3-4-2").
- * @param {boolean} isInternational a boolean that indicates whether the returned number should be in an international format or not.
-//     The default is true (international format).
+ * Number formatter for phone numbers
+ * @param {string} number phone number
+ * @param {string} format area code, 3-2-3-4 by default
+ * @param {boolean} isInternational indicator for international format, true by default
  * @returns object
  */
 const phoneNumberFormatter = (number) => {
@@ -215,14 +212,14 @@ const phoneNumberFormatter = (number) => {
   if (!regexFormat.test(number)) {
     return {
       success: false,
-      message: "Phone number input is invalid",
+      message: "Phone number input is invalid"
     };
   }
   //tests if the phone number after removing char is equal to format sum.
   if (sum !== cleanNumber.length) {
     return {
       success: false,
-      message: "Format does not match no. of digits in phone number",
+      message: "Format does not match no. of digits in phone number"
     };
   }
   // tests the phone number length by global standards
@@ -246,18 +243,18 @@ const phoneNumberFormatter = (number) => {
       return {
         success: true,
         message: "Phone number successfully formatted",
-        data: formattedNumber.slice(arr[0] + 1),
+        data: formattedNumber.slice(arr[0] + 1)
       };
     }
     return {
       success: true,
       message: "Phone number successfully formatted",
-      data: formattedNumber,
+      data: formattedNumber
     };
   } else {
     return {
       success: false,
-      message: "Phone number length can contain only 7-15 digits",
+      message: "Phone number length can contain only 7-15 digits"
     };
   }
 };
@@ -265,5 +262,5 @@ const phoneNumberFormatter = (number) => {
 module.exports = {
   numFormatter,
   tagsSeparator,
-  phoneNumberFormatter,
+  phoneNumberFormatter
 };
