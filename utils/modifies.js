@@ -1,4 +1,4 @@
-const { config } = require('../config')
+const { config } = require("../config");
 
 /**
  * Tags separator for tags string
@@ -6,7 +6,7 @@ const { config } = require('../config')
  * @param {separators} array indicator for format options, contains all special chars by default
  * @returns array
  */
- const tagsSeparator = (string, separators) => {
+const tagsSeparator = (string, separators) => {
   let inferredSeparator = "";
   let options = [];
 
@@ -19,22 +19,22 @@ const { config } = require('../config')
       if (separator.length > 1) {
         return {
           success: false,
-          message: "Separators may only include one character each."
-        }
+          message: "Separators may only include one character each.",
+        };
       }
 
       if (!reg.test(separator)) {
         return {
           success: false,
-          message: "Separators may only include special characters."
-        }
+          message: "Separators may only include special characters.",
+        };
       }
     }
 
     // Check items length
     if (separators.length === 1) {
       inferredSeparator = separators[0];
-    }else{
+    } else {
       options = [...separators];
     }
   }
@@ -92,16 +92,15 @@ const { config } = require('../config')
   return {
     success: true,
     message: "Tags array created successfully",
-    data: tags
-  } 
+    data: tags,
+  };
 };
 
-
 const magnitudeUnits = {
-  1: 'K',
-  2: 'M',
-  3: 'G',
-}
+  1: "K",
+  2: "M",
+  3: "G",
+};
 
 const isValidStringedNumber = (numToFormat) => {
   if (typeof numToFormat != "string") return false;
@@ -124,11 +123,11 @@ const numFormatter = (numToFormat) => {
   //if the number have floating point count it.
   const hasFloatingPoint = numToFormat.includes(".") ? 1 : 0;
   let processedNumber = numToFormat,
-    unitSuffix
+    unitSuffix;
 
   //if the number got floating point fixed the number accordingly
-  if (numberHasPoint) processedNumber = String(Number(numToFormat).toFixed(decimalDigitLimit))
- 
+  if (numberHasPoint)
+    processedNumber = String(Number(numToFormat).toFixed(decimalDigitLimit));
 
   // if the number exceeds the limit handle it
   if (processedNumber.length - hasFloatingPoint > overallDigitLimit) {
@@ -138,13 +137,13 @@ const numFormatter = (numToFormat) => {
       hasFloatingPoint
     );
     //the processed number is the new number that has been handled + the letter represent the thousends sliced
-    processedNumber = overallHandlement.num
-    unitSuffix = overallHandlement.unitSuffix
+    processedNumber = overallHandlement.num;
+    unitSuffix = overallHandlement.unitSuffix;
   }
 
   //seperate the number by the floating point
 
-  const [left, right] = processedNumber.split('.')
+  const [left, right] = processedNumber.split(".");
 
   //returns the handled number seperated by commas, attach the right side if exist and append the letter representing the thousends sliced
 
@@ -164,34 +163,37 @@ const overallHandler = (num, limit, isFloatingPoint) => {
   // until it meets the limit or until reaching the floating point
   if (isFloatingPoint)
     while (num.length - isFloatingPoint > limit) {
-      num = num.substring(0, num.length - 1)
+      num = num.substring(0, num.length - 1);
 
       if (num.length - isFloatingPoint === limit) {
-        return { num }
+        return { num };
       }
 
-      if (num.charAt(num.length - 1) === '.') {
-        num = num.substring(0, num.length - 1)
-        break
+      if (num.charAt(num.length - 1) === ".") {
+        num = num.substring(0, num.length - 1);
+        break;
       }
     }
   //thousend sliced counter initialized with 0
   let thousandsSliced = 0,
-    remainder
+    remainder;
   //the number exceeds the limit start slicing away by thousend at each time, save the sliced digits aside and count the thousends sliced
   while (num.length > limit) {
-    remainder = num.substring(num.length - 3)
-    num = num.substring(0, num.length - 3)
+    remainder = num.substring(num.length - 3);
+    num = num.substring(0, num.length - 3);
 
-    thousandsSliced++
+    thousandsSliced++;
   }
   //return the number + floating point if needed + the chunk from the remainder the meets the limit
   //also return the letter that represent the number of thousends sliced
   return {
-    num: num + (limit - num.length ? '.' : '') + remainder.substring(0, limit - num.length),
+    num:
+      num +
+      (limit - num.length ? "." : "") +
+      remainder.substring(0, limit - num.length),
     unitSuffix: magnitudeUnits[thousandsSliced],
-  }
-}
+  };
+};
 
 /**
  * The function phoneNumberFormatter validates the phone number it receives and returns it in a certain format.
@@ -203,51 +205,71 @@ const overallHandler = (num, limit, isFloatingPoint) => {
 //     The default is true (international format).
  * @returns object
  */
-const phoneNumberFormatter = (number, format = config.phones.format, isInternational = config.phones.isInternational) => {
-  const regexFormat = /^([\+]?[\(]?[0-9]{1,3}[\)]?)([\s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/
-  const cleanNumber = number.replace(/[^0-9]/g, '')
-  const sum = arr.reduce((acc, item) => acc + item)
-  const arr = format.split('-').map((str) => +str)
+const phoneNumberFormatter = (
+  number,
+  format = config.phones.format,
+  isInternational = config.phones.isInternational
+) => {
+  const regexFormat =
+    /^([\+]?[\(]?[0-9]{1,3}[\)]?)([\s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/;
+  // format the phone number to numbers only
+  const cleanNumber = number.replace(/[^0-9]/g, "");
+  const arr = format.split("-").map((str) => +str);
+  const sum = arr.reduce((acc, item) => acc + item);
 
+  //tests if the phone number input doesn't contain letters and also accepts hyphens, whitespace and parenthesis in specific locations.
   if (!regexFormat.test(number)) {
     return {
       success: false,
-      message: 'Phone number input is invalid',
-    }
+      message: "Phone number input is invalid",
+    };
   }
-
+  //tests if the phone number after removing char is equal to format sum.
   if (sum !== cleanNumber.length) {
-    return 'Format does not match no. of digits in phone no.'
+    return {
+      success: false,
+      message: "Format does not match no. of digits in phone number",
+    };
   }
-
+  // tests for phone number length by global standards
   if (cleanNumber.length >= 7 && cleanNumber.length <= 15) {
-    let formattedNumber = ''
-    let count = 0
-
+    let formattedNumber = "";
+    let count = 0;
+    // add to the clean number hyphens by the format param
     for (let i = 0; i < arr.length; i++) {
       if (i === 0) {
-        formattedNumber = cleanNumber.slice(0, arr[i])
-        count += +arr[i]
+        formattedNumber = cleanNumber.slice(0, arr[i]);
+        count += +arr[i];
       } else {
-        formattedNumber = formattedNumber.concat('-' + cleanNumber.slice(count, count + arr[i]))
-        count += +arr[i]
+        formattedNumber = formattedNumber.concat(
+          "-" + cleanNumber.slice(count, count + arr[i])
+        );
+        count += +arr[i];
       }
     }
-
+    // tests for prefix off/on and then return formatted phone number
     if (!isInternational) {
-      return formattedNumber.slice(arr[0] + 1)
+      return {
+        success: true,
+        message: "Phone number successfully formatted",
+        data: formattedNumber.slice(arr[0] + 1),
+      };
     }
-
     return {
       success: true,
-      message: 'Phone number successfully formatted',
+      message: "Phone number successfully formatted",
       data: formattedNumber,
-    }
+    };
+  } else {
+    return {
+      success: false,
+      message: "Phone number length can contain only 7-15 digits",
+    };
   }
-}
+};
 
 module.exports = {
   numFormatter,
   tagsSeparator,
   phoneNumberFormatter,
-}
+};
