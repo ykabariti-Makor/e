@@ -24,7 +24,7 @@ Configuration is optional, you can use most of the functions as they are, every 
 But if you would like to modifiy the values you can use `setConfig` function.
 
 ```javascript
-const { setConfig } = require('enigma-x-utilities')
+const { setConfig } = require('enigma-x-utilities');
 
 /**
  * setConfig for configuration
@@ -35,7 +35,7 @@ const { setConfig } = require('enigma-x-utilities')
 setConfig('phones', {
   format: '10',
   isInternational: true,
-})
+});
 ```
 
 ## Usage
@@ -43,13 +43,13 @@ setConfig('phones', {
 # URL Validator
 
 ```javascript
-const { URLValidator, setConfig } = require('enigma-x-utilities')
+const { URLValidator, setConfig } = require('enigma-x-utilities');
 
 // Config Default values
 setConfig('URLValidator', {
   domainName: false,
   pathIncluded: true,
-})
+});
 ```
 
 ### Success
@@ -75,12 +75,14 @@ URLValidator('blablablablo')
 // Output
 { success: false, message: 'URL is invalid' }
 ```
-#### Password Validation
+
+# Password Validation
 
 Feature for password validation ,check if password is valid based on configuration, and the strength of it.
 Return object after validation is succeed.
 
 #### configuration
+
 ```javascript
 const { setConfig } = require('./config');
 const { passwordValidation } = require('./utils/auth');
@@ -114,7 +116,9 @@ setConfig('password', {
   symbol: '#?!@$%^&*-',
 });
 ```
-#### Success  
+
+#### Success
+
 ```javascript
 //Validating the password.
 passwordValidation("112412$@Aa")
@@ -136,7 +140,9 @@ passwordValidation("112412$@Aa")
   strength:"Weak"
 }
 ```
+
 #### Error
+
 ```javascript
 //Error will happend if one of the value's of the default value is incorrect.
 {
