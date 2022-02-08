@@ -15,7 +15,7 @@
 ## Install
 
 ```shell
-npm i enigma-x-utilities
+npm i enigma-x-validator
 ```
 
 ## Configuration
@@ -40,11 +40,8 @@ setConfig('phones', {
 
 ## Usage
 
-### URL Validator
-Feature for URL, checks validity & format (optional). 
-Returns URL after validating & formmating (optional).
- 
-#### configuration 
+# URL Validator
+
 ```javascript
 const { URLValidator, setConfig } = require('enigma-x-utilities')
 
@@ -55,7 +52,7 @@ setConfig('URLValidator', {
 })
 ```
 
-#### Success
+### Success
 
 ```javascript
 // Validating & formatting URL
@@ -69,18 +66,14 @@ URLValidator('https://www.youtube.com/watch?v=OLK49ZTbmWM&list=PLtK75qxsQaMLZSo7
 }
 ```
 
-#### Error
+### Error
 
 ```javascript
 // Validating & formatting URL
 URLValidator('blablablablo')
 
 // Output
-{ 
-  success: false,
-  message: 'URL is invalid'
-}
-
+{ success: false, message: 'URL is invalid' }
 ```
 #### Password Validation
 
