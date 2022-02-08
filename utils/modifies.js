@@ -167,32 +167,32 @@ const numFormatter = (numToFormat) => {
     }
 
     // handle the overall digit
-    const overallHandler = (num, limit, isFloatingPoint) => {
-      //if the number contains floating point and the number is over the limit start to slice away the numbers
-      // until it meets the limit or until reaching the floating point
-      if (isFloatingPoint)
-        while (num.length - isFloatingPoint > limit) {
-          num = num.substring(0, num.length - 1)
+    // const overallHandler = (num, limit, isFloatingPoint) => {
+    //   //if the number contains floating point and the number is over the limit start to slice away the numbers
+    //   // until it meets the limit or until reaching the floating point
+    //   if (isFloatingPoint)
+    //     while (num.length - isFloatingPoint > limit) {
+    //       num = num.substring(0, num.length - 1)
 
-          if (num.length - isFloatingPoint === limit) {
-            return { num }
-          }
+    //       if (num.length - isFloatingPoint === limit) {
+    //         return { num }
+    //       }
 
-          if (num.charAt(num.length - 1) === '.') {
-            num = num.substring(0, num.length - 1)
-            break
-          }
-        }
-      //thousend sliced counter initialized with 0
-      let thousandsSliced = 0,
-        remainder
-      //the number exceeds the limit start slicing away by thousend at each time, save the sliced digits aside and count the thousends sliced
-      //!adding commas
+    //       if (num.charAt(num.length - 1) === '.') {
+    //         num = num.substring(0, num.length - 1)
+    //         break
+    //       }
+    //     }
+    //   //thousend sliced counter initialized with 0
+    //   let thousandsSliced = 0,
+    //     remainder
+    //   //the number exceeds the limit start slicing away by thousend at each time, save the sliced digits aside and count the thousends sliced
+    //   //!adding commas
 
-      const [left, right] = processedNumber.split('.')
+    //   const [left, right] = processedNumber.split('.')
 
-      return left.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (right ? '.' + right : '') + (unitSuffix ?? '')
-    }
+    //   return left.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (right ? '.' + right : '') + (unitSuffix ?? '')
+    // }
 
     //////////////////! DECIMAL LIMITER
     const decimalHandler = (numToFormat, decimalDigitLimit) => {
