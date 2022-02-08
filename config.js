@@ -42,7 +42,7 @@ const config = {
     isInternational: true,
   },
   tags: {
-    specialChars: ['.', '*', '?', '$', '^', '(', ')'],
+    specialChars: ['.', '*', '?', '$', '^', '(', ')', '|'],
   },
   numsFormater: {
     overallDigitLimit: 100,
