@@ -213,3 +213,39 @@ passwordValidation("112412$@Aa")
   strength: { success: false, message: [ 'value must be type of string' ] }
 }
 ```
+
+
+# Phone number validator
+
+```javascript
+const { phoneNumberFormatter, setConfig } = require('enigma-x-utilities');
+
+// Config Default values
+setConfig('phones', {
+  format: "3-3-3-4" ,
+  isInternational: true 
+});
+```
+
+### Success
+
+```javascript
+// Validating & formatting phone number
+phoneNumberFormatter('255-777-4708834')
+
+// Output
+{
+  success: true,
+  message: 'Phone number successfully formatted',
+  data: '255-777-470-8834'
+}
+```
+
+### Error
+
+```javascript
+// Validating & formatting phone number
+phoneNumberFormatter('255-777-470')
+
+// Output
+{ success: false, message: 'Format does not match the number of digits in phone number' }
