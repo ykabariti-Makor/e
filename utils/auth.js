@@ -3,8 +3,8 @@ const { config } = require('../config')
 /**
  * URL validator for url validation & formatting
  * @param url string url
- * @param domainOnly boolean indicator for url domain format, false by default
- * @param pathIncluded boolean indicator for url path format, true by default
+//  * @param domainOnly boolean indicator for url domain format, false by default
+//  * @param pathIncluded boolean indicator for url path format, true by default
  * @returns string
  */
 const URLValidator = (url) => {
