@@ -6,7 +6,11 @@ const { config } = require("../config");
  * @param {separators} array indicator for format options, contains all special chars by default
  * @returns array
  */
+<<<<<<< HEAD
 const tagsSeparator = (string, separators) => {
+=======
+ const tagsSeparator = (string, separators) => {
+>>>>>>> f7cadcb490377f5e0b6bf85a20aae972156b10b2
   let inferredSeparator = "";
   let options = [];
 
@@ -19,26 +23,41 @@ const tagsSeparator = (string, separators) => {
       if (separator.length > 1) {
         return {
           success: false,
+<<<<<<< HEAD
           message: "Separators may only include one character each.",
         };
+=======
+          message: "Separators may only include one character each."
+        }
+>>>>>>> f7cadcb490377f5e0b6bf85a20aae972156b10b2
       }
 
       if (!reg.test(separator)) {
         return {
           success: false,
+<<<<<<< HEAD
           message: "Separators may only include special characters.",
         };
+=======
+          message: "Separators may only include special characters."
+        }
+>>>>>>> f7cadcb490377f5e0b6bf85a20aae972156b10b2
       }
     }
 
     // Check items length
     if (separators.length === 1) {
       inferredSeparator = separators[0];
+<<<<<<< HEAD
     } else {
+=======
+    }else{
+>>>>>>> f7cadcb490377f5e0b6bf85a20aae972156b10b2
       options = [...separators];
     }
   }
 
+<<<<<<< HEAD
   if (!separators || separators.length > 1) {
     // No separator supllied
     const regSeparatorCandidates = /\W/g;
@@ -46,6 +65,14 @@ const tagsSeparator = (string, separators) => {
     // Capturing special characers- these are the candidates for the separator (with dupicate
     let specialChars = [...string.matchAll(regSeparatorCandidates)].map(
       (item) => item[0],
+=======
+  if (!separators || separators.length > 1 || separators.length === 0) {
+    const regSeparatorCandidates = /\W/g;
+
+    // Capturing special characers- these are the candidates for the separator (with dupicates). This will be used if no seperators are being passed or if an empty separators array is being passed
+    let specialChars = [...string.matchAll(regSeparatorCandidates)].map(
+      (item) => item[0]
+>>>>>>> f7cadcb490377f5e0b6bf85a20aae972156b10b2
     );
 
     if (separators?.length > 1) {
@@ -88,15 +115,25 @@ const tagsSeparator = (string, separators) => {
   } else {
     inferredReg = new RegExp(inferredSeparator);
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> f7cadcb490377f5e0b6bf85a20aae972156b10b2
   const tags = string.split(inferredReg);
 
   return {
     success: true,
     message: "Tags array created successfully",
+<<<<<<< HEAD
     data: tags,
   };
 };
+=======
+    data: tags
+  } 
+};
+
+>>>>>>> f7cadcb490377f5e0b6bf85a20aae972156b10b2
 
 const magnitudeUnits = {
   1: "K",
