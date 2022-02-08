@@ -73,7 +73,7 @@ const setConfig = (configName, parameters) => {
       break
     case 'phones':
       if (parameters.format !== undefined) config.phones.format = parameters.format
-      if (parameters.isInternational !== undefined) config.format.isInternational = parameters.isInternational
+      if (parameters.isInternational !== undefined) config.phones.isInternational = parameters.isInternational
       break
     case 'tags':
       config.tags.specialChars = parameters.specialChars
