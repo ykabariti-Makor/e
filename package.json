@@ -11,10 +11,10 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ykabariti-Makor/e.git"
+    "url": "git+https://github.com/ykabariti-Makor/enigma-x-utilities.git"
   },
   "bugs": {
-    "url": "https://github.com/ykabariti-Makor/e/issues"
+    "url": "https://github.com/ykabariti-Makor/enigma-x-utilities/issues"
   },
-  "homepage": "https://github.com/ykabariti-Makor/e#readme"
+  "homepage": "https://github.com/ykabariti-Makor/enigma-x-utilities#readme"
 }

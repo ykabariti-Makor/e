@@ -74,22 +74,4 @@ URLValidator('blablablablo')
 
 // Output
 { success: false, message: 'URL is invalid' }
-
-// the imported value "tag" is populated with YOUR tags!
-log.error(tag.security, 'not authorized', statusCode)
-
-// but if you prefer simply use strings
-log.warn('transporter', 'Evil twin detected!')
-
-// filtered since security's log level ERROR is greater than INFO
-log.info(tag.security, 'login successful')
-
-// also filtered since system's level is OFF
-log.error(tag.system, 'eject the warp core', error)
-
-// updates tag levels on the fly
-log.init({ loader: 'ERROR', system: 'INFO' })
-
-// disable logging by clearing the callback
-log.init()
 ```
