@@ -11,7 +11,7 @@ const config = {
 
       {
         id: 1,
-        value: 'Stron',
+        value: 'Strong',
         minDiversity: 2,
         minLength: 10,
       },
