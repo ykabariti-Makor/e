@@ -216,6 +216,7 @@ passwordValidation("112412$@Aa")
 
 
 # Phone number validator
+Feature for international phone number validation ,check if the phone number is valid based on the input, And reformat the phone number by user configuration.
 
 ```javascript
 const { phoneNumberFormatter, setConfig } = require('enigma-x-utilities');
