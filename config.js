@@ -3,18 +3,21 @@ const config = {
   password: {
     strengthOptions: [
       {
+        id: 0,
         value: 'Weak',
         minDiversity: 1,
         minLength: 8,
       },
 
       {
+        id: 1,
         value: 'Stron',
         minDiversity: 2,
         minLength: 10,
       },
 
       {
+        id: 2,
         value: 'Very Strong',
         minDiversity: 4,
         minLength: 12,
