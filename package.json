@@ -1,6 +1,6 @@
 {
   "name": "enigma-x-utilities",
-  "version": "1.0.72",
+  "version": "1.0.73",
   "description": "EnigmaX NPM utilities package",
   "main": "main.js",
   "scripts": {
@@ -17,8 +17,7 @@
     "url": "https://github.com/ykabariti-Makor/enigma-x-utilities/issues"
   },
   "homepage": "https://github.com/ykabariti-Makor/enigma-x-utilities#readme",
- 
-  "devDependencies": { 
+  "devDependencies": {
     "jest": "^27.5.1"
   }
 }
