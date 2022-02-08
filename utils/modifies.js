@@ -6,7 +6,7 @@ const { config } = require("../config");
  * @param {separators} array indicator for format options, contains all special chars by default
  * @returns array
  */
-const tagsSeparator = (string, separators) => {
+const tagsSeparator = (string) => {
 
   const separators = config.tags.separators
   let inferredSeparator = ''
