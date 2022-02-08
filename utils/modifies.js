@@ -4,7 +4,7 @@ const { config } = require('../config')
  * Tags separator for tags string
  * @param string string tags
  * @param separators array indicator for format options, contains all special chars by default
- * @returns string
+ * @returns array
  */
 const tagsSeparator = (string, separators) => {
   let inferredSeparator = ''
@@ -14,16 +14,16 @@ const tagsSeparator = (string, separators) => {
     const reg = /\W/
 
     //separators.forEach((separator) => {
-      // Check separators validity
-     for(const separator of separators){
-          if(separator.length > 1){
-              //"Error: Separators may only include one character each."
-            return undefined;
-          }
+    // Check separators validity
+    for (const separator of separators) {
+      if (separator.length > 1) {
+        //"Error: Separators may only include one character each."
+        return undefined
+      }
 
-      if(!reg.test(separator)) {
-             //"Error: Separators may only include special characters.";
-            return undefined;
+      if (!reg.test(separator)) {
+        //"Error: Separators may only include special characters.";
+        return undefined
       }
     }
 
@@ -45,13 +45,13 @@ const tagsSeparator = (string, separators) => {
     if (separators?.length > 1) {
       // If user supplied legit array of separtor options (more than 1) - the candidates for selected separator will only include user options
       specialChars = specialChars.filter((char) => options.includes(char))
-       if(specialChars.length === 0){
-          // If the separators passed by user do not exist in the passed string, push the first user separator anyway to specialChars
-          //This way, the string will not be splitted later - as should happen.
-           specialChars.push(options[0]);
-       }
+      if (specialChars.length === 0) {
+        // If the separators passed by user do not exist in the passed string, push the first user separator anyway to specialChars
+        //This way, the string will not be splitted later - as should happen.
+        specialChars.push(options[0])
+      }
     }
-   
+
     // Counting frequncy for each candidate
     const count = specialChars.reduce((accumulator, current) => {
       accumulator[current] = accumulator[current] ? (accumulator[current] += 1) : (accumulator[current] = 1)
@@ -69,7 +69,7 @@ const tagsSeparator = (string, separators) => {
   }
 
   // Moving from the separator as a string to a regex that represents it correctly
-  const specialChars = config.tags.specialChars;
+  const specialChars = config.tags.specialChars
   let inferredReg
 
   if (inferredSeparator === ' ') {
@@ -92,6 +92,11 @@ const magnitudeUnits = {
   3: 'G',
 }
 
+/**
+ * Number formatter for numbers
+ * @param numToFormat string
+ * @returns string
+ */
 const numFormatter = (numToFormat) => {
   const { overallDigitLimit, decimalDigitLimit } = config.numsFormater
   const isFloatingPoint = String(numToFormat).includes('.') ? 1 : 0
