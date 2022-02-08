@@ -1,8 +1,11 @@
 const { config } = require('../config')
 
 /**
- * Get URL, and 2 optional parameters
- * @returns Modified URL
+ * URL validator for url validation & formatting
+ * @param url string url
+ * @param domainOnly boolean indicator for url domain format, false by default
+ * @param pathIncluded boolean indicator for url path format, true by default
+ * @returns string
  */
 const URLValidator = (url, domainOnly = config.URL.domainOnly, pathIncluded = config.URL.pathIncluded) => {
   const isValid = isURLValid(url)
@@ -39,6 +42,11 @@ const isURLValid = (url) => {
   return !!pattern.test(url)
 }
 
+/**
+ * Password validator for password validation
+ * @param password the password
+ * @returns object
+ */
 const passwordValidation = (password) => {
   let validation = [
     config.password.characterLen !== undefined && config.password.characterLen !== 0
@@ -79,7 +87,7 @@ const passwordValidation = (password) => {
   ]
 
   validation = validation.filter((validator) => validator !== null && validator !== undefined)
-  let actualValidation = validation.map((validator) => {
+  const actualValidation = validation.map((validator) => {
     return { ...validator, valid: Boolean(validator.re.test(password)) }
   })
   validation = actualValidation
