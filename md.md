@@ -40,8 +40,13 @@ setConfig('phones', {
 
 ## Usage
 
+# URL Validator
+
 ```javascript
-const enigma = require('enigma-x-utilities')
+const { URLValidator } = require('enigma-x-utilities')
+
+// Validating & formatting URL
+URLValidator('https://github.com/daniel-bar')
 
 // the imported value "tag" is populated with YOUR tags!
 log.error(tag.security, 'not authorized', statusCode)
