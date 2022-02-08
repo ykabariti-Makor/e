@@ -40,10 +40,9 @@ const { config } = require('../config')
   }
 
   if (!separators || separators.length > 1 || separators.length === 0) {
-    // No separator supplied
     const regSeparatorCandidates = /\W/g;
 
-    // Capturing special characers- these are the candidates for the separator (with dupicate
+    // Capturing special characers- these are the candidates for the separator (with dupicates). This will be used if no seperators are being passed or if an empty separators array is being passed
     let specialChars = [...string.matchAll(regSeparatorCandidates)].map(
       (item) => item[0]
     );
