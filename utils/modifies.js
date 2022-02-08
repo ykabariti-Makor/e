@@ -225,7 +225,7 @@ const phoneNumberFormatter = (number) => {
       message: "Format does not match no. of digits in phone number",
     };
   }
-  // tests for phone number length by global standards
+  // tests the phone number length by global standards
   if (cleanNumber.length >= 7 && cleanNumber.length <= 15) {
     let formattedNumber = "";
     let count = 0;
