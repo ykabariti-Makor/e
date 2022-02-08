@@ -19,7 +19,15 @@ const URLValidator = (url) => {
     }
   }
 
-  const urlObject = new URL(url)
+  let urlObject
+  try {
+    urlObject = new URL(url)
+  } catch (error) {
+    return {
+      success: false,
+      message: 'URL is invalid',
+    }
+  }
 
   if (domainOnly && pathIncluded) {
     // URL domain & path
@@ -70,95 +78,150 @@ const isURLValid = (url) => {
  * @param password the password
  * @returns object
  */
+
 const passwordValidation = (password) => {
-  let validation = [
-    config.password.characterLen !== undefined && config.password.characterLen !== 0
-      ? {
-          title: 'Char',
-          valid: false,
-          re: new RegExp('^.{' + config.password.characterLen + ',}$'),
-        }
-      : null,
-    config.password.upperCase !== undefined && config.password.upperCase !== 0
-      ? {
-          title: 'UpperCase',
-          valid: false,
-          re: new RegExp('^(.*?[A-Z]){' + config.password.upperCase + ',}'),
-        }
-      : null,
-    config.password.lowerCase != undefined && config.password.lowerCase != 0
-      ? {
-          title: 'LowerCase',
-          valid: false,
-          re: new RegExp('^(.*?[a-z]){' + config.password.lowerCase + ',}'),
-        }
-      : null,
-    config.password.num != undefined && config.password.num != 0
-      ? {
-          title: 'Number',
-          valid: false,
-          re: new RegExp('^(.*?[0-9]){' + config.password.num + ',}'),
-        }
-      : null,
-    config.password.symbol !== undefined && config.password.symbol !== ''
-      ? {
-          title: 'NonAlphaNumeric',
-          valid: false,
-          re: new RegExp('^(.*?[' + config.password.symbol + ',])'),
-        }
-      : null,
-  ]
-
-  validation = validation.filter((validator) => validator !== null && validator !== undefined)
-  const actualValidation = validation.map((validator) => {
-    return { ...validator, valid: Boolean(validator.re.test(password)) }
-  })
-  validation = actualValidation
-  return { validation, strength: passwordStrength(password, config.password.strengthOptions, config.password.symbol) }
-}
-
-const passwordStrength = (password, options, allowedSymbols) => {
-  let passwordCopy = password || ''
-
-  ;(options[0].minDiversity = 0), (options[0].minLength = 0)
-
-  const rules = [
-    {
-      regex: '[a-z]',
-      message: 'lowercase',
-    },
-    {
-      regex: '[A-Z]',
-      message: 'uppercase',
-    },
-    {
-      regex: '[0-9]',
-      message: 'number',
-    },
-  ]
-
-  if (allowedSymbols) {
-    rules.push({
-      regex: `[${escapeRegExp(allowedSymbols)}]`,
-      message: 'symbol',
-    })
+  let isValid = {
+    success: true,
+    message: [],
   }
 
-  let strength = {}
+  let objTypeof = {
+    characterLen: 'number',
+    upperCase: 'number',
+    lowerCase: 'number',
+    num: 'number',
+    symbol: 'string',
+  }
 
-  strength.contains = rules.filter((rule) => new RegExp(`${rule.regex}`).test(passwordCopy)).map((rule) => rule.message)
+  Object.entries(config.password).map(([key, value]) => {
+    if (key !== 'strengthOptions' && value) {
+      if (typeof value !== objTypeof[key]) {
+        if (key === 'symbol' && value !== 0) {
+          isValid.success = false
+          isValid.message.push(`${key} must be type of ${objTypeof[key]}`)
+        }
+      }
+    }
+  })
 
-  strength.length = passwordCopy.length
+  if (isValid.success) {
+    let validation = [
+      config.password.characterLen !== undefined && config.password.characterLen !== 0
+        ? {
+            title: 'CharacterLen',
+            valid: false,
+            re: new RegExp('^.{' + config.password.characterLen + ',}$'),
+          }
+        : null,
+      config.password.upperCase !== undefined && config.password.upperCase !== 0
+        ? {
+            title: 'UpperCase',
+            valid: false,
+            re: new RegExp('^(.*?[A-Z]){' + config.password.upperCase + ',}'),
+          }
+        : null,
+      config.password.lowerCase != undefined && config.password.lowerCase != 0
+        ? {
+            title: 'LowerCase',
+            valid: false,
+            re: new RegExp('^(.*?[a-z]){' + config.password.lowerCase + ',}'),
+          }
+        : null,
+      config.password.num != undefined && config.password.num != 0
+        ? {
+            title: 'Number',
+            valid: false,
+            re: new RegExp('^(.*?[0-9]){' + config.password.num + ',}'),
+          }
+        : null,
+      config.password.symbol !== undefined && config.password.symbol !== '' && config.password.symbol !== 0
+        ? {
+            title: 'NonAlphaNumeric',
+            valid: false,
+            re: new RegExp('^(.*?[' + config.password.symbol + ',])'),
+          }
+        : null,
+    ]
 
-  let fulfilledOptions = options
-    .filter((option) => strength.contains.length >= option.minDiversity)
-    .filter((option) => strength.length >= option.minLength)
-    .sort((o1, o2) => o2.id - o1.id)
-    .map((option) => ({ id: option.id, value: option.value }))
+    validation = validation.filter((validator) => validator !== null && validator !== undefined)
+    let actualValidation = validation.map((validator) => {
+      return { ...validator, valid: Boolean(validator.re.test(password)) }
+    })
+    validation = actualValidation
+    return { validation, strength: passwordStrength(password) }
+  } else {
+    return isValid
+  }
+}
 
-  Object.assign(strength, fulfilledOptions[0])
+const passwordStrength = (password, options = config.password.strengthOptions, allowedSymbols = config.password.symbol) => {
+  console.log(options)
+  let passwordCopy = password || ''
 
-  return strength.value
+  let isValid = {
+    success: true,
+    message: [],
+  }
+
+  let objTypeof = {
+    value: 'string',
+    minDiversity: 'number',
+    minLength: 'number',
+  }
+
+  options.map((opt) => {
+    Object.entries(opt).map(([key, value]) => {
+      if (key !== 'id') {
+        if (typeof value !== objTypeof[key]) {
+          isValid.success = false
+          isValid.message.push(`${key} must be type of ${objTypeof[key]}`)
+        }
+      }
+    })
+  })
+
+  if (isValid.success) {
+    ;(options[0].minDiversity = 0), (options[0].minLength = 0)
+
+    const rules = [
+      {
+        regex: '[a-z]',
+        message: 'lowercase',
+      },
+      {
+        regex: '[A-Z]',
+        message: 'uppercase',
+      },
+      {
+        regex: '[0-9]',
+        message: 'number',
+      },
+    ]
+
+    if (allowedSymbols) {
+      rules.push({
+        regex: `[${escapeRegExp(allowedSymbols)}]`,
+        message: 'symbol',
+      })
+    }
+
+    let strength = {}
+
+    strength.contains = rules.filter((rule) => new RegExp(`${rule.regex}`).test(passwordCopy)).map((rule) => rule.message)
+
+    strength.length = passwordCopy.length
+
+    let fulfilledOptions = options
+      .filter((option) => strength.contains.length >= option.minDiversity)
+      .filter((option) => strength.length >= option.minLength)
+      .sort((o1, o2) => o2.id - o1.id)
+      .map((option) => ({ id: option.id, value: option.value }))
+
+    Object.assign(strength, fulfilledOptions[0])
+    return strength.value
+  } else {
+    return isValid
+  }
 }
 
 const escapeRegExp = (string) => string.replace(/[-.*+?^${}()|[\]\\]/g, '\\$&')
