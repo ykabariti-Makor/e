@@ -40,7 +40,7 @@ const config = {
     isInternational: true,
   },
   tags: {
-    specialChars: ['.', '*', '?', '$', '^', '(', ')', '|'],
+    separators: undefined,
   },
   numsFormater: {
     overallDigitLimit: 100,

@@ -7,6 +7,8 @@ const { config } = require('../config')
  * @returns array
  */
 const tagsSeparator = (string, separators) => {
+
+  const separators = config.tags.separators
   let inferredSeparator = ''
   let options = []
 
@@ -72,7 +74,7 @@ const tagsSeparator = (string, separators) => {
   }
 
   // Moving from the separator as a string to a regex that represents it correctly
-  const specialChars = config.tags.specialChars
+  const specialChars = ['.', '*', '?', '$', '^', '(', ')', '|']
   let inferredReg
 
   if (inferredSeparator === ' ') {
