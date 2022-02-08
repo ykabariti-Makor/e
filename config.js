@@ -36,13 +36,13 @@ const config = {
     isInternational: true,
   },
   tags: {
-    specialChars: ['.', '*', '?', '$', '^', '(', ')', '|'],
+    separators: undefined,
   },
   numsFormater: {
     overallDigitLimit: 100,
     decimalDigitLimit: 100,
   },
-};
+}
 
 // PROGRAMERS NOTICE: intital your own configuration according to your functions in the code above
 const setConfig = (configName, parameters) => {
@@ -64,25 +64,25 @@ const setConfig = (configName, parameters) => {
               id: index,
               minLength: parameters.characterLen + (index === 0 ? 0 : (index *= 2)),
             })),
-      };
-      break;
+      }
+      break
 
     case 'formatter':
-      if (parameters.overallDigitLimit !== undefined) config.numsFormater.overallDigitLimit = parameters.overallDigitLimit;
-      if (parameters.decimalDigitLimit !== undefined) config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit;
-      break;
+      if (parameters.overallDigitLimit !== undefined) config.numsFormater.overallDigitLimit = parameters.overallDigitLimit
+      if (parameters.decimalDigitLimit !== undefined) config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit
+      break
     case 'URLValidator' || 'urlValidator':
-      if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly;
-      if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded;
-      break;
+      if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly
+      if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded
+      break
     case 'phones':
-      if (parameters.format !== undefined) config.phones.format = parameters.format;
-      if (parameters.isInternational !== undefined) config.phones.isInternational = parameters.isInternational;
-      break;
+      if (parameters.format !== undefined) config.phones.format = parameters.format
+      if (parameters.isInternational !== undefined) config.phones.isInternational = parameters.isInternational
+      break
     case 'tags':
-      config.tags.specialChars = parameters.specialChars;
-      break;
+      config.tags.separators = parameters.separators
+      break
   }
-};
+}
 
-module.exports = { config, setConfig };
+module.exports = { config, setConfig }
