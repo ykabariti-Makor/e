@@ -1,5 +1,11 @@
 const { config } = require("../config");
 
+/**
+ * Tags separator for tags string
+ * @param string string tags
+ * @param separators array indicator for format options, contains all special chars by default
+ * @returns array
+ */
 const tagsSeparator = (string, separators) => {
   let inferredSeparator = "";
   let options = [];
@@ -7,12 +13,19 @@ const tagsSeparator = (string, separators) => {
   if (separators?.length) {
     const reg = /\W/;
 
-    separators.forEach((separator) => {
-      // Check separators validity
-      if (!reg.test(separator)) {
-        return "Separators may only include special characters";
+    //separators.forEach((separator) => {
+    // Check separators validity
+    for (const separator of separators) {
+      if (separator.length > 1) {
+        //"Error: Separators may only include one character each."
+        return undefined;
       }
-    });
+
+      if (!reg.test(separator)) {
+        //"Error: Separators may only include special characters.";
+        return undefined;
+      }
+    }
 
     // Check items length
     if (separators.length === 1) {
@@ -34,6 +47,11 @@ const tagsSeparator = (string, separators) => {
     if (separators?.length > 1) {
       // If user supplied legit array of separtor options (more than 1) - the candidates for selected separator will only include user options
       specialChars = specialChars.filter((char) => options.includes(char));
+      if (specialChars.length === 0) {
+        // If the separators passed by user do not exist in the passed string, push the first user separator anyway to specialChars
+        //This way, the string will not be splitted later - as should happen.
+        specialChars.push(options[0]);
+      }
     }
 
     // Counting frequncy for each candidate
@@ -50,9 +68,8 @@ const tagsSeparator = (string, separators) => {
       // If there are several candidates for separators - sort according to count
       countsArr.sort((a, b) => b[1] - a[1]);
     }
-
     // Saving either the only candidate or the candidate with highest count
-    inferredSeparator = countsArr[0][0];
+    inferredSeparator = countsArr[0]?.[0];
   }
 
   // Moving from the separator as a string to a regex that represents it correctly
@@ -79,6 +96,11 @@ const magnitudeUnits = {
   3: "G",
 };
 
+/**
+ * Number formatter for numbers
+ * @param numToFormat string
+ * @returns string
+ */
 const numFormatter = (numToFormat) => {
   const { overallDigitLimit, decimalDigitLimit } = config.numsFormater;
   //if the number have floating point count it.
@@ -166,7 +188,7 @@ const phoneNumberFormatter = (
   format = config.phones.format,
   isInternational = config.phones.isInternational
 ) => {
-  // const regexFormat = /^([\+]?[\(]?[0-9]{1,3}[\)]?[\s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/
+  // const regexFormat = /^([\+]?[\(]?[0-9]{1,3}[\)]?[\ s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/
 
   const arr = format.split("-").map((str) => +str);
   const sum = arr.reduce((acc, item) => acc + item);
@@ -179,7 +201,6 @@ const phoneNumberFormatter = (
   if (cleanNumber.length >= 7 && cleanNumber.length <= 15) {
     let formatedNumber = "";
     let count = 0;
-    // let a
 
     for (let i = 0; i < arr.length; i++) {
       if (i === 0) {

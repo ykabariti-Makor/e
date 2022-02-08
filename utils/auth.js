@@ -8,11 +8,16 @@ const { config } = require('../config')
  * @returns string
  */
 const URLValidator = (url, domainOnly = config.URL.domainOnly, pathIncluded = config.URL.pathIncluded) => {
-  const isValid = isURLValid(url)
-  const urlObject = new URL(url)
-
   // Check for URL validity
-  if (!isValid) return 'URL is invalid'
+  const isValid = isURLValid(url)
+  if (!isValid.success) {
+    return {
+      success: false,
+      message: 'URL is invalid',
+    }
+  }
+
+  const urlObject = new URL(url)
 
   if (domainOnly && pathIncluded) {
     // URL domain & path
@@ -25,7 +30,11 @@ const URLValidator = (url, domainOnly = config.URL.domainOnly, pathIncluded = co
     url = urlObject.origin
   }
 
-  return url
+  return {
+    success: true,
+    message: 'Successfully modified URL',
+    data: url,
+  }
 }
 
 const isURLValid = (url) => {
@@ -39,7 +48,19 @@ const isURLValid = (url) => {
       '(\\#[-a-z\\d_]*)?$',
     'i'
   ) // fragment locator
-  return !!pattern.test(url)
+
+  if (!pattern.test(url)) {
+    return {
+      success: false,
+      message: 'URL is invalid',
+    }
+  }
+
+  return {
+    success: true,
+    message: 'URL is valid',
+    data: pattern.test(url),
+  }
 }
 
 /**
