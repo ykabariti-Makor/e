@@ -37,7 +37,10 @@ const config = {
     domainOnly: false,
     pathIncluded: true,
   },
-  phones: {},
+  phones: {
+    format: '3-2-3-4',
+    isInternational: true,
+  },
   tags: {
     specialChars: ['.', '*', '?', '$', '^', '(', ')'],
   },
@@ -47,10 +50,8 @@ const config = {
   },
 }
 
+// PROGRAMERS NOTICE: intital your own configuration according to your functions in the code above
 const setConfig = (configName, parameters) => {
-  /**
-   * ! PROGRAMERS NOTICE: intital your own configuration according to your functions in the code above
-   */
   switch (configName) {
     case 'password':
       config.password = {
