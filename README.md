@@ -76,6 +76,58 @@ URLValidator('blablablablo')
 { success: false, message: 'URL is invalid' }
 ```
 
+# Tags Separator
+
+```javascript
+const { tagsSeparator } = require('enigma-x-utilities');
+```
+### Description
+The function receives a string and splits it into an array of separate tags.
+
+The first argument is the string to be splitted.
+
+The second argument, which is optional, is an array of separators(e.g. ["*", " ", "," ]).
+
+- If no array of separators is passed, the function will decide what should be treated as the separator by looking for all the *special 
+characters in the string and taking the most frequent one as the separator (if there are a couple of separators equally 
+frequent at the top - the one that shows up first in the string is selected).
+
+- If the array contains only one item, the function treats it as the separtor and splits the string into tags according to it.
+
+- If the array contains more than one item, the array is treated as optional allowed separators. 
+The actual separator will be the option that shows up most frequently in the passed string.
+
+- The array of separators may only contain *special characters; otherwise, an error is thrown.
+
+*Special characters: any character that is not a-z, A-Z,0-9, _
+
+### Success
+
+```javascript
+// Separating tags
+tagsSeparator('Sun Earth Mars', [" ", ","])
+
+// Output
+{
+  success: true,
+  message: 'Tags array created successfully',
+  data: ['Sun','Earth','Mars']
+}
+```
+
+### Error
+
+```javascript
+
+tagsSeparator('Sun Earth Mars', ["--"])
+
+// Output
+{
+  success: false,
+  message: 'Separators may only include one character each',
+}
+```
+
 # Password Validation
 
 Feature for password validation ,check if password is valid based on configuration, and the strength of it.
