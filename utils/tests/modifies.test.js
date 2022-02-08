@@ -52,3 +52,55 @@ test('phone number format invalid - error', async () => {
     message: 'Phone number input is invalid',
   })
 })
+
+
+//************************************************************/
+
+test("simple input - successes", async () => {
+  utils.setConfig("tags", {
+    separators: [","],
+  });
+  expect(utils.tagsSeparator("a,b,c,d,e,f")).toStrictEqual({
+    data: ["a", "b", "c", "d", "e", "f"],
+    message: "Tags array created successfully",
+    success: true,
+  });
+});
+
+test("input without separator , using most frequent char - successes", async () => {
+  utils.setConfig("tags", {
+    separators: [",","-"],
+  });
+  expect(utils.tagsSeparator("a,b,c-d,e,f,a-b-c-d-e-f")).toStrictEqual({
+    data: [ 'a,b,c', 'd,e,f,a', 'b', 'c', 'd', 'e', 'f' ],
+    message: "Tags array created successfully",
+    success: true,
+  });
+});
+test("input with multiple separator , using most frequent char - successes", async () => {
+
+  expect(utils.tagsSeparator("a,b,c,d,e,f")).toStrictEqual({
+    data: ["a", "b", "c", "d", "e", "f"],
+    message: "Tags array created successfully",
+    success: true,
+  });
+});
+
+test("double char seperator - error", async () => {
+  utils.setConfig("tags", {
+    separators: [",,"],
+  });
+  expect(utils.tagsSeparator("a,b,c,d,e,f")).toStrictEqual({
+    message: 'Separators may only include one character each.',
+    success: false,
+  });
+});
+test("seperator doesnt contains special char - error", async () => {
+  utils.setConfig("tags", {
+    separators: ["3"],
+  });
+  expect(utils.tagsSeparator("a3b3c3d3e3f")).toStrictEqual({
+    message: 'Separators may only include special characters.',
+    success: false,
+  });
+});
