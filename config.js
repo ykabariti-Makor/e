@@ -71,6 +71,10 @@ const setConfig = (configName, parameters) => {
       if (parameters.domainOnly !== undefined) config.URL.domainOnly = parameters.domainOnly
       if (parameters.pathIncluded !== undefined) config.URL.pathIncluded = parameters.pathIncluded
       break
+    case 'phones':
+      if (parameters.format !== undefined) config.phones.format = parameters.format
+      if (parameters.isInternational !== undefined) config.format.isInternational = parameters.isInternational
+      break
     case 'tags':
       config.tags.specialChars = parameters.specialChars
       break

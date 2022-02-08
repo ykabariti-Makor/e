@@ -1,5 +1,11 @@
 const { config } = require('../config')
 
+/**
+ * Tags separator for tags string
+ * @param string string tags
+ * @param separators array indicator for format options, contains all special chars by default
+ * @returns string
+ */
 const tagsSeparator = (string, separators) => {
   let inferredSeparator = ''
   let options = []
