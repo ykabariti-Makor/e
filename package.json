@@ -1,6 +1,10 @@
 {
   "name": "enigma-x-utilities",
+<<<<<<< HEAD
   "version": "1.0.52",
+=======
+  "version": "1.0.30",
+>>>>>>> password_validation
   "description": "EnigmaX NPM utilities package",
   "main": "main.js",
   "scripts": {
