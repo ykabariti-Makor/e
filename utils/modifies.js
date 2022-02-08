@@ -17,13 +17,17 @@ const tagsSeparator = (string, separators) => {
     // Check separators validity
     for (const separator of separators) {
       if (separator.length > 1) {
-        //"Error: Separators may only include one character each."
-        return undefined;
+        return {
+          success: false,
+          message: "Separators may only include one character each."
+        }
       }
 
       if (!reg.test(separator)) {
-        //"Error: Separators may only include special characters.";
-        return undefined;
+        return {
+          success: false,
+          message: "Separators may only include special characters."
+        }
       }
     }
 
@@ -87,7 +91,11 @@ const tagsSeparator = (string, separators) => {
 
   const tags = string.split(inferredReg);
 
-  return tags;
+  return {
+    success: true,
+    message: "Tags array created successfully",
+    data: tags
+  } 
 };
 
 const magnitudeUnits = {
