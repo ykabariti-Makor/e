@@ -40,6 +40,27 @@ const isURLValid = (url) => {
 };
 
 const passwordValidation = (password) => {
+  let isValid = true;
+
+  let objTypeof = {
+    characterLen: 'number',
+    upperCase: 'number',
+    lowerCase: 'number',
+    num: 'number',
+    symbol: 'string',
+  };
+
+  const checkUserParamsTypof = () => {
+    Object.entries(config.password).map(([key, value]) => {
+      if (key !== 'strengthOptions') {
+        if (typeof value !== objTypeof[key]) {
+          isValid = false;
+          console.log(`${key} must be type of ${objTypeof[key]}`);
+        }
+      }
+    });
+  };
+
   let validation = [
     config.password.characterLen !== undefined && config.password.characterLen !== 0
       ? {
@@ -83,6 +104,7 @@ const passwordValidation = (password) => {
     return { ...validator, valid: Boolean(validator.re.test(password)) };
   });
   validation = actualValidation;
+
   return { validation, strength: passwordStrength(password) };
 };
 

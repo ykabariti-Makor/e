@@ -25,7 +25,7 @@ setConfig('password', {
     },
   ],
 
-  characterLen: 8,
+  characterLen: "a",
   upperCase: 1,
   lowerCase: 1,
   num: 1,

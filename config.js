@@ -45,16 +45,21 @@ const setConfig = (configName, parameters) => {
   switch (configName) {
     case 'password':
       config.password = {
-        characterLen: parameters.charLen === null || parameters.charLen === undefined || parameters.charLen === 0 ? undefined : parameters.charLen,
+        characterLen: parameters.characterLen === null || parameters.characterLen === undefined || parameters.characterLen === 0 ? undefined : parameters.characterLen,
         upperCase: parameters.upperCase === null || parameters.upperCase === undefined || parameters.upperCase === 0 ? undefined : parameters.upperCase,
         lowerCase: parameters.lowerCase === null || parameters.lowerCase === undefined || parameters.lowerCase === 0 ? undefined : parameters.lowerCase,
         num: parameters.num === null || parameters.num === undefined || parameters.num === 0 ? undefined : parameters.num,
         symbol: parameters.symbol === null || parameters.symbol === undefined || parameters.symbol === '' ? undefined : parameters.symbol,
-        strengthOptions: parameters.strengthOptions.map((opt, index) => ({
-          ...opt,
-
-          id: index,
-        })),
+        strengthOptions: parameters.strengthOptions
+          ? parameters.strengthOptions.map((opt, index) => ({
+              ...opt,
+              id: index,
+            }))
+          : config.password.strengthOptions.map((opt, index) => ({
+              ...opt,
+              id: index,
+              minLength: parameters.characterLen + (index === 0 ? 0 : (index *= 2)),
+            })),
       };
       break;
 
