@@ -89,9 +89,15 @@ separators: undefined
 ### Description
 The function receives a string and splits it into an array of separate tags.
 
-The first argument is the string to be splitted.
+The argument is the string to be splitted.
 
-The second argument, which is optional, is an array of separators(e.g. ["*", " ", "," ]).
+Optionaly you can config the separators passing an array of chars to the config function
+
+```javascript
+setConfig('tags', {
+  separators: ['$','^','&']
+})
+```
 
 - If no array of separators is passed, the function will decide what should be treated as the separator by looking for all the *special 
 characters in the string and taking the most frequent one as the separator (if there are a couple of separators equally 
