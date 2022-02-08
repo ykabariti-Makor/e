@@ -52,6 +52,7 @@ const setConfig = (configName, parameters) => {
         symbol: parameters.symbol === null || parameters.symbol === undefined || parameters.symbol === '' ? undefined : parameters.symbol,
         strengthOptions: parameters.strengthOptions.map((opt, index) => ({
           ...opt,
+
           id: index,
         })),
       };
