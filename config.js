@@ -39,7 +39,7 @@ const config = {
   },
   phones: {},
   tags: {
-    specialChars: ['.', '*', '?', '$', '^', '(', ')'],
+    specialChars: ['.', '*', '?', '$', '^', '(', ')', '|'],
   },
   numsFormater: {
     overallDigitLimit: 100,
