@@ -155,7 +155,6 @@ const passwordValidation = (password) => {
 }
 
 const passwordStrength = (password, options = config.password.strengthOptions, allowedSymbols = config.password.symbol) => {
-  console.log(options)
   let passwordCopy = password || ''
 
   let isValid = {
