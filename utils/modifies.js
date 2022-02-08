@@ -1,8 +1,8 @@
 const { config } = require('../config')
 
 /**
- * Tags separator for tags string
- * @param {string} string tags
+ * Tags separator for tags
+ * @param {string} string tags list
  * @param {separators} array indicator for format options, contains all special chars by default
  * @returns array
  */
@@ -14,8 +14,6 @@ const tagsSeparator = (string) => {
   if (separators?.length) {
     const reg = /\W/
 
-    //separators.forEach((separator) => {
-    // Check separators validity
     for (const separator of separators) {
       if (separator.length > 1) {
         return {
@@ -41,10 +39,11 @@ const tagsSeparator = (string) => {
   }
 
   if (!separators || separators.length > 1 || separators.length === 0) {
-    const regSeparatorCandidates = /\W/g
-
     // Capturing special characers- these are the candidates for the separator (with dupicates). This will be used if no seperators are being passed or if an empty separators array is being passed
     let specialChars = [...string.matchAll(regSeparatorCandidates)].map((item) => item[0])
+
+    const regSeparatorCandidates = /\W/g
+    const countsArr = Object.entries(count)
 
     if (separators?.length > 1) {
       // If user supplied legit array of separtor options (more than 1) - the candidates for selected separator will only include user options
@@ -62,8 +61,6 @@ const tagsSeparator = (string) => {
       return accumulator
     }, {})
 
-    const countsArr = Object.entries(count)
-
     if (countsArr.length > 1) {
       // If there are several candidates for separators - sort according to count
       countsArr.sort((a, b) => b[1] - a[1])
@@ -74,8 +71,8 @@ const tagsSeparator = (string) => {
 
   // Moving from the separator as a string to a regex that represents it correctly
   const specialChars = ['.', '*', '?', '$', '^', '(', ')', '|']
-  let inferredReg
 
+  let inferredReg
   if (inferredSeparator === ' ') {
     inferredReg = /\s/
   } else if (specialChars.includes(inferredSeparator)) {
