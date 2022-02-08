@@ -108,7 +108,7 @@ const passwordValidation = (password) => {
     let validation = [
       config.password.characterLen !== undefined && config.password.characterLen !== 0
         ? {
-            title: 'Char',
+            title: 'CharacterLen',
             valid: false,
             re: new RegExp('^.{' + config.password.characterLen + ',}$'),
           }
