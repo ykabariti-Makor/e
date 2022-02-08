@@ -171,7 +171,7 @@ const overallHandler = (num, limit, isFloatingPoint) => {
 //     The default is true (international format).
 
 const phoneNumberFormatter = (number, format = config.phones.format, isInternational = config.phones.isInternational) => {
-  // const regexFormat = /^([\+]?[\(]?[0-9]{1,3}[\)]?[\s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/
+  // const regexFormat = /^([\+]?[\(]?[0-9]{1,3}[\)]?[\ s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/
 
   const arr = format.split('-').map((str) => +str)
   const sum = arr.reduce((acc, item) => acc + item)
@@ -184,7 +184,6 @@ const phoneNumberFormatter = (number, format = config.phones.format, isInternati
   if (cleanNumber.length >= 7 && cleanNumber.length <= 15) {
     let formatedNumber = ''
     let count = 0
-    // let a
 
     for (let i = 0; i < arr.length; i++) {
       if (i === 0) {
