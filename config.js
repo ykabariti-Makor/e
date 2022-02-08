@@ -11,7 +11,7 @@ const config = {
       },
 
       {
-        value: 'Strong',
+        value: 'Stron',
 
         minDiversity: 2,
 
