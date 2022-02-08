@@ -96,7 +96,6 @@ const tagsSeparator = (string, separators) => {
   };
 };
 
- 
 /**
  * Number formatter for numbers
  * @param {numToFormat} string
@@ -114,8 +113,7 @@ const magnitudeUnits = {
  * @returns string
  */
 const numFormatter = (numToFormat) => {
- 
-  if (isNaN(numToFormat))
+  if (typeof numToFormat !== "number")
     return {
       success: false,
       message: "Input is not a valid number",
