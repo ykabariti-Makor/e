@@ -1,29 +1,95 @@
-# tagSplitter
+# Enigma X Utilities [![NPM version][npm-image]][npm-url] [![Coverage Status](https://coveralls.io/repos/github/rmartone/missionlog/badge.svg?branch=master)](https://coveralls.io/github/rmartone/missionlog?branch=master) [![Bundlephobia](https://badgen.net/bundlephobia/minzip/missionlog)](https://bundlephobia.com/result?p=missionlog)
 
-The function receives a string and splits it into an array of separate tags.
+[npm-image]: https://img.shields.io/npm/v/missionlog.svg?style=flat
+[npm-url]: https://www.npmjs.com/package/missionlog
 
-The first argument is the string to be splitted.
+## Features
 
-The second argument , which is optional, is an array of separators(e.g. ["*", " ", "," ]).
+- URL validator: Check URL validaity & domain/path formatter
+- Tags separator: Separate tags
+- Password strength/validator: Check for password strength & validity
+- Number modifier: Modify number
+- Phone number modifier: Modify phone number
+- Handle errors with success status & detailed message
 
-- If no array of separators is passed, the function will decide what should be treated as the separator by looking for all the *special 
-characters in the string and taking the most frequent one as the separator (if there are a couple of separators equally 
-frequent at the top - the one that shows up first in the string is selected).
+## Install
 
-- If the array contains only one item, the function treats it as the separtor and splits the string into tags according to it.
+```shell
+npm i enigma-x-validator
+```
 
-- If the array contains more than one item, the array is treated as optional allowed separators. 
-The actual separator will be the option that shows up most frequently in the passed string.
+## Configuration
 
-- The array of separators may only contain *special characters; otherwise, an error is thrown.
+Configuration is optional, you can use most of the functions as they are, every optional option has default value.
+But if you would like to modifiy the values you can use `setConfig` function.
 
-## examples: 
-tagSplitter("moon,sun, earth!")  -> separator : "," 
+```javascript
+const { setConfig } = require('enigma-x-utilities')
 
-tagSplitter("moon,sun, earth!", [" "])  -> separator : " " 
+/**
+ * setConfig for configuration
+ * @param {configName} string function to config
+ * @param {parameters} object fields to config
+ * @returns void
+ */
+setConfig('phones', {
+  format: '10',
+  isInternational: true,
+})
+```
 
-tagSplitter("moon,sun, earth!", ["!", " "])  -> separator : " " 
+## Usage
 
-tagSplitter("moon,sun, earth!", ["!", "0"])  -> Error
+# URL Validator
 
+```javascript
+const { URLValidator, setConfig } = require('enigma-x-utilities')
 
+// Config Default values
+setConfig('URLValidator', {
+  domainName: false,
+  pathIncluded: true,
+})
+```
+
+### Success
+
+```javascript
+// Validating & formatting URL
+URLValidator('https://www.youtube.com/watch?v=OLK49ZTbmWM&list=PLtK75qxsQaMLZSo7KL-PmiRarU7hrpnwK&index=5')
+
+// Output
+{
+  success: true,
+  message: 'Successfully modified URL',
+  data: 'https://www.youtube.com/watch?v=OLK49ZTbmWM&list=PLtK75qxsQaMLZSo7KL-PmiRarU7hrpnwK&index=5'
+}
+```
+
+### Error
+
+```javascript
+// Validating & formatting URL
+URLValidator('blablablablo')
+
+// Output
+{ success: false, message: 'URL is invalid' }
+
+// the imported value "tag" is populated with YOUR tags!
+log.error(tag.security, 'not authorized', statusCode)
+
+// but if you prefer simply use strings
+log.warn('transporter', 'Evil twin detected!')
+
+// filtered since security's log level ERROR is greater than INFO
+log.info(tag.security, 'login successful')
+
+// also filtered since system's level is OFF
+log.error(tag.system, 'eject the warp core', error)
+
+// updates tag levels on the fly
+log.init({ loader: 'ERROR', system: 'INFO' })
+
+// disable logging by clearing the callback
+log.init()
+```
