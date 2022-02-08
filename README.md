@@ -15,7 +15,7 @@
 ## Install
 
 ```shell
-npm i enigma-x-validator
+npm i enigma-x-utilities
 ```
 
 ## Configuration
@@ -40,8 +40,11 @@ setConfig('phones', {
 
 ## Usage
 
-# URL Validator
-
+### URL Validator
+Feature for URL, checks validity & format (optional). 
+Returns URL after validating & formmating (optional).
+ 
+#### configuration 
 ```javascript
 const { URLValidator, setConfig } = require('enigma-x-utilities')
 
@@ -52,7 +55,7 @@ setConfig('URLValidator', {
 })
 ```
 
-### Success
+#### Success
 
 ```javascript
 // Validating & formatting URL
@@ -66,30 +69,16 @@ URLValidator('https://www.youtube.com/watch?v=OLK49ZTbmWM&list=PLtK75qxsQaMLZSo7
 }
 ```
 
-### Error
+#### Error
 
 ```javascript
 // Validating & formatting URL
 URLValidator('blablablablo')
 
 // Output
-{ success: false, message: 'URL is invalid' }
+{ 
+  success: false,
+  message: 'URL is invalid'
+}
 
-// the imported value "tag" is populated with YOUR tags!
-log.error(tag.security, 'not authorized', statusCode)
-
-// but if you prefer simply use strings
-log.warn('transporter', 'Evil twin detected!')
-
-// filtered since security's log level ERROR is greater than INFO
-log.info(tag.security, 'login successful')
-
-// also filtered since system's level is OFF
-log.error(tag.system, 'eject the warp core', error)
-
-// updates tag levels on the fly
-log.init({ loader: 'ERROR', system: 'INFO' })
-
-// disable logging by clearing the callback
-log.init()
 ```
