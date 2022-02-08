@@ -96,28 +96,48 @@ const magnitudeUnits = {
   3: "G",
 };
 
+const isValidStringedNumber = (numToFormat) => {
+  if (typeof numToFormat != "string") return false;
+  return !isNaN(numToFormat) && !isNaN(parseFloat(numToFormat));
+};
+
 /**
  * Number formatter for numbers
  * @param numToFormat string
  * @returns string
  */
 const numFormatter = (numToFormat) => {
+  if (!isValidStringedNumber(numToFormat))
+    return {
+      success: false,
+      message: "Is not a valid number",
+    };
+
   const { overallDigitLimit, decimalDigitLimit } = config.numsFormater;
   //if the number have floating point count it.
-  const numberHasPoint = numToFormat.includes(".") ? 1 : 0;
+  const hasFloatingPoint = numToFormat.includes(".") ? 1 : 0;
   let processedNumber = numToFormat,
     unitSuffix;
 
   //if the number got floating point fixed the number accordingly
-  if (numberHasPoint)
+  if (hasFloatingPoint) {
     processedNumber = String(Number(numToFormat).toFixed(decimalDigitLimit));
 
+    //in the case the initial input to numFormatter is a decimal fraction - return promptly
+    // if (processedNumber.split(".")[0] === "0")
+    //   return {
+    //     success: true,
+    //     message: "Successfully formatted number",
+    //     data: processedNumber,
+    //   };
+  }
+
   // if the number exceeds the limit handle it
-  if (processedNumber.length - numberHasPoint > overallDigitLimit) {
+  if (processedNumber.length - hasFloatingPoint > overallDigitLimit) {
     overallHandlement = overallHandler(
       processedNumber,
       overallDigitLimit,
-      numberHasPoint
+      hasFloatingPoint
     );
     //the processed number is the new number that has been handled + the letter represent the thousends sliced
     processedNumber = overallHandlement.num;
@@ -130,11 +150,14 @@ const numFormatter = (numToFormat) => {
 
   //returns the handled number seperated by commas, attach the right side if exist and append the letter representing the thousends sliced
 
-  return (
-    left.replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-    (right ? "." + right : "") +
-    (unitSuffix ?? "")
-  );
+  return {
+    success: true,
+    message: "Successfully formatted number",
+    data:
+      left.replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+      (right ? "." + right : "") +
+      (unitSuffix ?? ""),
+  };
 };
 
 // handle the overall digit
