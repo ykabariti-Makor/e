@@ -1,5 +1,5 @@
-const { setConfig } = require('./config');
-const { passwordValidation } = require('./utils/auth');
+const { setConfig } = require('./config')
+const { passwordValidation } = require('./utils/auth')
 
 setConfig('password', {
   strengthOptions: [
@@ -26,7 +26,7 @@ setConfig('password', {
   upperCase: 1,
   lowerCase: 1,
   num: 1,
-  symbol: 0,
-});
+  symbol: '',
+})
 
-console.log(passwordValidation('1234$@1Aafasfasfasfas!@#$!@!@!@$'));
+console.log(passwordValidation('1234$@1Aafasfasfasfas!@#$!@!@!@$'))

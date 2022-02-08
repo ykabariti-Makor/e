@@ -78,6 +78,7 @@ const isURLValid = (url) => {
  * @param password the password
  * @returns object
  */
+
 const passwordValidation = (password) => {
   let isValid = {
     success: true,
@@ -94,9 +95,11 @@ const passwordValidation = (password) => {
 
   Object.entries(config.password).map(([key, value]) => {
     if (key !== 'strengthOptions' && value) {
-      if (typeof value !== objTypeof[key] || (key === "symbol" && value !== 0)) {
-        isValid.success = false;
-        isValid.message.push(`${key} must be type of ${objTypeof[key]}`);
+      if (typeof value !== objTypeof[key]) {
+        if (key === 'symbol' && value !== 0) {
+          isValid.success = false
+          isValid.message.push(`${key} must be type of ${objTypeof[key]}`)
+        }
       }
     }
   })
@@ -152,6 +155,7 @@ const passwordValidation = (password) => {
 }
 
 const passwordStrength = (password, options = config.password.strengthOptions, allowedSymbols = config.password.symbol) => {
+  console.log(options)
   let passwordCopy = password || ''
 
   let isValid = {
