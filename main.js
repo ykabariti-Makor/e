@@ -14,38 +14,3 @@ module.exports = {
   numFormatter,
   phoneNumberFormatter,
 };
-
-console.log(
-  "🚀 ~ file: main.js ~ line 12 ~ numFormatter('123.234')",
-  numFormatter("123")
-);
-
-console.log(
-  "🚀 ~ file: main.js ~ line 12 ~ numFormatter('123.234')",
-  numFormatter("123.123")
-);
-
-console.log(
-  "🚀 ~ file: main.js ~ line 12 ~ numFormatter('123.234')",
-  numFormatter("123123")
-);
-
-console.log(
-  "🚀 ~ file: main.js ~ line 12 ~ numFormatter('123.234')",
-  numFormatter("123123.123123")
-);
-
-console.log(
-  "🚀 ~ file: main.js ~ line 12 ~ numFormatter('123.234')",
-  numFormatter("123123123")
-);
-
-console.log(
-  "🚀 ~ file: main.js ~ line 12 ~ numFormatter('123.234')",
-  numFormatter("123123123.123123")
-);
-
-console.log(
-  "🚀 ~ file: main.js ~ line 12 ~ numFormatter('123.234')",
-  numFormatter("123123.1231231231")
-);
