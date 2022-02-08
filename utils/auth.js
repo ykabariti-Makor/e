@@ -94,9 +94,9 @@ const passwordValidation = (password) => {
 
   Object.entries(config.password).map(([key, value]) => {
     if (key !== 'strengthOptions' && value) {
-      if (typeof value !== objTypeof[key]) {
-        isValid.success = false
-        isValid.message.push(`${key} must be type of ${objTypeof[key]}`)
+      if (typeof value !== objTypeof[key] || (key === "symbol" && value !== 0)) {
+        isValid.success = false;
+        isValid.message.push(`${key} must be type of ${objTypeof[key]}`);
       }
     }
   })
@@ -131,7 +131,7 @@ const passwordValidation = (password) => {
             re: new RegExp('^(.*?[0-9]){' + config.password.num + ',}'),
           }
         : null,
-      config.password.symbol !== undefined && config.password.symbol !== ''
+      config.password.symbol !== undefined && config.password.symbol !== '' && config.password.symbol !== 0
         ? {
             title: 'NonAlphaNumeric',
             valid: false,

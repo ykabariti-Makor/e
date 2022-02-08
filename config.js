@@ -4,22 +4,18 @@ const config = {
     strengthOptions: [
       {
         value: 'Weak',
-
         minDiversity: 1,
-
         minLength: 8,
       },
 
       {
-        value: 'Strong',
-
+        value: 'Stron',
         minDiversity: 2,
         minLength: 10,
       },
 
       {
         value: 'Very Strong',
-
         minDiversity: 4,
         minLength: 12,
       },
