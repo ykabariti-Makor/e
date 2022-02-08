@@ -97,7 +97,7 @@ frequent at the top - the one that shows up first in the string is selected).
 - If the array contains more than one item, the array is treated as optional allowed separators. 
 The actual separator will be the option that shows up most frequently in the passed string.
 
-- The array of separators may only contain *special characters; otherwise, an error is thrown.
+- The array of separators may only contain *special characters. Each separator should consist of one character only.
 
 *Special characters: any character that is not a-z, A-Z,0-9, _
 
@@ -216,6 +216,7 @@ passwordValidation("112412$@Aa")
 
 
 # Phone number validator
+Feature for international phone number validation ,check if the phone number is valid based on the input, And reformat the phone number by user configuration.
 
 ```javascript
 const { phoneNumberFormatter, setConfig } = require('enigma-x-utilities');
