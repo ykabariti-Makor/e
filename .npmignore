@@ -1,0 +1,6 @@
+/tests
+.eslintrc.js
+.eslintignore
+.gitignore
+.prettierignore
+.prettierc.js

@@ -214,6 +214,7 @@ const emailDomainValidator = (email) => {
 			return {
 				success: true,
 				message: 'Email inserted is valid',
+				data: true,
 			};
 		} else {
 			return {
