@@ -452,7 +452,7 @@ Feature for removing unneeded whitespace from text. Receives a string and return
 
 ```javascript
 const { removeSpaces  } = require('enigma-x-utilities');
-
+```
 
 ## Description
 
