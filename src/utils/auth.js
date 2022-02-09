@@ -238,7 +238,7 @@ const ValidateIPaddress = (ipaddress) => {
 	return false;
 };
 
-ValidateIPaddress('31.154.132.28');
+const checkPositive = (number, zeroIncluded = false) => {};
 module.exports = {
 	URLValidator,
 	passwordValidation,
