@@ -1,6 +1,5 @@
 module.exports = {
 	root: true,
-	// parser: 'babel-eslint',
 	parserOptions: {
 		ecmaVersion: 2020,
 		ecmaFeatures: {
@@ -29,11 +28,12 @@ module.exports = {
 		'no-multiple-empty-lines': 'error',
 		'no-trailing-spaces': 'error',
 		'require-await': 'error',
-		'no-var': 'error',
+		'no-var': 'eyrror',
 		'no-labels': 'error',
 		'no-inline-comments': 'error',
 		'eqeqeq': 'error',
 		'no-console': 'warn',
 		'unused-imports/no-unused-imports': 'error',
+		'prefer-const': ['error', { destructuring: 'all' }],
 	},
 };
