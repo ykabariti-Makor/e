@@ -1,8 +1,6 @@
 const { config } = require('../config');
 const { passwordStrength, isURLValid } = require('../utils/auth');
 
-const a = 1;
-
 // console.log(a);
 
 /**
