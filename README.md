@@ -238,32 +238,31 @@ const { passwordValidation, setConfig } = require('enigma-x-utilities');
 
 //Config default values
 setConfig('password', {
-	strengthOptions: [
-		{
-			value: 1,
-			minDiversity: 1,
-			minLength: 8,
-		},
+  strengthOptions: [
+    {
+      value: 1,
+      minDiversity: 1,
+      minLength: 8,
+    },
 
-		{
-			value: 'Medium',
-			minDiversity: 3,
-			minLength: 10,
-		},
+    {
+      value: 'Medium',
+      minDiversity: 3,
+      minLength: 10,
+    },
 
-		{
-			value: 'Strong',
-			minDiversity: 4,
-			minLength: 12,
-		},
-	],
-
-	characterLen: 12,
-	upperCase: 1,
-	lowerCase: 1,
-	num: 1,
-	symbol: '#?!@$%^&*-',
-});
+    {
+      value: 'Strong',
+      minDiversity: 4,
+      minLength: 12,
+    },
+  ],
+  characterLen: 12,
+  upperCase: 1,
+  lowerCase: 1,
+  num: 1,
+  symbol: '#?!@$%^&*-',
+})
 ```
 
 #### Success
@@ -349,7 +348,7 @@ phoneNumberFormatter('255-777-470')
 { success: false, message: 'Format does not match the number of digits in phone number' }
 ```
 
-# Special chars modifier.
+# Special chars modifier
 
 #### configuration
 
@@ -421,6 +420,7 @@ emailDomainValidator('eli@yahoo.com')
 {
   success: true,
   message: 'Email inserted is valid',
+  data: true
   }
 ```
 
@@ -436,4 +436,4 @@ emailDomainValidator('eli@capital.com')
 
 ## Resources
 
-codeSandbox - https://codesandbox.io/s/trusting-volhard-od81x?file=/src/App.js
+codeSandbox - https://codesandbox.io/s/restless-bash-3nrj2
