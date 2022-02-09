@@ -113,7 +113,6 @@ const numberFormatter = (numToFormat) => {
 	}
 
 	const { overallDigitLimit, decimalDigitLimit, useColors, colors } = config.numberFormatter;
-	console.log('🚀 ~ file: modifies.js ~ line 117 ~ numberFormatter ~ config.numberFormatter', config.numberFormatter);
 	//if the number have floating point count it.
 	const hasFloatingPoint = String(numToFormat).includes('.') ? 1 : 0;
 	let processedNumber = numToFormat,
@@ -144,7 +143,7 @@ const numberFormatter = (numToFormat) => {
 		},
 	};
 
-	if (useColors) obj.color = colors[isNegative ? 'negative' : 'positive'];
+	if (useColors) obj.data.color = colors[isNegative ? 'negative' : 'positive'];
 
 	return obj;
 };

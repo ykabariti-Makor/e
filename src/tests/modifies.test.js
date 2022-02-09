@@ -430,7 +430,7 @@ describe(`~~~~~~~~~~~ ~ ~ ~ ### @ @ @                                  @ @ @ ###
 
 //success situation when no configuration function.
 test('specialCharModifier', async () => {
-	expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({
+	await expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({
 		success: true,
 		message: 'String successfully modified',
 		data: 'aviv  avisrur  ',
@@ -439,7 +439,7 @@ test('specialCharModifier', async () => {
 //success situation when config the function.
 test('specialCharModifier', async () => {
 	utils.setConfig('specialCharsModifier', { exceptions: '@#$' });
-	expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({
+	await expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({
 		success: true,
 		message: 'String successfully modified',
 		data: 'aviv @ avisrur $# ',
@@ -448,5 +448,5 @@ test('specialCharModifier', async () => {
 
 //success situation when no configuration function.
 test('specialCharModifier', async () => {
-	expect(utils.specialCharsModifier(12345)).toStrictEqual({ success: false, message: '12345 should be string' });
+	await expect(utils.specialCharsModifier(12345)).toStrictEqual({ success: false, message: '12345 should be string' });
 });
