@@ -200,12 +200,22 @@ const phoneNumberFormatter = (number) => {
 		};
 	}
 };
-
+/**
+ * Special characters modifier 
+ * @param {string} string any string 
+ * @returns object
+ */
 const specialCharsModifier = (string) => {
+	if(typeof string !== 'string'){
+		return {
+			success:false,
+			message: `${string} should be string`
+		}
+	}
 	const formattedReg = new RegExp('[^A-Za-z0-9 ' + config.specialCharsModifier.exceptions + ']', 'g');
 	const replacedString = string.replace(formattedReg, '');
 
-	return replacedString;
+	return {success:true,message:"String successfully modified",data:replacedString};
 };
 
 module.exports = {
