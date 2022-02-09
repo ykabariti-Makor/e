@@ -1,4 +1,4 @@
-const { config } = require('../../config');
+const { config } = require('../config');
 
 /**
  * Tags separator for tags string
@@ -82,7 +82,7 @@ const tagsSeparator = (string) => {
 	} else {
 		inferredReg = new RegExp(inferredSeparator);
 	}
-	const tags = string.split(inferredReg);
+	const tags = [...new Set(string.split(inferredReg))];
 
 	return {
 		success: true,
@@ -241,8 +241,27 @@ const phoneNumberFormatter = (number) => {
 	}
 };
 
+/**
+ * Removes unnecessary space from a text
+ * @param {string} text to be cleaned
+ * @returns object
+ */
+
+const removeSpaces = (string) => {
+	const reg = /([\S])[\s]{2,}([\S])/g;   
+	const trimmedString =  string.trim().replace(reg,'$1 $2')
+	const reg2 = /([\S])[\s]{1,}([.,!?%;])/
+	const newString = trimmedString.replace(reg2, '$1$2')
+	return {
+		success: true,
+		message: 'Spaces removed successfully',
+		data: newString,
+	};
+   } 
+
 module.exports = {
 	numFormatter,
 	tagsSeparator,
 	phoneNumberFormatter,
+	removeSpaces
 };
