@@ -56,7 +56,7 @@ test('phone number format invalid - error', async () => {
 
 //************************************************************/
 
-test("simple input - successes", async () => {
+test("user sends one separator - string is split according to it - successes", async () => {
   utils.setConfig("tags", {
     separators: [","],
   });
@@ -67,7 +67,7 @@ test("simple input - successes", async () => {
   });
 });
 
-test("input without separator , using most frequent char - successes", async () => {
+test("user sends a couple of separators , string is split according to the most frequent among them  - successes", async () => {
   utils.setConfig("tags", {
     separators: [",","-"],
   });
@@ -77,10 +77,33 @@ test("input without separator , using most frequent char - successes", async () 
     success: true,
   });
 });
-test("input with multiple separator , using most frequent char - successes", async () => {
+
+test("user does not send separators, the string is split using the most frequent special char - successes", async () => {
 
   expect(utils.tagsSeparator("a,b,c,d,e,f")).toStrictEqual({
     data: ["a", "b", "c", "d", "e", "f"],
+    message: "Tags array created successfully",
+    success: true,
+  });
+});
+
+test("user sends separators that do not exist in string , function sends back array with one unsplit string - successes", async () => {
+  utils.setConfig("tags", {
+    separators: ["|","."],
+  });
+  expect(utils.tagsSeparator("a,b,c-d,e,f,a-b-c-d-e-f")).toStrictEqual({
+    data: ['a,b,c-d,e,f,a-b-c-d-e-f'],
+    message: "Tags array created successfully",
+    success: true,
+  });
+});
+
+test("user sends empty separators array, string is split according to most frequent special char", async () => {
+  utils.setConfig("tags", {
+    separators: [],
+  });
+  expect(utils.tagsSeparator("a,b,c-d,e,f,a-b-c-d-e-f")).toStrictEqual({
+    data: ['a,b,c', 'd,e,f,a', 'b', 'c', 'd', 'e', 'f'],
     message: "Tags array created successfully",
     success: true,
   });
