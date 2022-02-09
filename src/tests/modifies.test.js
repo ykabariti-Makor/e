@@ -386,3 +386,18 @@ describe(`~~~~~~~~~~~ ~ ~ ~ ### @ @ @                                  @ @ @ ###
 		);
 	});
 });
+//success situation when config the function.
+test ("specialCharModifier",async ()=>{
+	utils.setConfig("specialCharsModifier",{exceptions:"@#$"})
+	expect(utils.specialCharsModifier("av!iv @ avisrur $# !&*")).toStrictEqual({success:true,message:"String successfully modified",data:'aviv @ avisrur $# '})
+})
+
+//success situation when no configuration function.
+test ("specialCharModifier",async ()=>{
+	expect(utils.specialCharsModifier("av!iv @ avisrur $# !&*")).toStrictEqual({success:true,message:"String successfully modified", data: 'aviv  avisrur  '})
+})
+
+//success situation when no configuration function.
+test ("specialCharModifier",async ()=>{
+	expect(utils.specialCharsModifier(12345)).toStrictEqual({success:false,message:"1234 should be string"})
+})

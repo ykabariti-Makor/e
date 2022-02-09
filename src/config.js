@@ -1,4 +1,7 @@
 const config = {
+	specialCharsModifier: {
+		exceptions: '',
+	},
 	password: {
 		strengthOptions: [
 			{
@@ -105,6 +108,9 @@ const setConfig = (configName, parameters) => {
 			break;
 		case 'tags':
 			config.tags.separators = parameters.separators;
+			break;
+		case 'specialCharsModifier':
+			config.specialCharsModifier.exceptions = parameters.exceptions;
 			break;
 	}
 };

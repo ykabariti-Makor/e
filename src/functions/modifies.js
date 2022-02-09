@@ -83,7 +83,7 @@ const tagsSeparator = (string) => {
 	} else {
 		inferredReg = new RegExp(inferredSeparator);
 	}
-	const tags = string.split(inferredReg);
+	const tags = [...new Set(string.split(inferredReg))];
 
 	return {
 		success: true,
@@ -215,17 +215,54 @@ const phoneNumberFormatter = (number) => {
 		};
 	}
 };
-
+/**
+ * Special characters modifier 
+ * @param {string} string any string 
+ * @returns object
+ */
 const specialCharsModifier = (string) => {
-	const formattedReg = new RegExp('[^A-Za-z0-9' + config.specialChar + ']', 'g');
-
+	if(typeof string !== 'string'){
+		return {
+			success:false,
+			message: `${string} should be string`
+		}
+	}
+	const formattedReg = new RegExp('[^A-Za-z0-9 ' + config.specialCharsModifier.exceptions + ']', 'g');
 	const replacedString = string.replace(formattedReg, '');
 
-	return replacedString;
+	return {success:true,message:"String successfully modified",data:replacedString};
 };
+
+/**
+ * Removes unnecessary space from a text
+ * @param {string} string
+ * @returns object
+ */
+const removeSpaces = (string) => {
+	if (typeof string !== 'string') {
+		return {
+			success: false,
+			message: `${string} should be string`,
+		};
+	}
+
+	const reg = /([\S])[\s]{2,}([\S])/g;
+	const trimmedString = string.trim().replace(reg, '$1 $2');
+
+	const reg2 = /([\S])[\s]{1,}([.,!?%;])/;
+	const newString = trimmedString.replace(reg2, '$1$2');
+
+	return {
+		success: true,
+		message: 'Spaces removed successfully',
+		data: newString,
+	};
+};
+
 module.exports = {
 	numberFormatter,
 	tagsSeparator,
 	phoneNumberFormatter,
 	specialCharsModifier,
+	removeSpaces,
 };
