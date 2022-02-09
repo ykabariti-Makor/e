@@ -234,6 +234,10 @@ const passwordStrength = (
   }
 };
 
+
+
+
+
 const escapeRegExp = (string) => string.replace(/[-.*+?^${}()|[\]\\]/g, "\\$&");
 
 module.exports = {
