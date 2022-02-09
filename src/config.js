@@ -1,4 +1,7 @@
 const config = {
+	specialCharsModifier: {
+		exceptions: '',
+	},
 	password: {
 		strengthOptions: [
 			{
@@ -51,53 +54,55 @@ const config = {
 
 const setConfig = (configName, parameters) => {
 	switch (configName) {
-	case 'password':
-		config.password = {
-			characterLen:
+		case 'password':
+			config.password = {
+				characterLen:
 					parameters.characterLen === null || parameters.characterLen === undefined || parameters.characterLen === 0
 						? undefined
 						: parameters.characterLen,
-			upperCase:
+				upperCase:
 					parameters.upperCase === null || parameters.upperCase === undefined || parameters.upperCase === 0
 						? undefined
 						: parameters.upperCase,
-			lowerCase:
+				lowerCase:
 					parameters.lowerCase === null || parameters.lowerCase === undefined || parameters.lowerCase === 0
 						? undefined
 						: parameters.lowerCase,
-			num: parameters.num === null || parameters.num === undefined || parameters.num === 0 ? undefined : parameters.num,
-			symbol:
+				num: parameters.num === null || parameters.num === undefined || parameters.num === 0 ? undefined : parameters.num,
+				symbol:
 					parameters.symbol === null || parameters.symbol === undefined || parameters.symbol === ''
 						? undefined
 						: parameters.symbol,
-			strengthOptions: parameters.strengthOptions
-				? parameters.strengthOptions.map((opt, index) => ({
-					...opt,
-					id: index,
+				strengthOptions: parameters.strengthOptions
+					? parameters.strengthOptions.map((opt, index) => ({
+							...opt,
+							id: index,
 					  }))
-				: config.password.strengthOptions.map((opt, index) => ({
-					...opt,
-					id: index,
-					minLength: parameters.characterLen + (index === 0 ? 0 : (index *= 2)),
+					: config.password.strengthOptions.map((opt, index) => ({
+							...opt,
+							id: index,
+							minLength: parameters.characterLen + (index === 0 ? 0 : (index *= 2)),
 					  })),
-		};
-		break;
-
-	case 'formatter':
-		if (parameters.overallDigitLimit !== undefined) config.numsFormater.overallDigitLimit = parameters.overallDigitLimit;
-		if (parameters.decimalDigitLimit !== undefined) config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit;
-		break;
-	case 'URLValidator' || 'urlValidator':
-		if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly;
-		if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded;
-		break;
-	case 'phones':
-		if (parameters.format !== undefined) config.phones.format = parameters.format;
-		if (parameters.isInternational !== undefined) config.phones.isInternational = parameters.isInternational;
-		break;
-	case 'tags':
-		config.tags.separators = parameters.separators;
-		break;
+			};
+			break;
+		case 'formatter':
+			if (parameters.overallDigitLimit !== undefined) config.numsFormater.overallDigitLimit = parameters.overallDigitLimit;
+			if (parameters.decimalDigitLimit !== undefined) config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit;
+			break;
+		case 'URLValidator' || 'urlValidator':
+			if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly;
+			if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded;
+			break;
+		case 'phones':
+			if (parameters.format !== undefined) config.phones.format = parameters.format;
+			if (parameters.isInternational !== undefined) config.phones.isInternational = parameters.isInternational;
+			break;
+		case 'tags':
+			config.tags.separators = parameters.separators;
+			break;
+		case 'specialCharsModifier':
+			config.specialCharsModifier.exceptions = parameters.exceptions;
+			break;
 	}
 };
 
