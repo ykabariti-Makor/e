@@ -38,7 +38,6 @@ const overallHandler = (num, limit, isFloatingPoint) => {
 		unitSuffix: magnitudeUnits[thousandsSliced],
 	};
 };
-
 module.exports = {
 	overallHandler,
 };
