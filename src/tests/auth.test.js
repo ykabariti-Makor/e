@@ -1,6 +1,6 @@
 const utils = require('../main');
 
-test('url valid', async () => {
+test('url_valid', async () => {
 	utils.setConfig('URLValidator', {
 		domainOnly: true,
 		pathIncluded: false,
@@ -12,7 +12,7 @@ test('url valid', async () => {
 	});
 });
 
-test('password valid', async () => {
+test('password_valid', async () => {
 	//arrange
 	utils.setConfig('password', {
 		strengthOptions: [
@@ -62,17 +62,219 @@ test('password valid', async () => {
 	});
 });
 
-//success situation
-test('ip validation', async () => {
+//fail password scenarios
+test('password_valid_fail_senario_1', async () => {
+	//arrange
+	utils.setConfig('password', {
+		strengthOptions: [
+			{
+				value: 'Weak',
+				minDiversity: 1,
+				minLength: 12,
+			},
+
+			{
+				value: 'Strong',
+				minDiversity: 2,
+				minLength: 14,
+			},
+
+			{
+				value: 'Very Strong',
+				minDiversity: 4,
+				minLength: 16,
+			},
+		],
+
+		characterLen: 'a',
+		upperCase: 1,
+		lowerCase: 1,
+		num: 1,
+		symbol: '#?!@$%^&*-',
+	});
+
+	//act
+	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
+
+	//assent
+	await expect(passwordResult).toStrictEqual({
+		success: false,
+		message: ['characterLen must be type of number'],
+	});
+});
+
+test('password_valid_fail_senario_2', async () => {
+	//arrange
+	utils.setConfig('password', {
+		strengthOptions: [
+			{
+				value: 'Weak',
+				minDiversity: 1,
+				minLength: 12,
+			},
+
+			{
+				value: 'Strong',
+				minDiversity: 2,
+				minLength: 14,
+			},
+
+			{
+				value: 'Very Strong',
+				minDiversity: 4,
+				minLength: 16,
+			},
+		],
+
+		characterLen: 8,
+		upperCase: "a",
+		lowerCase: 1,
+		num: 1,
+		symbol: '#?!@$%^&*-',
+	});
+
+	//act
+	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
+
+	//assent
+	await expect(passwordResult).toStrictEqual({
+		success: false,
+		message: ['upperCase must be type of number'],
+	});
+});
+
+test('password_valid_fail_senario_3', async () => {
+	//arrange
+	utils.setConfig('password', {
+		strengthOptions: [
+			{
+				value: 'Weak',
+				minDiversity: 1,
+				minLength: 12,
+			},
+
+			{
+				value: 'Strong',
+				minDiversity: 2,
+				minLength: 14,
+			},
+
+			{
+				value: 'Very Strong',
+				minDiversity: 4,
+				minLength: 16,
+			},
+		],
+
+		characterLen: 8,
+		upperCase: 1,
+		lowerCase: "1",
+		num: 1,
+		symbol: '#?!@$%^&*-',
+	});
+
+	//act
+	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
+
+	//assent
+	await expect(passwordResult).toStrictEqual({
+		success: false,
+		message: ['lowerCase must be type of number'],
+	});
+});
+
+test('password_valid_fail_senario_4', async () => {
+	//arrange
+	utils.setConfig('password', {
+		strengthOptions: [
+			{
+				value: 'Weak',
+				minDiversity: 1,
+				minLength: 12,
+			},
+
+			{
+				value: 'Strong',
+				minDiversity: 2,
+				minLength: 14,
+			},
+
+			{
+				value: 'Very Strong',
+				minDiversity: 4,
+				minLength: 16,
+			},
+		],
+
+		characterLen: 8,
+		upperCase: 1,
+		lowerCase: 1,
+		num: "a",
+		symbol: '#?!@$%^&*-',
+	});
+
+	//act
+	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
+
+	//assent
+	await expect(passwordResult).toStrictEqual({
+		success: false,
+		message: ['num must be type of number'],
+	});
+});
+
+test('password_valid_fail_senario_5', async () => {
+	//arrange
+	utils.setConfig('password', {
+		strengthOptions: [
+			{
+				value: 'Weak',
+				minDiversity: 1,
+				minLength: 12,
+			},
+
+			{
+				value: 'Strong',
+				minDiversity: 2,
+				minLength: 14,
+			},
+
+			{
+				value: 'Very Strong',
+				minDiversity: 4,
+				minLength: 16,
+			},
+		],
+
+		characterLen: 8,
+		upperCase: 1,
+		lowerCase: 1,
+		num: 1,
+		symbol: 1,
+	});
+
+	//act
+	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
+
+	//assent
+	await expect(passwordResult).toStrictEqual({
+		success: false,
+		message: ['symbol must be type of string'],
+	});
+});
+
+
+//success scenario
+test('ip_validation', async () => {
 	await expect(utils.ValidateIPaddress('10.0.0.36')).toStrictEqual({ success: true, message: 'IP is valid' });
 });
 
-//failed situation - wrong input
-test('ip validation fail', async () => {
+//failed scenario - wrong input
+test('ip_validation_fail', async () => {
 	await expect(utils.ValidateIPaddress(10)).toStrictEqual({ success: false, message: 'IP is invalid' });
 });
 
-//failed situation - wrong ip
-test('ip validation fail', async () => {
+//failed scenario - wrong ip
+test('ip_validation_fail', async () => {
 	await expect(utils.ValidateIPaddress('10.0.0')).toStrictEqual({ success: false, message: 'IP is invalid' });
 });
