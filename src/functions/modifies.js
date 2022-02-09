@@ -83,7 +83,7 @@ const tagsSeparator = (string) => {
 	} else {
 		inferredReg = new RegExp(inferredSeparator);
 	}
-	const tags = string.split(inferredReg);
+	const tags = [...new Set(string.split(inferredReg))];
 
 	return {
 		success: true,
