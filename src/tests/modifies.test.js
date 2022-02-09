@@ -1,4 +1,6 @@
 const utils = require('../main');
+const { setConfig } = require('../config');
+const { numberFormatter } = require('../functions/modifies');
 
 test('simple input - successes', async () => {
 	utils.setConfig('phones', {

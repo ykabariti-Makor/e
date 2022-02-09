@@ -40,6 +40,44 @@ setConfig('phones', {
 
 ## Usage
 
+# Check number positivity
+
+Feature for checking number positivity, checks number value.
+Return boolean
+
+```javascript
+const { checkNumberPositivity, setConfig } = require('enigma-x-utilities');
+
+// Config Default values
+setConfig('checkNumberPositivity', {
+	zeroIncluded: false,
+});
+```
+
+### Success
+
+```javascript
+// Checking number positivity
+checkNumberPositivity(1)
+
+// Output
+{
+  success: true,
+  message: 'successfully processed number',
+  data: true,
+}
+```
+
+### Error
+
+```javascript
+// Checking number positivity
+checkNumberPositivity('blbalbla')
+
+// Output
+{ success: false, message: 'blbalbla' should be type number }
+```
+
 # URL Validator
 
 Feature for validating & formatting URL, check if URL is valid & format the URL.

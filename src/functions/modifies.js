@@ -95,23 +95,32 @@ const tagsSeparator = (string) => {
 /**
  * Number formatter for numbers
  * @param {numToFormat} string
- * @returns object
+ * @returns string
  */
-const numFormatter = (numToFormat) => {
+const numberFormatter = (numToFormat) => {
 	if (typeof numToFormat !== 'number')
 		return {
 			success: false,
 			message: 'Input is not a valid number',
 		};
 
-	const { overallDigitLimit, decimalDigitLimit } = config.numsFormater;
+	let isNegative = false;
+
+	// turn positive in case negative to streamline 'numberFormatter' function use
+	if (numToFormat < 0) {
+		isNegative = true;
+		numToFormat *= -1;
+	}
+
+	const { overallDigitLimit, decimalDigitLimit, useColors, colors } = config.numberFormatter;
+	console.log('🚀 ~ file: modifies.js ~ line 117 ~ numberFormatter ~ config.numberFormatter', config.numberFormatter);
 	//if the number have floating point count it.
 	const hasFloatingPoint = String(numToFormat).includes('.') ? 1 : 0;
 	let processedNumber = numToFormat,
 		unitSuffix;
 
 	//if the number got floating point fixed the number accordingly
-	if (hasFloatingPoint) processedNumber = String(numToFormat.toFixed(decimalDigitLimit));
+	if (hasFloatingPoint) processedNumber = String(Number(numToFormat.toFixed(decimalDigitLimit)));
 	processedNumber = String(processedNumber);
 	// if the number exceeds the limit handle it
 	if (processedNumber.length - hasFloatingPoint > overallDigitLimit) {
@@ -127,11 +136,17 @@ const numFormatter = (numToFormat) => {
 
 	//returns the handled number seperated by commas, attach the right side if exist and append the letter representing the thousends sliced
 
-	return {
+	const obj = {
 		success: true,
 		message: 'Successfully formatted number',
-		data: left.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (right ? '.' + right : '') + (unitSuffix ?? ''),
+		data: {
+			number: (isNegative ? '-' : '') + left.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (right ? '.' + right : '') + (unitSuffix ?? ''),
+		},
 	};
+
+	if (useColors) obj.color = colors[isNegative ? 'negative' : 'positive'];
+
+	return obj;
 };
 
 /**
@@ -200,12 +215,22 @@ const phoneNumberFormatter = (number) => {
 		};
 	}
 };
-
+/**
+ * Special characters modifier 
+ * @param {string} string any string 
+ * @returns object
+ */
 const specialCharsModifier = (string) => {
+	if(typeof string !== 'string'){
+		return {
+			success:false,
+			message: `${string} should be string`
+		}
+	}
 	const formattedReg = new RegExp('[^A-Za-z0-9 ' + config.specialCharsModifier.exceptions + ']', 'g');
 	const replacedString = string.replace(formattedReg, '');
 
-	return replacedString;
+	return {success:true,message:"String successfully modified",data:replacedString};
 };
 
 /**
@@ -235,7 +260,7 @@ const removeSpaces = (string) => {
 };
 
 module.exports = {
-	numFormatter,
+	numberFormatter,
 	tagsSeparator,
 	phoneNumberFormatter,
 	specialCharsModifier,

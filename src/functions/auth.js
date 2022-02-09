@@ -138,10 +138,10 @@ const ValidateIPaddress = (ipaddress) => {
 			ipaddress,
 		)
 	) {
-		return true;
+		return {success:true,message:"IP is valid"};
 	}
 
-	return false;
+	return {success:false,message:"IP is invalid"}
 };
 
 const checkNumberPositivity = (number) => {

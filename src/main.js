@@ -8,7 +8,7 @@ module.exports = {
 	passwordValidation,
 	ValidateIPaddress,
 	tagsSeparator,
-	numFormatter,
+	numberFormatter,
 	phoneNumberFormatter,
 	checkNumberPositivity,
 	removeSpaces,
