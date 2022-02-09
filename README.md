@@ -401,7 +401,7 @@ ipValidation('130.75.164');
 
 # Email domain validator
 
-Feature for testing if inserted email input is contained inside a list of approved domain.
+Feature for testing if inserted email input is contained inside a list of approved domains.
 
 ```javascript
 const { emailDomainValidator, setConfig } = require('enigma-x-utilities');
