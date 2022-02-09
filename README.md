@@ -10,6 +10,11 @@
 -   Password strength/validator: Check for password strength & validity
 -   Number modifier: Modify number
 -   Phone number modifier: Modify phone number
+-   Number positivity checker: Check if number is negative or positive
+-   IP address validation: Validate IP
+-   Remove spaces: Remove spaces 
+-   Email domain checker: Check email domain
+-   Special chars removal: Remove special chars from
 -   Handle errors with success status & detailed message
 
 ## Install
