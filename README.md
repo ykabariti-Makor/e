@@ -15,7 +15,7 @@
 ## Install
 
 ```shell
-npm i enigma-x-validator
+npm i enigma-x-utilities
 ```
 
 ## Configuration
@@ -326,6 +326,7 @@ setConfig('phones', {
 });
 ```
 
+
 ### Success
 
 ```javascript
@@ -398,3 +399,6 @@ ipValidation('130.75.164.95');
 ipValidation('130.75.164');
 //You will recieve an object with {valid:false,message : Your ip is invalid.}
 ```
+
+## Resources
+codeSandbox - https://codesandbox.io/s/trusting-volhard-od81x?file=/src/App.js
