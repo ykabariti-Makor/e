@@ -183,12 +183,16 @@ const checkNumberPositivity = (number) => {
 		}
 	}
 };
-
+/**
+ *
+ * @param {string} email inserted by the user
+ * @returns boolean of tested input
+ */
 const emailDomainValidator = (email) => {
 	const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 	//test if email inserted is in email format
 	if (regex.test(email)) {
-		const domainList = config.emailDomainValidator.domainList?config.emailDomainValidator.domainList:undefined;
+		const domainList = config.emailDomainValidator.domainList ? config.emailDomainValidator.domainList : undefined;
 		// test if user inserted domain list
 		if (!domainList || !(Array.isArray(domainList) || typeof domainList === 'string')) {
 			return {
@@ -209,7 +213,7 @@ const emailDomainValidator = (email) => {
 		}
 
 		const extractedDomain = email.split('@')[1];
-		console.log("domainList",domainList)
+		console.log('domainList', domainList);
 		// test if email domain inserted is in domain list
 		if (domainList.includes(extractedDomain)) {
 			return {
