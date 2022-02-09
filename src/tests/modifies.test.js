@@ -53,9 +53,7 @@ test('phone number format invalid - error', async () => {
 	});
 });
 
-//************************************************************/
-
-test('user sends one separator - string is split according to it (even if it\'s not the most frequent) - successes', async () => {
+test("user sends one separator - string is split according to it (even if it's not the most frequent) - successes", async () => {
 	utils.setConfig('tags', {
 		separators: [','],
 	});
@@ -116,6 +114,7 @@ test('double char seperator - error', async () => {
 		success: false,
 	});
 });
+
 test('seperator doesnt contains special char - error', async () => {
 	utils.setConfig('tags', {
 		separators: ['3'],
@@ -123,5 +122,49 @@ test('seperator doesnt contains special char - error', async () => {
 	await expect(utils.tagsSeparator('a3b3c3d3e3f')).toStrictEqual({
 		message: 'Separators may only include special characters.',
 		success: false,
+	});
+});
+
+test('user sends string with unneeded spaces at the start/end of the string', () => {
+	expect(utils.removeSpaces('   user sends empty separators array, string is split according to most frequent char')).toStrictEqual({
+		data: 'user sends empty separators array, string is split according to most frequent char',
+		message: 'Spaces removed successfully',
+		success: true,
+	});
+});
+
+test('user sends string with unneeded spaces between words (more then one space)', () => {
+	expect(utils.removeSpaces('user      sends empty separators array, string is split according to most frequent char')).toStrictEqual({
+		data: 'user sends empty separators array, string is split according to most frequent char',
+
+		message: 'Spaces removed successfully',
+
+		success: true,
+	});
+});
+
+test('user sends string with unneeded spaces between words and punctuation marks (even one space is considered unneeded)', () => {
+	expect(utils.removeSpaces('user sends empty separators array , string is split according to most frequent char')).toStrictEqual({
+		data: 'user sends empty separators array, string is split according to most frequent char',
+		message: 'Spaces removed successfully',
+		success: true,
+	});
+});
+
+test('user sends string with unneeded whitespace created by tabs', () => {
+	expect(utils.removeSpaces('user sends     empty separators array , string is split according to most frequent char    ')).toStrictEqual(
+		{
+			data: 'user sends empty separators array, string is split according to most frequent char',
+			message: 'Spaces removed successfully',
+			success: true,
+		},
+	);
+});
+
+test('user sends duplicate words, function returns only unique tags - successes', async () => {
+	expect(tagsSeparator('sea-sun-moon-sea')).toStrictEqual({
+		success: true,
+		message: 'Tags array created successfully',
+		data: ['sea', 'sun', 'moon'],
 	});
 });
