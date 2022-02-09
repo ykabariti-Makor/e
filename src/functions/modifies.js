@@ -156,8 +156,8 @@ const numberFormatter = (numToFormat) => {
  * @returns object
  */
 const phoneNumberFormatter = (number) => {
-	const format = config.phones.format;
-	const isInternational = config.phones.isInternational;
+	const format = config.phoneNumberFormatter.format;
+	const isInternational = config.phoneNumberFormatter.isInternational;
 
 	const regexFormat = /^([\+]?[\(]?[0-9]{1,3}[\)]?)([\s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/;
 	const arr = format.split('-').map((str) => +str);

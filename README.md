@@ -15,7 +15,7 @@
 ## Install
 
 ```shell
-npm i enigma-x-validator
+npm i enigma-x-utilities
 ```
 
 ## Configuration
@@ -87,13 +87,13 @@ const { numberFormatter, setConfig } = require('enigma-x-utilities');
 
 // Config Default values
 setConfig('numberFormatter', {
-	overallDigitLimit:5,
-	decimalDigitLimit:2,
-	useColors:true,
-	colors:{
-    positive:"green",
-    negative:"red"
-  }
+	overallDigitLimit: 5,
+	decimalDigitLimit: 2,
+	useColors: true,
+	colors: {
+		positive: 'green',
+		negative: 'red',
+	},
 });
 ```
 
@@ -124,7 +124,6 @@ numberFormatter('asd')
 // Output
 { success: false, message: 'Input is not a valid number' }
 ```
-
 
 # URL Validator
 
@@ -239,32 +238,31 @@ const { passwordValidation, setConfig } = require('enigma-x-utilities');
 
 //Config default values
 setConfig('password', {
-	strengthOptions: [
-		{
-			value: 1,
-			minDiversity: 1,
-			minLength: 8,
-		},
+  strengthOptions: [
+    {
+      value: 1,
+      minDiversity: 1,
+      minLength: 8,
+    },
 
-		{
-			value: 'Medium',
-			minDiversity: 3,
-			minLength: 10,
-		},
+    {
+      value: 'Medium',
+      minDiversity: 3,
+      minLength: 10,
+    },
 
-		{
-			value: 'Strong',
-			minDiversity: 4,
-			minLength: 12,
-		},
-	],
-
-	characterLen: 12,
-	upperCase: 1,
-	lowerCase: 1,
-	num: 1,
-	symbol: '#?!@$%^&*-',
-});
+    {
+      value: 'Strong',
+      minDiversity: 4,
+      minLength: 12,
+    },
+  ],
+  characterLen: 12,
+  upperCase: 1,
+  lowerCase: 1,
+  num: 1,
+  symbol: '#?!@$%^&*-',
+})
 ```
 
 #### Success
@@ -350,7 +348,7 @@ phoneNumberFormatter('255-777-470')
 { success: false, message: 'Format does not match the number of digits in phone number' }
 ```
 
-# Special chars modifier.
+# Special chars modifier
 
 #### configuration
 
@@ -398,3 +396,44 @@ ipValidation('130.75.164.95');
 ipValidation('130.75.164');
 //You will recieve an object with {valid:false,message : Your ip is invalid.}
 ```
+
+# Email domain validator
+
+Feature for testing if inserted email input is contained inside a list of approved domains.
+
+```javascript
+const { emailDomainValidator, setConfig } = require('enigma-x-utilities');
+
+// Config Default values
+setConfig('emailDomainValidator', {
+	domainList: ['gmail.com', 'yahoo.com', 'blabla.co.il'],
+});
+```
+
+### Success
+
+```javascript
+// Validating email input
+emailDomainValidator('eli@yahoo.com')
+
+// Output
+{
+  success: true,
+  message: 'Email inserted is valid',
+  data: true
+  }
+```
+
+### Error
+
+```javascript
+// Validating email outside list of domains
+emailDomainValidator('eli@capital.com')
+
+// Output
+{ success: false, message: 'Email inserted is not in domain list' }
+```
+
+## Resources
+
+codeSandbox - https://codesandbox.io/s/restless-bash-3nrj2

@@ -2,8 +2,22 @@ const utils = require('../main');
 const { setConfig } = require('../config');
 const { numberFormatter } = require('../functions/modifies');
 
+test('user does not send separators, the string is split using the most frequent special char - successes', async () => {
+	await expect(utils.tagsSeparator('a,b,c,d,e,f')).toStrictEqual({
+		data: ['a', 'b', 'c', 'd', 'e', 'f'],
+		message: 'Tags array created successfully',
+		success: true,
+	});
+});
+test('user sends duplicate words, function returns only unique tags - successes', async () => {
+	await expect(utils.tagsSeparator('sea-sun-moon-sea')).toStrictEqual({
+		success: true,
+		message: 'Tags array created successfully',
+		data: ['sea', 'sun', 'moon'],
+	});
+});
 test('simple input - successes', async () => {
-	utils.setConfig('phones', {
+	utils.setConfig('phoneNumberFormatter', {
 		format: '3-8',
 	});
 	await expect(utils.phoneNumberFormatter('12345678765')).toStrictEqual({
@@ -14,7 +28,7 @@ test('simple input - successes', async () => {
 });
 
 test('simple input with isInternational: false- successes', async () => {
-	utils.setConfig('phones', {
+	utils.setConfig('phoneNumberFormatter', {
 		format: '3-4-4',
 		isInternational: false,
 	});
@@ -26,7 +40,7 @@ test('simple input with isInternational: false- successes', async () => {
 });
 
 test('phone number length test - error', async () => {
-	utils.setConfig('phones', {
+	utils.setConfig('phoneNumberFormatter', {
 		format: '3-8-5',
 	});
 	await expect(utils.phoneNumberFormatter('123-4567-876544133')).toStrictEqual({
@@ -36,7 +50,7 @@ test('phone number length test - error', async () => {
 });
 
 test('phone number format test - error', async () => {
-	utils.setConfig('phones', {
+	utils.setConfig('phoneNumberFormatter', {
 		format: '3-8',
 	});
 	await expect(utils.phoneNumberFormatter('123-4567-876544133')).toStrictEqual({
@@ -46,7 +60,7 @@ test('phone number format test - error', async () => {
 });
 
 test('phone number format invalid - error', async () => {
-	utils.setConfig('phones', {
+	utils.setConfig('phoneNumberFormatter', {
 		format: '3-3-4',
 	});
 	await expect(utils.phoneNumberFormatter('123$456$4133')).toStrictEqual({
@@ -54,8 +68,6 @@ test('phone number format invalid - error', async () => {
 		message: 'Phone number input is invalid',
 	});
 });
-
-//************************************************************/
 
 test('user sends one separator - string is split according to it (even if it\'s not the most frequent) - successes', async () => {
 	utils.setConfig('tags', {
@@ -74,14 +86,6 @@ test('user sends a couple of separators , string is split according to the most 
 	});
 	await expect(utils.tagsSeparator('a,b,c-d,e,f,a-b-c-d-e-f')).toStrictEqual({
 		data: ['a,b,c', 'd,e,f,a', 'b', 'c', 'd', 'e', 'f'],
-		message: 'Tags array created successfully',
-		success: true,
-	});
-});
-
-test('user does not send separators, the string is split using the most frequent special char - successes', async () => {
-	await expect(utils.tagsSeparator('a,b,c,d,e,f')).toStrictEqual({
-		data: ['a', 'b', 'c', 'd', 'e', 'f'],
 		message: 'Tags array created successfully',
 		success: true,
 	});
@@ -118,6 +122,7 @@ test('double char seperator - error', async () => {
 		success: false,
 	});
 });
+
 test('seperator doesnt contains special char - error', async () => {
 	utils.setConfig('tags', {
 		separators: ['3'],
@@ -126,6 +131,42 @@ test('seperator doesnt contains special char - error', async () => {
 		message: 'Separators may only include special characters.',
 		success: false,
 	});
+});
+
+test('user sends string with unneeded spaces at the start/end of the string', () => {
+	expect(utils.removeSpaces('   user sends empty separators array, string is split according to most frequent char')).toStrictEqual({
+		data: 'user sends empty separators array, string is split according to most frequent char',
+		message: 'Spaces removed successfully',
+		success: true,
+	});
+});
+
+test('user sends string with unneeded spaces between words (more then one space)', () => {
+	expect(utils.removeSpaces('user      sends empty separators array, string is split according to most frequent char')).toStrictEqual({
+		data: 'user sends empty separators array, string is split according to most frequent char',
+
+		message: 'Spaces removed successfully',
+
+		success: true,
+	});
+});
+
+test('user sends string with unneeded spaces between words and punctuation marks (even one space is considered unneeded)', () => {
+	expect(utils.removeSpaces('user sends empty separators array , string is split according to most frequent char')).toStrictEqual({
+		data: 'user sends empty separators array, string is split according to most frequent char',
+		message: 'Spaces removed successfully',
+		success: true,
+	});
+});
+
+test('user sends string with unneeded whitespace created by tabs', () => {
+	expect(utils.removeSpaces('user sends     empty separators array , string is split according to most frequent char    ')).toStrictEqual(
+		{
+			data: 'user sends empty separators array, string is split according to most frequent char',
+			message: 'Spaces removed successfully',
+			success: true,
+		},
+	);
 });
 
 describe(`~~~~~~~~~~~ ~ ~ ~ ### @ @ @                                  @ @ @ ### ~ ~ ~ ~~~~~~~~~~~
@@ -386,18 +427,26 @@ describe(`~~~~~~~~~~~ ~ ~ ~ ### @ @ @                                  @ @ @ ###
 		);
 	});
 });
+
+//success situation when no configuration function.
+test('specialCharModifier', async () => {
+	await expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({
+		success: true,
+		message: 'String successfully modified',
+		data: 'aviv  avisrur  ',
+	});
+});
 //success situation when config the function.
-test ('specialCharModifier',async ()=>{
-	utils.setConfig('specialCharsModifier',{exceptions:'@#$'});
-	expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({success:true,message:'String successfully modified',data:'aviv @ avisrur $# '});
+test('specialCharModifier', async () => {
+	utils.setConfig('specialCharsModifier', { exceptions: '@#$' });
+	await expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({
+		success: true,
+		message: 'String successfully modified',
+		data: 'aviv @ avisrur $# ',
+	});
 });
 
 //success situation when no configuration function.
-test ('specialCharModifier',async ()=>{
-	expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({success:true,message:'String successfully modified', data: 'aviv  avisrur  '});
-});
-
-//success situation when no configuration function.
-test ('specialCharModifier',async ()=>{
-	expect(utils.specialCharsModifier(12345)).toStrictEqual({success:false,message:'1234 should be string'});
+test('specialCharModifier', async () => {
+	await expect(utils.specialCharsModifier(12345)).toStrictEqual({ success: false, message: '12345 should be string' });
 });

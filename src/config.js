@@ -36,7 +36,7 @@ const config = {
 		domainOnly: false,
 		pathIncluded: true,
 	},
-	phones: {
+	phoneNumberFormatter: {
 		format: '3-2-3-4',
 		isInternational: true,
 	},
@@ -51,6 +51,9 @@ const config = {
 	},
 	checkNumberPositivity: {
 		zeroIncluded: false,
+	},
+	emailDomainValidator: {
+		domainList: undefined,
 	},
 };
 
@@ -104,13 +107,15 @@ const setConfig = (configName, parameters) => {
 			if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly;
 			if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded;
 			break;
-		case 'phones':
-			if (parameters.format !== undefined) config.phones.format = parameters.format;
-			if (parameters.isInternational !== undefined) config.phones.isInternational = parameters.isInternational;
+		case 'phoneNumberFormatter':
+			if (parameters.format !== undefined) config.phoneNumberFormatter.format = parameters.format;
+			if (parameters.isInternational !== undefined) config.phoneNumberFormatter.isInternational = parameters.isInternational;
 			break;
 		case 'tags':
 			config.tags.separators = parameters.separators;
 			break;
+		case 'emailDomainValidator':
+			if (parameters.domainList !== undefined) config.emailDomainValidator.domainList = parameters.domainList;
 		case 'specialCharsModifier':
 			config.specialCharsModifier.exceptions = parameters.exceptions;
 			break;
