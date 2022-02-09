@@ -5,12 +5,12 @@
 
 ## Features
 
-- URL validator: Check URL validaity & domain/path formatter
-- Tags separator: Separate tags
-- Password strength/validator: Check for password strength & validity
-- Number modifier: Modify number
-- Phone number modifier: Modify phone number
-- Handle errors with success status & detailed message
+-   URL validator: Check URL validaity & domain/path formatter
+-   Tags separator: Separate tags
+-   Password strength/validator: Check for password strength & validity
+-   Number modifier: Modify number
+-   Phone number modifier: Modify phone number
+-   Handle errors with success status & detailed message
 
 ## Install
 
@@ -21,10 +21,10 @@ npm i enigma-x-validator
 ## Configuration
 
 Configuration is optional, you can use most of the functions as they are, every optional option has default value.
-But if you would like to modifiy the values use `setConfig` function.
+But if you would like to modifiy the values use the `setConfig` function.
 
 ```javascript
-const { setConfig } = require("enigma-x-utilities");
+const { setConfig } = require('enigma-x-utilities');
 
 /**
  * setConfig for configuration
@@ -32,9 +32,9 @@ const { setConfig } = require("enigma-x-utilities");
  * @param {parameters} object fields to config
  * @returns void
  */
-setConfig("phones", {
-  format: "10",
-  isInternational: true
+setConfig('phones', {
+	format: '10',
+	isInternational: true,
 });
 ```
 
@@ -42,16 +42,16 @@ setConfig("phones", {
 
 # URL Validator
 
-Feature for validating & formatting URL, check if URL is valid & format the URL
-Return formatted URL
+Feature for validating & formatting URL, check if URL is valid & format the URL.
+Return formatted URL.
 
 ```javascript
-const { URLValidator, setConfig } = require("enigma-x-utilities");
+const { URLValidator, setConfig } = require('enigma-x-utilities');
 
 // Config Default values
-setConfig("URLValidator", {
-  domainName: false,
-  pathIncluded: true
+setConfig('URLValidator', {
+	domainName: false,
+	pathIncluded: true,
 });
 ```
 
@@ -81,39 +81,36 @@ URLValidator('blablablablo')
 
 # Tags Separator
 
+Feature for sepataring tags, Receives string and splits it into an array. Optionaly you can config the separators passing an array of chars to the config function.
+Return sepatarted tags array.
+
 ```javascript
-const { tagsSeparator, setConfig } = require("enigma-x-utilities");
+const { tagsSeparator, setConfig } = require('enigma-x-utilities');
 
 //Config default values
-setConfig("tags", {
-  separators: undefined
+setConfig('tags', {
+	separators: undefined,
 });
 ```
-
-### Description
-
-Receives string and splits it into an array.
-
-The argument is the string to be splitted.
-
-Optionaly you can config the separators passing an array of chars to the config function
 
 ```javascript
-setConfig("tags", {
-  separators: ["$", "^", "&"]
+setConfig('tags', {
+	separators: ['$', '^', '&'],
 });
 ```
 
-- If no array of separators is passed, the function will decide what should be treated as the separator by looking for all the \*special
-  characters in the string and taking the most frequent one as the separator (if there are a couple of separators equally
-  frequent at the top - the one that shows up first in the string is selected).
+## Description
 
-- If the array contains only one item, the function treats it as the separtor and splits the string into tags according to it.
+-   If no array of separators is passed, the function will decide what should be treated as the separator by looking for all the \*special
+    characters in the string and taking the most frequent one as the separator (if there are a couple of separators equally
+    frequent at the top - the one that shows up first in the string is selected).
 
-- If the array contains more than one item, the array is treated as optional allowed separators.
-  The actual separator will be the option that shows up most frequently in the passed string.
+-   If the array contains only one item, the function treats it as the separtor and splits the string into tags according to it.
 
-- The array of separators may only contain \*special characters. Each separator should consist of one character only.
+-   If the array contains more than one item, the array is treated as optional allowed separators.
+    The actual separator will be the option that shows up most frequently in the passed string.
+
+-   The array of separators may only contain \*special characters. Each separator should consist of one character only.
 
 \*Special characters: any character that is not a-z, A-Z,0-9, \_
 
@@ -152,36 +149,36 @@ Return object after validation is succeed.
 #### configuration
 
 ```javascript
-const { setConfig } = require("./config");
-const { passwordValidation } = require("./utils/auth");
+const { setConfig } = require('./config');
+const { passwordValidation } = require('./utils/auth');
 
 //Config default values
-setConfig("password", {
-  strengthOptions: [
-    {
-      value: 1,
-      minDiversity: 1,
-      minLength: 8
-    },
+setConfig('password', {
+	strengthOptions: [
+		{
+			value: 1,
+			minDiversity: 1,
+			minLength: 8,
+		},
 
-    {
-      value: "Medium",
-      minDiversity: 3,
-      minLength: 10
-    },
+		{
+			value: 'Medium',
+			minDiversity: 3,
+			minLength: 10,
+		},
 
-    {
-      value: "Strong",
-      minDiversity: 4,
-      minLength: 12
-    }
-  ],
+		{
+			value: 'Strong',
+			minDiversity: 4,
+			minLength: 12,
+		},
+	],
 
-  characterLen: 12,
-  upperCase: 1,
-  lowerCase: 1,
-  num: 1,
-  symbol: "#?!@$%^&*-"
+	characterLen: 12,
+	upperCase: 1,
+	lowerCase: 1,
+	num: 1,
+	symbol: '#?!@$%^&*-',
 });
 ```
 
@@ -235,12 +232,12 @@ passwordValidation("112412$@Aa")
 Feature for international phone number validation ,check if the phone number is valid based on the input, And reformat the phone number by user configuration.
 
 ```javascript
-const { phoneNumberFormatter, setConfig } = require("enigma-x-utilities");
+const { phoneNumberFormatter, setConfig } = require('enigma-x-utilities');
 
 // Config Default values
-setConfig("phones", {
-  format: "3-3-3-4",
-  isInternational: true
+setConfig('phones', {
+	format: '3-3-3-4',
+	isInternational: true,
 });
 ```
 
