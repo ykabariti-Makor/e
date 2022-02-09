@@ -446,6 +446,35 @@ emailDomainValidator('eli@capital.com')
 { success: false, message: 'Email inserted is not in domain list' }
 ```
 
+# Space Remover
+
+Feature for removing unneeded whitespace from text. Receives a string and returns a string.
+
+```javascript
+const { removeSpaces  } = require('enigma-x-utilities');
+
+
+## Description
+
+-   removeSpaces removes whitespace of any sort before and after text; removes more than one whitespace between words and
+    any whitespace between words and pumctuation marks.
+
+
+
+### Success
+
+```javascript
+// Removing unneeded spaces
+removeSpaces('user      sends empty separators array, string is split according to most frequent char')
+
+// Output
+{
+  success: true,
+  message: 'Spaces removed successfully',
+  data: 'user sends empty separators array, string is split according to most frequent char'
+}
+```
+
 ## Resources
 
 codeSandbox - https://codesandbox.io/s/dry-sky-dfi7x
