@@ -100,7 +100,7 @@ setConfig('numberFormatter', {
 ### Success
 
 ```javascript
-// Validating & formatting phone number
+
 numberFormatter(123456.1)
 
 // Output
@@ -118,7 +118,7 @@ numberFormatter(123456.1)
 ### Error
 
 ```javascript
-// Validating & formatting phone number
+
 numberFormatter('asd')
 
 // Output
