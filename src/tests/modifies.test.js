@@ -1,7 +1,7 @@
 const utils = require('../main');
 
 test('simple input - successes', async () => {
-	utils.setConfig('phones', {
+	utils.setConfig('phoneNumberFormatter', {
 		format: '3-8',
 	});
 	await expect(utils.phoneNumberFormatter('12345678765')).toStrictEqual({
@@ -12,7 +12,7 @@ test('simple input - successes', async () => {
 });
 
 test('simple input with isInternational: false- successes', async () => {
-	utils.setConfig('phones', {
+	utils.setConfig('phoneNumberFormatter', {
 		format: '3-4-4',
 		isInternational: false,
 	});
@@ -24,7 +24,7 @@ test('simple input with isInternational: false- successes', async () => {
 });
 
 test('phone number length test - error', async () => {
-	utils.setConfig('phones', {
+	utils.setConfig('phoneNumberFormatter', {
 		format: '3-8-5',
 	});
 	await expect(utils.phoneNumberFormatter('123-4567-876544133')).toStrictEqual({
@@ -34,7 +34,7 @@ test('phone number length test - error', async () => {
 });
 
 test('phone number format test - error', async () => {
-	utils.setConfig('phones', {
+	utils.setConfig('phoneNumberFormatter', {
 		format: '3-8',
 	});
 	await expect(utils.phoneNumberFormatter('123-4567-876544133')).toStrictEqual({
@@ -44,7 +44,7 @@ test('phone number format test - error', async () => {
 });
 
 test('phone number format invalid - error', async () => {
-	utils.setConfig('phones', {
+	utils.setConfig('phoneNumberFormatter', {
 		format: '3-3-4',
 	});
 	await expect(utils.phoneNumberFormatter('123$456$4133')).toStrictEqual({
