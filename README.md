@@ -370,14 +370,19 @@ setConfig('special chars', '@');
 
 ```javascript
 specialCharsModifier('12#$3%4567');
-//expected result will be 1234567
+//Output
+{success:true,
+message:"String modify successfully
+data:string
+}
 ```
 
 #### Error
 
 ```javascript
 specialCharsModifier(123$4%^&)
-//the function must get string. in this case you will recieve an error
+//Output
+{success:false,message:"123$4%^& must be a string"}
 ```
 
 # Ip validation
@@ -392,14 +397,16 @@ const { ipValidation } = require('enigma-x-utilities');
 
 ```javascript
 ipValidation('130.75.164.95');
-//You will recieve and object with {valid:true,message:Your ip is valid!}
+//Output
+{success:true,message:ip is valid}
 ```
 
 #### Error
 
 ```javascript
 ipValidation('130.75.164');
-//You will recieve an object with {valid:false,message : Your ip is invalid.}
+//Output
+{success:false,message:ip is not valid}
 ```
 
 # Email domain validator
