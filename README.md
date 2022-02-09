@@ -87,13 +87,13 @@ const { numberFormatter, setConfig } = require('enigma-x-utilities');
 
 // Config Default values
 setConfig('numberFormatter', {
-	overallDigitLimit:5,
-	decimalDigitLimit:2,
-	useColors:true,
-	colors:{
-    positive:"green",
-    negative:"red"
-  }
+	overallDigitLimit: 5,
+	decimalDigitLimit: 2,
+	useColors: true,
+	colors: {
+		positive: 'green',
+		negative: 'red',
+	},
 });
 ```
 
@@ -124,7 +124,6 @@ numberFormatter('asd')
 // Output
 { success: false, message: 'Input is not a valid number' }
 ```
-
 
 # URL Validator
 
@@ -326,7 +325,6 @@ setConfig('phones', {
 });
 ```
 
-
 ### Success
 
 ```javascript
@@ -400,5 +398,42 @@ ipValidation('130.75.164');
 //You will recieve an object with {valid:false,message : Your ip is invalid.}
 ```
 
+# Email domain validator
+
+Feature for testing if inserted email input is contained inside a list of approved domains.
+
+```javascript
+const { emailDomainValidator, setConfig } = require('enigma-x-utilities');
+
+// Config Default values
+setConfig('emailDomainValidator', {
+	domainList: ['gmail.com', 'yahoo.com', 'blabla.co.il'],
+});
+```
+
+### Success
+
+```javascript
+// Validating email input
+emailDomainValidator('eli@yahoo.com')
+
+// Output
+{
+  success: true,
+  message: 'Email inserted is valid',
+  }
+```
+
+### Error
+
+```javascript
+// Validating email outside list of domains
+emailDomainValidator('eli@capital.com')
+
+// Output
+{ success: false, message: 'Email inserted is not in domain list' }
+```
+
 ## Resources
+
 codeSandbox - https://codesandbox.io/s/trusting-volhard-od81x?file=/src/App.js

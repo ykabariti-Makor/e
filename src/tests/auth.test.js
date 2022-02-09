@@ -62,6 +62,76 @@ test('password valid', async () => {
 	});
 });
 
+//****************************************************/
+test('domain list is undefined - error', async () => {
+
+	await expect(utils.emailDomainValidator('ortal0166@gmail.com')).toStrictEqual({
+	  success: false,
+		message: 'domain list is required and must be string or array of strings'
+	});
+});
+
+test('email input matches domain value single string - successes', async () => {
+	utils.setConfig('emailDomainValidator', {
+		domainList: ['makor-capital.com'],
+	});
+	await expect(utils.emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
+		success: true,
+		message: 'Email inserted is valid',
+	});
+});
+
+test('email input matches domain list values inside array of strings - successes', async () => {
+	utils.setConfig('emailDomainValidator', {
+		domainList: ['makor-capital.com', 'enigma-securities.com'],
+	});
+	await expect(utils.emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
+		success: true,
+		message: 'Email inserted is valid',
+	});
+});
+
+test('Domain list is single input number type - error', async () => {
+	utils.setConfig('emailDomainValidator', {
+		domainList: 3,
+	});
+	await expect(utils.emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
+		success: false,
+		message: 'domain list is required and must be string or array of strings',
+	});
+});
+
+test('Domain list is array of numbers - error', async () => {
+	utils.setConfig('emailDomainValidator', {
+		domainList: [3, 3, 5],
+	});
+	await expect(utils.emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
+		success: false,
+		message: 'domain list must be string or array of strings only',
+	});
+});
+
+test('email input doesn\'t match the domain value single string - error', async () => {
+	utils.setConfig('emailDomainValidator', {
+		domainList: 'enigma.com',
+	});
+	await expect(utils.emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
+		success: false,
+		message: 'Email inserted is not in domain list',
+	});
+});
+
+test('email input doesn\'t match domain list values inside array of strings - error', async () => {
+	utils.setConfig('emailDomainValidator', {
+		domainList: ['makor-capital.com', 'enigma-securities.com'],
+	});
+	await expect(utils.emailDomainValidator('yonit@makor-group.com')).toStrictEqual({
+		success: false,
+		message: 'Email inserted is not in domain list',
+	});
+});
+
+
 //success situation
 test('ip validation', async () => {
 	await expect(utils.ValidateIPaddress('10.0.0.36')).toStrictEqual({ success: true, message: 'IP is valid' });

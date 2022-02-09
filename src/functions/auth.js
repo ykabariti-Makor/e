@@ -1,8 +1,6 @@
 const { config } = require('../config');
 const { passwordStrength, isURLValid } = require('../utils/auth');
 
-// console.log(a);
-
 /**
  * URL validator for url validation & formatting
  * @param {url} string url
@@ -181,10 +179,59 @@ const checkNumberPositivity = (number) => {
 		}
 	}
 };
+/**
+ *
+ * @param {string} email inserted by the user
+ * @returns boolean of tested input
+ */
+const emailDomainValidator = (email) => {
+	const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	//test if email inserted is in email format
+	if (regex.test(email)) {
+		const domainList = config.emailDomainValidator.domainList ? config.emailDomainValidator.domainList : undefined;
+		// test if user inserted domain list
+		if (!domainList || !(Array.isArray(domainList) || typeof domainList === 'string')) {
+			return {
+				success: false,
+				message: 'domain list is required and must be string or array of strings',
+			};
+		}
 
+		// test if array contains not string values
+		if (Array.isArray(domainList)) {
+			for (const domain of domainList) {
+				if (typeof domain !== 'string')
+					return {
+						success: false,
+						message: 'domain list must be string or array of strings only',
+					};
+			}
+		}
+
+		const extractedDomain = email.split('@')[1];
+		// test if email domain inserted is in domain list
+		if (domainList.includes(extractedDomain)) {
+			return {
+				success: true,
+				message: 'Email inserted is valid',
+			};
+		} else {
+			return {
+				success: false,
+				message: 'Email inserted is not in domain list',
+			};
+		}
+	} else {
+		return {
+			success: false,
+			message: 'Email inserted is invalid',
+		};
+	}
+};
 module.exports = {
 	URLValidator,
 	passwordValidation,
 	ValidateIPaddress,
 	checkNumberPositivity,
+	emailDomainValidator,
 };
