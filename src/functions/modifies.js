@@ -74,8 +74,12 @@ const tagsSeparator = (string) => {
 	// Moving from the separator as a string to a regex that represents it correctly
 	const specialChars = ['.', '*', '?', '$', '^', '(', ')', '|'];
 	let inferredReg;
+	let tags;
 
-	if (inferredSeparator === ' ') {
+	if(!inferredSeparator){
+		//if there is no inferred separator, no special chars - there will be one tag containing the string
+		tags = [string]
+	}else if (inferredSeparator === ' ') {
 		inferredReg = /\s/;
 	} else if (specialChars.includes(inferredSeparator)) {
 		// Add backslash
@@ -83,7 +87,8 @@ const tagsSeparator = (string) => {
 	} else {
 		inferredReg = new RegExp(inferredSeparator);
 	}
-	const tags = [...new Set(string.split(inferredReg))];
+	let notAtagReg = /\W/
+	tags = [...new Set(string.split(inferredReg))].filter(tag => !((tag.length === 1 && notAtagReg.test(tag) ) || tag.length === 0 || tag === " "));
 
 	return {
 		success: true,
