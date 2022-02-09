@@ -21,7 +21,7 @@ npm i enigma-x-validator
 ## Configuration
 
 Configuration is optional, you can use most of the functions as they are, every optional option has default value.
-But if you would like to modifiy the values use `setConfig` function.
+But if you would like to modifiy the values use the `setConfig` function.
 
 ```javascript
 const { setConfig } = require('enigma-x-utilities');
@@ -42,8 +42,8 @@ setConfig('phones', {
 
 # URL Validator
 
-Feature for validating & formatting URL, check if URL is valid & format the URL
-Return formatted URL
+Feature for validating & formatting URL, check if URL is valid & format the URL.
+Return formatted URL.
 
 ```javascript
 const { URLValidator, setConfig } = require('enigma-x-utilities');
@@ -81,6 +81,9 @@ URLValidator('blablablablo')
 
 # Tags Separator
 
+Feature for sepataring tags, Receives string and splits it into an array. Optionaly you can config the separators passing an array of chars to the config function.
+Return sepatarted tags array.
+
 ```javascript
 const { tagsSeparator, setConfig } = require('enigma-x-utilities');
 
@@ -90,19 +93,13 @@ setConfig('tags', {
 });
 ```
 
-### Description
-
-Receives string and splits it into an array.
-
-The argument is the string to be splitted.
-
-Optionaly you can config the separators passing an array of chars to the config function
-
 ```javascript
 setConfig('tags', {
 	separators: ['$', '^', '&'],
 });
 ```
+
+## Description
 
 -   If no array of separators is passed, the function will decide what should be treated as the separator by looking for all the \*special
     characters in the string and taking the most frequent one as the separator (if there are a couple of separators equally
