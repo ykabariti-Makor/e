@@ -69,7 +69,7 @@ test('phone number format invalid - error', async () => {
 	});
 });
 
-test("user sends one separator - string is split according to it (even if it's not the most frequent) - successes", async () => {
+test('user sends one separator - string is split according to it (even if it\'s not the most frequent) - successes', async () => {
 	utils.setConfig('tags', {
 		separators: [','],
 	});

@@ -1,8 +1,6 @@
 const { config } = require('../config');
 const { passwordStrength, isURLValid } = require('../utils/auth');
 
-// console.log(a);
-
 /**
  * URL validator for url validation & formatting
  * @param {url} string url
@@ -86,37 +84,37 @@ const passwordValidation = (password) => {
 		let validation = [
 			config.password.characterLen !== undefined && config.password.characterLen !== 0
 				? {
-						title: 'CharacterLen',
-						valid: false,
-						re: new RegExp('^.{' + config.password.characterLen + ',}$'),
+					title: 'CharacterLen',
+					valid: false,
+					re: new RegExp('^.{' + config.password.characterLen + ',}$'),
 				  }
 				: null,
 			config.password.upperCase !== undefined && config.password.upperCase !== 0
 				? {
-						title: 'UpperCase',
-						valid: false,
-						re: new RegExp('^(.*?[A-Z]){' + config.password.upperCase + ',}'),
+					title: 'UpperCase',
+					valid: false,
+					re: new RegExp('^(.*?[A-Z]){' + config.password.upperCase + ',}'),
 				  }
 				: null,
 			config.password.lowerCase !== undefined && config.password.lowerCase !== 0
 				? {
-						title: 'LowerCase',
-						valid: false,
-						re: new RegExp('^(.*?[a-z]){' + config.password.lowerCase + ',}'),
+					title: 'LowerCase',
+					valid: false,
+					re: new RegExp('^(.*?[a-z]){' + config.password.lowerCase + ',}'),
 				  }
 				: null,
 			config.password.num !== undefined && config.password.num !== 0
 				? {
-						title: 'Number',
-						valid: false,
-						re: new RegExp('^(.*?[0-9]){' + config.password.num + ',}'),
+					title: 'Number',
+					valid: false,
+					re: new RegExp('^(.*?[0-9]){' + config.password.num + ',}'),
 				  }
 				: null,
 			config.password.symbol !== undefined && config.password.symbol !== '' && config.password.symbol !== 0
 				? {
-						title: 'NonAlphaNumeric',
-						valid: false,
-						re: new RegExp('^(.*?[' + config.password.symbol + ',])'),
+					title: 'NonAlphaNumeric',
+					valid: false,
+					re: new RegExp('^(.*?[' + config.password.symbol + ',])'),
 				  }
 				: null,
 		];
@@ -138,10 +136,10 @@ const ValidateIPaddress = (ipaddress) => {
 			ipaddress,
 		)
 	) {
-		return {success:true,message:'IP is valid'};
+		return { success: true, message: 'IP is valid' };
 	}
 
-	return {success:false,message:'IP is invalid'};
+	return { success: false, message: 'IP is invalid' };
 };
 
 const checkNumberPositivity = (number) => {
@@ -211,7 +209,6 @@ const emailDomainValidator = (email) => {
 		}
 
 		const extractedDomain = email.split('@')[1];
-		console.log('domainList', domainList);
 		// test if email domain inserted is in domain list
 		if (domainList.includes(extractedDomain)) {
 			return {
