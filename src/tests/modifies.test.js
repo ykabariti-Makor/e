@@ -57,7 +57,7 @@ test('phone number format invalid - error', async () => {
 
 //************************************************************/
 
-test("user sends one separator - string is split according to it (even if it's not the most frequent) - successes", async () => {
+test('user sends one separator - string is split according to it (even if it\'s not the most frequent) - successes', async () => {
 	utils.setConfig('tags', {
 		separators: [','],
 	});
@@ -143,7 +143,7 @@ describe(`~~~~~~~~~~~ ~ ~ ~ ### @ @ @                                  @ @ @ ###
 		setConfig('numberFormatter', {
 			overallDigitLimit: 10,
 			decimalDigitLimit: 2,
-		}); 
+		});
 
 		expect(numberFormatter(234)).toEqual(
 			expect.objectContaining({
@@ -387,17 +387,17 @@ describe(`~~~~~~~~~~~ ~ ~ ~ ### @ @ @                                  @ @ @ ###
 	});
 });
 //success situation when config the function.
-test ("specialCharModifier",async ()=>{
-	utils.setConfig("specialCharsModifier",{exceptions:"@#$"})
-	expect(utils.specialCharsModifier("av!iv @ avisrur $# !&*")).toStrictEqual({success:true,message:"String successfully modified",data:'aviv @ avisrur $# '})
-})
+test ('specialCharModifier',async ()=>{
+	utils.setConfig('specialCharsModifier',{exceptions:'@#$'});
+	expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({success:true,message:'String successfully modified',data:'aviv @ avisrur $# '});
+});
 
 //success situation when no configuration function.
-test ("specialCharModifier",async ()=>{
-	expect(utils.specialCharsModifier("av!iv @ avisrur $# !&*")).toStrictEqual({success:true,message:"String successfully modified", data: 'aviv  avisrur  '})
-})
+test ('specialCharModifier',async ()=>{
+	expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({success:true,message:'String successfully modified', data: 'aviv  avisrur  '});
+});
 
 //success situation when no configuration function.
-test ("specialCharModifier",async ()=>{
-	expect(utils.specialCharsModifier(12345)).toStrictEqual({success:false,message:"1234 should be string"})
-})
+test ('specialCharModifier',async ()=>{
+	expect(utils.specialCharsModifier(12345)).toStrictEqual({success:false,message:'1234 should be string'});
+});

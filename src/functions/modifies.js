@@ -113,7 +113,6 @@ const numberFormatter = (numToFormat) => {
 	}
 
 	const { overallDigitLimit, decimalDigitLimit, useColors, colors } = config.numberFormatter;
-	console.log('🚀 ~ file: modifies.js ~ line 117 ~ numberFormatter ~ config.numberFormatter', config.numberFormatter);
 	//if the number have floating point count it.
 	const hasFloatingPoint = String(numToFormat).includes('.') ? 1 : 0;
 	let processedNumber = numToFormat,
@@ -144,7 +143,7 @@ const numberFormatter = (numToFormat) => {
 		},
 	};
 
-	if (useColors) obj.color = colors[isNegative ? 'negative' : 'positive'];
+	if (useColors) obj.data.color = colors[isNegative ? 'negative' : 'positive'];
 
 	return obj;
 };
@@ -216,21 +215,21 @@ const phoneNumberFormatter = (number) => {
 	}
 };
 /**
- * Special characters modifier 
- * @param {string} string any string 
+ * Special characters modifier
+ * @param {string} string any string
  * @returns object
  */
 const specialCharsModifier = (string) => {
-	if(typeof string !== 'string'){
+	if (typeof string !== 'string') {
 		return {
-			success:false,
-			message: `${string} should be string`
-		}
+			success: false,
+			message: `${string} should be string`,
+		};
 	}
 	const formattedReg = new RegExp('[^A-Za-z0-9 ' + config.specialCharsModifier.exceptions + ']', 'g');
 	const replacedString = string.replace(formattedReg, '');
 
-	return {success:true,message:"String successfully modified",data:replacedString};
+	return { success: true, message: 'String successfully modified', data: replacedString };
 };
 
 /**

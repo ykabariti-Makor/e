@@ -47,7 +47,7 @@ const config = {
 		overallDigitLimit: 100,
 		decimalDigitLimit: 100,
 		useColors: false,
-		colors: {}
+		colors: {},
 	},
 	checkNumberPositivity: {
 		zeroIncluded: false,
@@ -56,62 +56,61 @@ const config = {
 
 const setConfig = (configName, parameters) => {
 	switch (configName) {
-		case 'password':
-			config.password = {
-				characterLen:
+	case 'password':
+		config.password = {
+			characterLen:
 					parameters.characterLen === null || parameters.characterLen === undefined || parameters.characterLen === 0
 						? undefined
 						: parameters.characterLen,
-				upperCase:
+			upperCase:
 					parameters.upperCase === null || parameters.upperCase === undefined || parameters.upperCase === 0
 						? undefined
 						: parameters.upperCase,
-				lowerCase:
+			lowerCase:
 					parameters.lowerCase === null || parameters.lowerCase === undefined || parameters.lowerCase === 0
 						? undefined
 						: parameters.lowerCase,
-				num: parameters.num === null || parameters.num === undefined || parameters.num === 0 ? undefined : parameters.num,
-				symbol:
+			num: parameters.num === null || parameters.num === undefined || parameters.num === 0 ? undefined : parameters.num,
+			symbol:
 					parameters.symbol === null || parameters.symbol === undefined || parameters.symbol === ''
 						? undefined
 						: parameters.symbol,
-				strengthOptions: parameters.strengthOptions
-					? parameters.strengthOptions.map((opt, index) => ({
-							...opt,
-							id: index,
+			strengthOptions: parameters.strengthOptions
+				? parameters.strengthOptions.map((opt, index) => ({
+					...opt,
+					id: index,
 					  }))
-					: config.password.strengthOptions.map((opt, index) => ({
-							...opt,
-							id: index,
-							minLength: parameters.characterLen + (index === 0 ? 0 : (index *= 2)),
+				: config.password.strengthOptions.map((opt, index) => ({
+					...opt,
+					id: index,
+					minLength: parameters.characterLen + (index === 0 ? 0 : (index *= 2)),
 					  })),
-			};
-			break;
+		};
+		break;
 
-		case 'numberFormatter':
-			console.log("🚀 ~ file: config.js ~ line 90 ~ setConfig ~ parameters", parameters)
-			if (parameters.overallDigitLimit !== undefined) config.numberFormatter.overallDigitLimit = parameters.overallDigitLimit;
-			if (parameters.decimalDigitLimit !== undefined) config.numberFormatter.decimalDigitLimit = parameters.decimalDigitLimit;
-			if (parameters.useColors) {
-				config.numberFormatter.useColors = true;
-				config.numberFormatter.colors.positive = parameters.colors.positive;
-				config.numberFormatter.colors.negative = parameters.colors.negative;
-			}
-			break;
-		case 'URLValidator' || 'urlValidator':
-			if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly;
-			if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded;
-			break;
-		case 'phones':
-			if (parameters.format !== undefined) config.phones.format = parameters.format;
-			if (parameters.isInternational !== undefined) config.phones.isInternational = parameters.isInternational;
-			break;
-		case 'tags':
-			config.tags.separators = parameters.separators;
-			break;
-		case 'specialCharsModifier':
-			config.specialCharsModifier.exceptions = parameters.exceptions;
-			break;
+	case 'numberFormatter':
+		if (parameters.overallDigitLimit !== undefined) config.numberFormatter.overallDigitLimit = parameters.overallDigitLimit;
+		if (parameters.decimalDigitLimit !== undefined) config.numberFormatter.decimalDigitLimit = parameters.decimalDigitLimit;
+		if (parameters.useColors) {
+			config.numberFormatter.useColors = true;
+			config.numberFormatter.colors.positive = parameters.colors.positive;
+			config.numberFormatter.colors.negative = parameters.colors.negative;
+		}
+		break;
+	case 'URLValidator' || 'urlValidator':
+		if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly;
+		if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded;
+		break;
+	case 'phones':
+		if (parameters.format !== undefined) config.phones.format = parameters.format;
+		if (parameters.isInternational !== undefined) config.phones.isInternational = parameters.isInternational;
+		break;
+	case 'tags':
+		config.tags.separators = parameters.separators;
+		break;
+	case 'specialCharsModifier':
+		config.specialCharsModifier.exceptions = parameters.exceptions;
+		break;
 	}
 };
 

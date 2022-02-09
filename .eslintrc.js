@@ -28,7 +28,7 @@ module.exports = {
 		'no-multiple-empty-lines': 'error',
 		'no-trailing-spaces': 'error',
 		'require-await': 'error',
-		'no-var': 'eyrror',
+		'no-var': 'error',
 		'no-labels': 'error',
 		'no-inline-comments': 'error',
 		'eqeqeq': 'error',

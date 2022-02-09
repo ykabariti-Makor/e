@@ -13,13 +13,3 @@ module.exports = {
 	checkNumberPositivity,
 	specialCharsModifier,
 };
-
-
-setConfig('numberFormatter', {
-	overallDigitLimit: 3,
-	decimalDigitLimit: 2,
-	useColors: true,
-	colors: {positive: 'asd',negative: 'asdasd'}
-});
-
-console.log(numberFormatter(5000000000));
