@@ -56,12 +56,12 @@ test('phone number format invalid - error', async () => {
 
 //************************************************************/
 
-test("user sends one separator - string is split according to it - successes", async () => {
+test("user sends one separator - string is split according to it (even if it's not the most frequent) - successes", async () => {
   utils.setConfig("tags", {
     separators: [","],
   });
-  expect(utils.tagsSeparator("a,b,c,d,e,f")).toStrictEqual({
-    data: ["a", "b", "c", "d", "e", "f"],
+  expect(utils.tagsSeparator("a:b:c:d,e,f")).toStrictEqual({
+    data: ["a:b:c:d", "e", "f"],
     message: "Tags array created successfully",
     success: true,
   });
