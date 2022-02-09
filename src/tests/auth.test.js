@@ -132,3 +132,17 @@ test("email input doesn't match domain list values inside array of strings - err
 });
 
 
+//success situation
+test('ip validation', async () => {
+	await expect(utils.ValidateIPaddress('10.0.0.36')).toStrictEqual({ success: true, message: 'IP is valid' });
+});
+
+//failed situation - wrong input
+test('ip validation fail', async () => {
+	await expect(utils.ValidateIPaddress(10)).toStrictEqual({ success: false, message: 'IP is invalid' });
+});
+
+//failed situation - wrong ip
+test('ip validation fail', async () => {
+	await expect(utils.ValidateIPaddress('10.0.0')).toStrictEqual({ success: false, message: 'IP is invalid' });
+});

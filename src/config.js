@@ -1,4 +1,7 @@
 const config = {
+	specialCharsModifier: {
+		exceptions: '',
+	},
 	password: {
 		strengthOptions: [
 			{
@@ -40,9 +43,11 @@ const config = {
 	tags: {
 		separators: undefined,
 	},
-	numsFormater: {
+	numberFormatter: {
 		overallDigitLimit: 100,
 		decimalDigitLimit: 100,
+		useColors: false,
+		colors: {},
 	},
 	checkNumberPositivity: {
 		zeroIncluded: false,
@@ -86,9 +91,14 @@ const setConfig = (configName, parameters) => {
 			};
 			break;
 
-		case 'formatter':
-			if (parameters.overallDigitLimit !== undefined) config.numsFormater.overallDigitLimit = parameters.overallDigitLimit;
-			if (parameters.decimalDigitLimit !== undefined) config.numsFormater.decimalDigitLimit = parameters.decimalDigitLimit;
+		case 'numberFormatter':
+			if (parameters.overallDigitLimit !== undefined) config.numberFormatter.overallDigitLimit = parameters.overallDigitLimit;
+			if (parameters.decimalDigitLimit !== undefined) config.numberFormatter.decimalDigitLimit = parameters.decimalDigitLimit;
+			if (parameters.useColors) {
+				config.numberFormatter.useColors = true;
+				config.numberFormatter.colors.positive = parameters.colors.positive;
+				config.numberFormatter.colors.negative = parameters.colors.negative;
+			}
 			break;
 		case 'URLValidator' || 'urlValidator':
 			if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly;
@@ -103,6 +113,8 @@ const setConfig = (configName, parameters) => {
 			break;
 		case 'emailDomainValidator':
 			if (parameters.domainList !== undefined) config.emailDomainValidator.domainList = parameters.domainList;
+		case 'specialCharsModifier':
+			config.specialCharsModifier.exceptions = parameters.exceptions;
 			break;
 	}
 };

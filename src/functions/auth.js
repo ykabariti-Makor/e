@@ -1,7 +1,5 @@
-const { config } = require('../config.js');
+const { config } = require('../config');
 const { passwordStrength, isURLValid } = require('../utils/auth');
-
-const a = 1;
 
 // console.log(a);
 
@@ -140,10 +138,10 @@ const ValidateIPaddress = (ipaddress) => {
 			ipaddress,
 		)
 	) {
-		return true;
+		return {success:true,message:'IP is valid'};
 	}
 
-	return false;
+	return {success:false,message:'IP is invalid'};
 };
 
 const checkNumberPositivity = (number) => {
