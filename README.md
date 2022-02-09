@@ -149,8 +149,7 @@ Return object after validation is succeed.
 #### configuration
 
 ```javascript
-const { setConfig } = require('./config');
-const { passwordValidation } = require('./utils/auth');
+const { passwordValidation, setConfig } = require('enigma-x-utilities');
 
 //Config default values
 setConfig('password', {
@@ -263,4 +262,53 @@ phoneNumberFormatter('255-777-470')
 
 // Output
 { success: false, message: 'Format does not match the number of digits in phone number' }
+```
+
+# Special chars modifier.
+
+#### configuration
+
+```javascript
+const { specialCharsModifier, setConfig } = require('enigma-x-utilities');
+
+//you can call the function without configuration it . and then all the special chars in your string will be deleted.
+//You can config this function to filter which chars you want to still appear.
+
+setConfig('special chars', '@');
+```
+
+#### SUCCESS
+
+```javascript
+specialCharsModifier('12#$3%4567');
+//expected result will be 1234567
+```
+
+#### Error
+
+```javascript
+specialCharsModifier(123$4%^&)
+//the function must get string. in this case you will recieve an error
+```
+
+# Ip validation
+
+#### Configuration
+
+```javascript
+const { ipValidation } = require('enigma-x-utilities');
+```
+
+#### SUCCESS
+
+```javascript
+ipValidation('130.75.164.95');
+//You will recieve and object with {valid:true,message:Your ip is valid!}
+```
+
+#### Error
+
+```javascript
+ipValidation('130.75.164');
+//You will recieve an object with {valid:false,message : Your ip is invalid.}
 ```
