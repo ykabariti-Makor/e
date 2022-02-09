@@ -184,10 +184,25 @@ const overallHandler = (num, limit, isFloatingPoint) => {
 const phoneNumberFormatter = (number) => {
 	const format = config.phones.format;
 	const isInternational = config.phones.isInternational;
+	//test if format inserted by user is a string 
+	if(typeof format !== 'string'){
+		return {
+			success: false,
+			message: "Format value is invalid. should be a string and match X-X-X etc pattern",
+		};
+	}
 
 	const regexFormat = /^([\+]?[\(]?[0-9]{1,3}[\)]?)([\s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/;
 	const arr = format.split('-').map((str) => +str);
 	const sum = arr.reduce((acc, item) => acc + item);
+
+	// test if the sum of the format is a number
+	if (typeof sum !== 'number' || isNaN(sum) ) {
+    return {
+      success: false,
+      message: "Format value is invalid. should match X-X, X-X-X etc pattern",
+    };
+  } 
 
 	// format the phone number to numbers only
 	const cleanNumber = number.replace(/[^0-9]/g, '');
