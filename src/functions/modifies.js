@@ -202,7 +202,7 @@ const phoneNumberFormatter = (number) => {
 };
 
 const specialCharsModifier = (string) => {
-	const formattedReg = new RegExp('[^A-Za-z0-9 ' + config.specialChar + ']', 'g');
+	const formattedReg = new RegExp('[^A-Za-z0-9 ' + config.specialCharsModifier.exceptions + ']', 'g');
 	const replacedString = string.replace(formattedReg, '');
 
 	return replacedString;
