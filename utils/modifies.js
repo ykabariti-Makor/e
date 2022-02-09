@@ -107,7 +107,16 @@ const numFormatter = (numToFormat) => {
       message: "Input is not a valid number",
     };
 
-  const { overallDigitLimit, decimalDigitLimit } = config.numsFormater;
+  let isNegative = false;
+
+  // turn positive in case is negative to streamline 'numFormatter' function use
+  if (numToFormat < 0) {
+    isNegative = true;
+    numToFormat *= -1;
+  }
+
+  const { overallDigitLimit, decimalDigitLimit, useColors, colors } =
+    config.numFormatter;
   //if the number have floating point count it.
   const hasFloatingPoint = String(numToFormat).includes(".") ? 1 : 0;
   let processedNumber = numToFormat,
@@ -115,7 +124,7 @@ const numFormatter = (numToFormat) => {
 
   //if the number got floating point fixed the number accordingly
   if (hasFloatingPoint)
-    processedNumber = String(numToFormat.toFixed(decimalDigitLimit));
+    processedNumber = String(Number(numToFormat.toFixed(decimalDigitLimit)));
   processedNumber = String(processedNumber);
   // if the number exceeds the limit handle it
   if (processedNumber.length - hasFloatingPoint > overallDigitLimit) {
@@ -135,20 +144,28 @@ const numFormatter = (numToFormat) => {
 
   //returns the handled number seperated by commas, attach the right side if exist and append the letter representing the thousends sliced
 
-  return {
+  const obj = {
     success: true,
     message: "Successfully formatted number",
-    data:
-      left.replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-      (right ? "." + right : "") +
-      (unitSuffix ?? ""),
-  };
+    data: {
+      number:
+        (isNegative ? "-" : "") +
+        left.replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+        (right ? "." + right : "") +
+        (unitSuffix ?? ""),
+    },
+  }; 
+
+  if (useColors) obj.color = colors[isNegative ? "negative" : "positive"];
+
+  return obj;
 };
 
-// handle the overall digit
+// handle the overall digit limit
 const overallHandler = (num, limit, isFloatingPoint) => {
   //if the number contains floating point and the number is over the limit start to slice away the numbers
   // until it meets the limit or until reaching the floating point
+
   if (isFloatingPoint)
     while (num.length - isFloatingPoint > limit) {
       num = num.substring(0, num.length - 1);
@@ -165,13 +182,15 @@ const overallHandler = (num, limit, isFloatingPoint) => {
   //thousend sliced counter initialized with 0
   let thousandsSliced = 0,
     remainder;
+
   //the number exceeds the limit start slicing away by thousend at each time, save the sliced digits aside and count the thousends sliced
   while (num.length > limit) {
     remainder = num.substring(num.length - 3);
     num = num.substring(0, num.length - 3);
-
+ 
     thousandsSliced++;
   }
+
   const magnitudeUnits = {
     1: "K",
     2: "M",
@@ -182,9 +201,9 @@ const overallHandler = (num, limit, isFloatingPoint) => {
   //also return the letter that represent the number of thousends sliced
   return {
     num:
-      num +
+      (num ? num : "0") +
       (limit - num.length ? "." : "") +
-      remainder.substring(0, limit - num.length),
+      remainder.substring(0, limit - num.length - (num ? 0 : 1)),
     unitSuffix: magnitudeUnits[thousandsSliced],
   };
 };
