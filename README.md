@@ -457,7 +457,7 @@ const { removeSpaces  } = require('enigma-x-utilities');
 ## Description
 
 -   removeSpaces removes whitespace of any sort before and after text; removes more than one whitespace between words and
-    any whitespace between words and pumctuation marks.
+    any whitespace between words and punctuation marks.
 
 
 
