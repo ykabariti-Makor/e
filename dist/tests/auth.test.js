@@ -1,3 +1,5 @@
+"use strict";
+
 const utils = require('../main');
 
 test('url_valid', async () => {

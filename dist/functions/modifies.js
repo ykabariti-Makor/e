@@ -1,6 +1,8 @@
-// const { config } = require('../config');
-import { config } from '../config';
+"use strict";
 
+var _config = require("../config");
+
+// const { config } = require('../config');
 const {
   overallHandler
 } = require('../utils/modifies');
@@ -13,7 +15,7 @@ const {
 
 
 const tagsSeparator = string => {
-  const separators = config.tags.separators;
+  const separators = _config.config.tags.separators;
   let inferredSeparator = '';
   let options = [];
 
@@ -129,7 +131,7 @@ const numberFormatter = number => {
     decimalDigitLimit,
     useColors,
     colors
-  } = config.numberFormatter; //if the number have floating point count it.
+  } = _config.config.numberFormatter; //if the number have floating point count it.
 
   const hasFloatingPoint = String(number).includes('.') ? 1 : 0;
   let processedNumber = number,
@@ -168,8 +170,8 @@ const numberFormatter = number => {
 
 
 const phoneNumberFormatter = number => {
-  const format = config.phoneNumberFormatter.format;
-  const isInternational = config.phoneNumberFormatter.isInternational;
+  const format = _config.config.phoneNumberFormatter.format;
+  const isInternational = _config.config.phoneNumberFormatter.isInternational;
   const regexFormat = /^([\+]?[\(]?[0-9]{1,3}[\)]?)([\s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/;
   const arr = format.split('-').map(str => +str);
   const sum = arr.reduce((acc, item) => acc + item); // format the phone number to numbers only
@@ -242,7 +244,7 @@ const specialCharsModifier = string => {
     };
   }
 
-  const formattedReg = new RegExp('[^A-Za-z0-9 ' + config.specialCharsModifier.exceptions + ']', 'g');
+  const formattedReg = new RegExp('[^A-Za-z0-9 ' + _config.config.specialCharsModifier.exceptions + ']', 'g');
   const replacedString = string.replace(formattedReg, '');
   return {
     success: true,

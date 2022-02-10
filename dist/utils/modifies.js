@@ -1,3 +1,5 @@
+"use strict";
+
 // Handle the overall digit limit
 const overallHandler = (num, limit, isFloatingPoint) => {
   // If the number contains floating point and the number is over the limit start to slice away the numbers
@@ -29,7 +31,7 @@ const overallHandler = (num, limit, isFloatingPoint) => {
   const magnitudeUnits = {
     1: 'K',
     2: 'M',
-    3: 'G'
+    3: 'B'
   }; // Return the number + floating point if needed + the chunk from the remainder the meets the limit
   // Also return the letter that represent the number of thousends sliced
 

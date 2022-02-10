@@ -1,4 +1,5 @@
-/src/tests
+/src
+/dist/tests
 .eslintrc.js
 .eslintignore
 .gitignore
