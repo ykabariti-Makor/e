@@ -3,6 +3,7 @@
 	"version": "10.0.100",
 	"description": "EnigmaX NPM utilities package",
 	"main": "dist/main.js",
+	"type": "module",
 	"scripts": {
 		"test": "jest",
 		"lint": "eslint \"{src,apps,libs,test }/**/*.js\" --fix",

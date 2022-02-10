@@ -1,8 +1,8 @@
-const { setConfig } = require('./config');
-const { tagsSeparator, numberFormatter, phoneNumberFormatter, specialCharsModifier, removeSpaces } = require('./functions/modifies');
-const { URLValidator, passwordValidation, validateIPAddress, checkNumberPositivity, emailDomainValidator } = require('./functions/auth');
+import { setConfig } from './config';
+import { tagsSeparator, numberFormatter, phoneNumberFormatter, specialCharsModifier, removeSpaces } from './functions/modifies';
+import { URLValidator, passwordValidation, validateIPAddress, checkNumberPositivity, emailDomainValidator } from './functions/auth';
 
-module.exports = {
+export {
 	setConfig,
 	URLValidator,
 	passwordValidation,

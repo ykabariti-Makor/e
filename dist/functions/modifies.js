@@ -1,21 +1,22 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.tagsSeparator = exports.specialCharsModifier = exports.removeSpaces = exports.phoneNumberFormatter = exports.numberFormatter = void 0;
+
 var _config = require("../config");
 
-// const { config } = require('../config');
-const {
-  overallHandler
-} = require('../utils/modifies');
+var _modifies = require("../utils/modifies");
+
 /**
  * Tags separator for tags string
  * @param {string} string tags
  * @param {separators} array indicator for format options, contains all special chars by default
  * @returns object
  */
-
-
 const tagsSeparator = string => {
-  const separators = _config.config.tags.separators;
+  const separators = _config.config.tagsSeparator.separators;
   let inferredSeparator = '';
   let options = [];
 
@@ -112,6 +113,8 @@ const tagsSeparator = string => {
  */
 
 
+exports.tagsSeparator = tagsSeparator;
+
 const numberFormatter = number => {
   var _unitSuffix;
 
@@ -141,7 +144,7 @@ const numberFormatter = number => {
   processedNumber = String(processedNumber); // if the number exceeds the limit handle it
 
   if (processedNumber.length - hasFloatingPoint > overallDigitLimit) {
-    overallHandlement = overallHandler(processedNumber, overallDigitLimit, hasFloatingPoint); //the processed number is the new number that has been handled + the letter represent the thousends sliced
+    const overallHandlement = (0, _modifies.overallHandler)(processedNumber, overallDigitLimit, hasFloatingPoint); //the processed number is the new number that has been handled + the letter represent the thousends sliced
 
     processedNumber = overallHandlement.num;
     unitSuffix = overallHandlement.unitSuffix;
@@ -168,6 +171,8 @@ const numberFormatter = number => {
  * @returns object
  */
 
+
+exports.numberFormatter = numberFormatter;
 
 const phoneNumberFormatter = number => {
   const format = _config.config.phoneNumberFormatter.format;
@@ -236,6 +241,8 @@ const phoneNumberFormatter = number => {
  */
 
 
+exports.phoneNumberFormatter = phoneNumberFormatter;
+
 const specialCharsModifier = string => {
   if (typeof string !== 'string') {
     return {
@@ -259,6 +266,8 @@ const specialCharsModifier = string => {
  */
 
 
+exports.specialCharsModifier = specialCharsModifier;
+
 const removeSpaces = string => {
   if (typeof string !== 'string') {
     return {
@@ -278,10 +287,4 @@ const removeSpaces = string => {
   };
 };
 
-module.exports = {
-  numberFormatter,
-  tagsSeparator,
-  phoneNumberFormatter,
-  specialCharsModifier,
-  removeSpaces
-};
+exports.removeSpaces = removeSpaces;

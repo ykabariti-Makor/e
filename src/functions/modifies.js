@@ -1,6 +1,5 @@
-// const { config } = require('../config');
 import { config } from '../config';
-const { overallHandler } = require('../utils/modifies');
+import { overallHandler } from '../utils/modifies';
 
 /**
  * Tags separator for tags string
@@ -9,7 +8,7 @@ const { overallHandler } = require('../utils/modifies');
  * @returns object
  */
 const tagsSeparator = (string) => {
-	const separators = config.tags.separators;
+	const separators = config.tagsSeparator.separators;
 	let inferredSeparator = '';
 	let options = [];
 
@@ -131,7 +130,7 @@ const numberFormatter = (number) => {
 	processedNumber = String(processedNumber);
 	// if the number exceeds the limit handle it
 	if (processedNumber.length - hasFloatingPoint > overallDigitLimit) {
-		overallHandlement = overallHandler(processedNumber, overallDigitLimit, hasFloatingPoint);
+		const overallHandlement = overallHandler(processedNumber, overallDigitLimit, hasFloatingPoint);
 		//the processed number is the new number that has been handled + the letter represent the thousends sliced
 		processedNumber = overallHandlement.num;
 		unitSuffix = overallHandlement.unitSuffix;
@@ -267,10 +266,4 @@ const removeSpaces = (string) => {
 	};
 };
 
-module.exports = {
-	numberFormatter,
-	tagsSeparator,
-	phoneNumberFormatter,
-	specialCharsModifier,
-	removeSpaces,
-};
+export { numberFormatter, tagsSeparator, phoneNumberFormatter, specialCharsModifier, removeSpaces };

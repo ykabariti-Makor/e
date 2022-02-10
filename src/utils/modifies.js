@@ -42,6 +42,4 @@ const overallHandler = (num, limit, isFloatingPoint) => {
 	};
 };
 
-module.exports = {
-	overallHandler,
-};
+export { overallHandler };

@@ -1,5 +1,5 @@
-const { config } = require('../config');
-const { passwordStrength, isURLValid } = require('../utils/auth');
+import { config } from '../config';
+import { passwordStrength, isURLValid } from '../utils/auth';
 
 /**
  * URL validator for url validation & formatting
@@ -69,7 +69,7 @@ const passwordValidation = (password) => {
 		symbol: 'string',
 	};
 
-	Object.entries(config.password).map(([key, value]) => {
+	Object.entries(config.passwordValidation).map(([key, value]) => {
 		if (key !== 'strengthOptions' && value) {
 			if (typeof value !== objTypeof[key]) {
 				if ((key === 'symbol' && value !== 0) || key !== 'symbol') {
@@ -82,39 +82,39 @@ const passwordValidation = (password) => {
 
 	if (isValid.success) {
 		let validation = [
-			config.password.characterLen !== undefined && config.password.characterLen !== 0
+			config.passwordValidation.characterLen !== undefined && config.passwordValidation.characterLen !== 0
 				? {
 						title: 'CharacterLen',
 						valid: false,
-						re: new RegExp('^.{' + config.password.characterLen + ',}$'),
+						re: new RegExp('^.{' + config.passwordValidation.characterLen + ',}$'),
 				  }
 				: null,
-			config.password.upperCase !== undefined && config.password.upperCase !== 0
+			config.passwordValidation.upperCase !== undefined && config.passwordValidation.upperCase !== 0
 				? {
 						title: 'UpperCase',
 						valid: false,
-						re: new RegExp('^(.*?[A-Z]){' + config.password.upperCase + ',}'),
+						re: new RegExp('^(.*?[A-Z]){' + config.passwordValidation.upperCase + ',}'),
 				  }
 				: null,
-			config.password.lowerCase !== undefined && config.password.lowerCase !== 0
+			config.passwordValidation.lowerCase !== undefined && config.passwordValidation.lowerCase !== 0
 				? {
 						title: 'LowerCase',
 						valid: false,
-						re: new RegExp('^(.*?[a-z]){' + config.password.lowerCase + ',}'),
+						re: new RegExp('^(.*?[a-z]){' + config.passwordValidation.lowerCase + ',}'),
 				  }
 				: null,
-			config.password.num !== undefined && config.password.num !== 0
+			config.passwordValidation.num !== undefined && config.passwordValidation.num !== 0
 				? {
 						title: 'Number',
 						valid: false,
-						re: new RegExp('^(.*?[0-9]){' + config.password.num + ',}'),
+						re: new RegExp('^(.*?[0-9]){' + config.passwordValidation.num + ',}'),
 				  }
 				: null,
-			config.password.symbol !== undefined && config.password.symbol !== '' && config.password.symbol !== 0
+			config.passwordValidation.symbol !== undefined && config.passwordValidation.symbol !== '' && config.passwordValidation.symbol !== 0
 				? {
 						title: 'NonAlphaNumeric',
 						valid: false,
-						re: new RegExp('^(.*?[' + config.password.symbol + ',])'),
+						re: new RegExp('^(.*?[' + config.passwordValidation.symbol + ',])'),
 				  }
 				: null,
 		];
@@ -240,10 +240,4 @@ const emailDomainValidator = (email) => {
 	}
 };
 
-module.exports = {
-	URLValidator,
-	passwordValidation,
-	validateIPAddress,
-	checkNumberPositivity,
-	emailDomainValidator,
-};
+export { URLValidator, passwordValidation, validateIPAddress, checkNumberPositivity, emailDomainValidator };

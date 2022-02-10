@@ -1,11 +1,11 @@
-const utils = require('../main');
+import { setConfig, passwordValidation, URLValidator, validateIPAddress, emailDomainValidator } from '../main';
 
 test('url_valid', async () => {
-	utils.setConfig('URLValidator', {
+	setConfig('URLValidator', {
 		domainOnly: true,
 		pathIncluded: false,
 	});
-	await expect(utils.URLValidator('https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages')).toStrictEqual({
+	await expect(URLValidator('https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages')).toStrictEqual({
 		success: true,
 		message: 'Successfully modified URL',
 		data: 'docs.npmjs.com',
@@ -14,7 +14,7 @@ test('url_valid', async () => {
 
 test('password_valid', async () => {
 	// Arrange
-	utils.setConfig('password', {
+	setConfig('password', {
 		strengthOptions: [
 			{
 				value: 'Weak',
@@ -43,7 +43,7 @@ test('password_valid', async () => {
 	});
 
 	//act
-	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
+	const passwordResult = passwordValidation('123Aa4@5@#!678');
 
 	//assent
 	await expect(passwordResult).toStrictEqual({
@@ -63,17 +63,17 @@ test('password_valid', async () => {
 });
 
 test('domain list is undefined - error', async () => {
-	await expect(utils.emailDomainValidator('ortal0166@gmail.com')).toStrictEqual({
+	await expect(emailDomainValidator('ortal0166@gmail.com')).toStrictEqual({
 		success: false,
 		message: 'domain list is required and must be string or array of strings',
 	});
 });
 
 test('email input matches domain value single string - successes', async () => {
-	utils.setConfig('emailDomainValidator', {
+	setConfig('emailDomainValidator', {
 		domainList: ['makor-capital.com'],
 	});
-	await expect(utils.emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
+	await expect(emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
 		success: true,
 		message: 'Email inserted is valid',
 		data: true,
@@ -81,10 +81,10 @@ test('email input matches domain value single string - successes', async () => {
 });
 
 test('email input matches domain list values inside array of strings - successes', async () => {
-	utils.setConfig('emailDomainValidator', {
+	setConfig('emailDomainValidator', {
 		domainList: ['makor-capital.com', 'enigma-securities.com'],
 	});
-	await expect(utils.emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
+	await expect(emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
 		success: true,
 		message: 'Email inserted is valid',
 		data: true,
@@ -92,40 +92,40 @@ test('email input matches domain list values inside array of strings - successes
 });
 
 test('Domain list is single input number type - error', async () => {
-	utils.setConfig('emailDomainValidator', {
+	setConfig('emailDomainValidator', {
 		domainList: 3,
 	});
-	await expect(utils.emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
+	await expect(emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
 		success: false,
 		message: 'domain list is required and must be string or array of strings',
 	});
 });
 
 test('Domain list is array of numbers - error', async () => {
-	utils.setConfig('emailDomainValidator', {
+	setConfig('emailDomainValidator', {
 		domainList: [3, 3, 5],
 	});
-	await expect(utils.emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
+	await expect(emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
 		success: false,
 		message: 'domain list must be string or array of strings only',
 	});
 });
 
 test('email input does not match the domain value single string - error', async () => {
-	utils.setConfig('emailDomainValidator', {
+	setConfig('emailDomainValidator', {
 		domainList: 'enigma.com',
 	});
-	await expect(utils.emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
+	await expect(emailDomainValidator('yonit@makor-capital.com')).toStrictEqual({
 		success: false,
 		message: 'Email inserted is not in domain list',
 	});
 });
 
 test('email input does not match domain list values inside array of strings - error', async () => {
-	utils.setConfig('emailDomainValidator', {
+	setConfig('emailDomainValidator', {
 		domainList: ['makor-capital.com', 'enigma-securities.com'],
 	});
-	await expect(utils.emailDomainValidator('yonit@makor-group.com')).toStrictEqual({
+	await expect(emailDomainValidator('yonit@makor-group.com')).toStrictEqual({
 		success: false,
 		message: 'Email inserted is not in domain list',
 	});
@@ -134,7 +134,7 @@ test('email input does not match domain list values inside array of strings - er
 // Fail password scenarios
 test('password_valid_fail_senario_1', async () => {
 	// Arrange
-	utils.setConfig('password', {
+	setConfig('password', {
 		strengthOptions: [
 			{
 				value: 'Weak',
@@ -163,7 +163,7 @@ test('password_valid_fail_senario_1', async () => {
 	});
 
 	// Act
-	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
+	const passwordResult = passwordValidation('123Aa4@5@#!678');
 
 	// Assent
 	await expect(passwordResult).toStrictEqual({
@@ -174,7 +174,7 @@ test('password_valid_fail_senario_1', async () => {
 
 test('password_valid_fail_senario_2', async () => {
 	// Arrange
-	utils.setConfig('password', {
+	setConfig('password', {
 		strengthOptions: [
 			{
 				value: 'Weak',
@@ -203,7 +203,7 @@ test('password_valid_fail_senario_2', async () => {
 	});
 
 	// Act
-	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
+	const passwordResult = passwordValidation('123Aa4@5@#!678');
 
 	// Assent
 	await expect(passwordResult).toStrictEqual({
@@ -214,7 +214,7 @@ test('password_valid_fail_senario_2', async () => {
 
 test('password_valid_fail_senario_3', async () => {
 	// Arrange
-	utils.setConfig('password', {
+	setConfig('password', {
 		strengthOptions: [
 			{
 				value: 'Weak',
@@ -243,7 +243,7 @@ test('password_valid_fail_senario_3', async () => {
 	});
 
 	// Act
-	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
+	const passwordResult = passwordValidation('123Aa4@5@#!678');
 
 	// Assent
 	await expect(passwordResult).toStrictEqual({
@@ -254,7 +254,7 @@ test('password_valid_fail_senario_3', async () => {
 
 test('password_valid_fail_senario_4', async () => {
 	// Arrange
-	utils.setConfig('password', {
+	setConfig('password', {
 		strengthOptions: [
 			{
 				value: 'Weak',
@@ -283,7 +283,7 @@ test('password_valid_fail_senario_4', async () => {
 	});
 
 	// Act
-	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
+	const passwordResult = passwordValidation('123Aa4@5@#!678');
 
 	// Assent
 	await expect(passwordResult).toStrictEqual({
@@ -294,7 +294,7 @@ test('password_valid_fail_senario_4', async () => {
 
 test('password_valid_fail_senario_5', async () => {
 	// Arrange
-	utils.setConfig('password', {
+	setConfig('password', {
 		strengthOptions: [
 			{
 				value: 'Weak',
@@ -323,7 +323,7 @@ test('password_valid_fail_senario_5', async () => {
 	});
 
 	// Act
-	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
+	const passwordResult = passwordValidation('123Aa4@5@#!678');
 
 	// Assent
 	await expect(passwordResult).toStrictEqual({
@@ -334,15 +334,15 @@ test('password_valid_fail_senario_5', async () => {
 
 // Auccess scenario
 test('ip_validation', async () => {
-	await expect(utils.validateIPAddress('10.0.0.36')).toStrictEqual({ success: true, message: 'IP is valid' });
+	await expect(validateIPAddress('10.0.0.36')).toStrictEqual({ success: true, message: 'IP is valid' });
 });
 
 // Failed scenario - wrong input
 test('ip_validation_fail', async () => {
-	await expect(utils.validateIPAddress(10)).toStrictEqual({ success: false, message: 'IP is invalid' });
+	await expect(validateIPAddress(10)).toStrictEqual({ success: false, message: 'IP is invalid' });
 });
 
 // Failed scenario - wrong ip
 test('ip_validation_fail', async () => {
-	await expect(utils.validateIPAddress('10.0.0')).toStrictEqual({ success: false, message: 'IP is invalid' });
+	await expect(validateIPAddress('10.0.0')).toStrictEqual({ success: false, message: 'IP is invalid' });
 });

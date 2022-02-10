@@ -1,4 +1,4 @@
-const { config } = require('../config');
+import { config } from '../config';
 
 // Check URL validity
 const isURLValid = (url) => {
@@ -29,8 +29,8 @@ const isURLValid = (url) => {
 
 // Check password strength
 const passwordStrength = (password) => {
-	const options = config.password.strengthOptions;
-	const allowedSymbols = config.password.symbol;
+	const options = config.passwordValidation.strengthOptions;
+	const allowedSymbols = config.passwordValidation.symbol;
 	const passwordCopy = password || '';
 
 	const isValid = {
@@ -99,7 +99,4 @@ const passwordStrength = (password) => {
 	}
 };
 
-module.exports = {
-	isURLValid,
-	passwordStrength,
-};
+export { isURLValid, passwordStrength };

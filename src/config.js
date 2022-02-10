@@ -122,4 +122,4 @@ const setConfig = (configName, parameters) => {
 	}
 };
 
-module.exports = { config, setConfig };
+export { config, setConfig };

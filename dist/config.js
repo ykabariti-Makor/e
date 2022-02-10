@@ -1,5 +1,9 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setConfig = exports.config = void 0;
 const config = {
   specialCharsModifier: {
     exceptions: ''
@@ -51,6 +55,7 @@ const config = {
     domainList: undefined
   }
 };
+exports.config = config;
 
 const setConfig = (configName, parameters) => {
   switch (configName) {
@@ -108,7 +113,4 @@ const setConfig = (configName, parameters) => {
   }
 };
 
-module.exports = {
-  config,
-  setConfig
-};
+exports.setConfig = setConfig;

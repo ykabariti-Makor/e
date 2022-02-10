@@ -1,5 +1,10 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.overallHandler = void 0;
+
 // Handle the overall digit limit
 const overallHandler = (num, limit, isFloatingPoint) => {
   // If the number contains floating point and the number is over the limit start to slice away the numbers
@@ -41,6 +46,4 @@ const overallHandler = (num, limit, isFloatingPoint) => {
   };
 };
 
-module.exports = {
-  overallHandler
-};
+exports.overallHandler = overallHandler;

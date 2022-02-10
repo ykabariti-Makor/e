@@ -1,10 +1,13 @@
 "use strict";
 
-const {
-  config
-} = require('../config'); // Check URL validity
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.passwordStrength = exports.isURLValid = void 0;
 
+var _config = require("../config");
 
+// Check URL validity
 const isURLValid = url => {
   // Checks for URL validity
   const pattern = new RegExp('^(https?:\\/\\/)?' + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + '((\\d{1,3}\\.){3}\\d{1,3}))' + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + '(\\?[;&a-z\\d%_.~+=-]*)?' + '(\\#[-a-z\\d_]*)?$', 'i');
@@ -24,9 +27,11 @@ const isURLValid = url => {
 }; // Check password strength
 
 
+exports.isURLValid = isURLValid;
+
 const passwordStrength = password => {
-  const options = config.password.strengthOptions;
-  const allowedSymbols = config.password.symbol;
+  const options = _config.config.passwordValidation.strengthOptions;
+  const allowedSymbols = _config.config.passwordValidation.symbol;
   const passwordCopy = password || '';
   const isValid = {
     success: true,
@@ -82,7 +87,4 @@ const passwordStrength = password => {
   }
 };
 
-module.exports = {
-  isURLValid,
-  passwordStrength
-};
+exports.passwordStrength = passwordStrength;
