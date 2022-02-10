@@ -87,7 +87,7 @@ const tagsSeparator = (string) => {
 	} else {
 		inferredReg = new RegExp(inferredSeparator);
 	}
-	let notAtagReg = /\W/;
+	const notAtagReg = /\W/;
 	tags = [...new Set(string.split(inferredReg))].filter(
 		(tag) => !((tag.length === 1 && notAtagReg.test(tag)) || tag.length === 0 || tag === ' '),
 	);

@@ -112,7 +112,7 @@ test('Domain list is array of numbers - error', async () => {
 	});
 });
 
-test("email input doesn't match the domain value single string - error", async () => {
+test('email input doesn\'t match the domain value single string - error', async () => {
 	utils.setConfig('emailDomainValidator', {
 		domainList: 'enigma.com',
 	});
@@ -122,7 +122,7 @@ test("email input doesn't match the domain value single string - error", async (
 	});
 });
 
-test("email input doesn't match domain list values inside array of strings - error", async () => {
+test('email input doesn\'t match domain list values inside array of strings - error', async () => {
 	utils.setConfig('emailDomainValidator', {
 		domainList: ['makor-capital.com', 'enigma-securities.com'],
 	});

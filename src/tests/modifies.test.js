@@ -78,7 +78,7 @@ test('user sends duplicate words, function returns only unique tags - successes'
 	});
 });
 
-test("user sends one separator - string is split according to it (even if it's not the most frequent) - successes", async () => {
+test('user sends one separator - string is split according to it (even if it\'s not the most frequent) - successes', async () => {
 	utils.setConfig('tags', {
 		separators: [','],
 	});
