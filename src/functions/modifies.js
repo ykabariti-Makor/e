@@ -1,4 +1,5 @@
-const { config } = require('../config');
+// const { config } = require('../config');
+import { config } from '../config';
 const { overallHandler } = require('../utils/modifies');
 
 /**
