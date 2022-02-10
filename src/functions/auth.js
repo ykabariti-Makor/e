@@ -72,7 +72,7 @@ const passwordValidation = (password) => {
 	Object.entries(config.password).map(([key, value]) => {
 		if (key !== 'strengthOptions' && value) {
 			if (typeof value !== objTypeof[key]) {
-				if (key === 'symbol' && value !== 0) {
+				if ((key === 'symbol' && value !== 0) || key !== 'symbol') {
 					isValid.success = false;
 					isValid.message.push(`${key} must be type of ${objTypeof[key]}`);
 				}

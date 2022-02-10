@@ -76,10 +76,10 @@ const tagsSeparator = (string) => {
 	let inferredReg;
 	let tags;
 
-	if(!inferredSeparator){
+	if (!inferredSeparator) {
 		//if there is no inferred separator, no special chars - there will be one tag containing the string
-		tags = [string]
-	}else if (inferredSeparator === ' ') {
+		tags = [string];
+	} else if (inferredSeparator === ' ') {
 		inferredReg = /\s/;
 	} else if (specialChars.includes(inferredSeparator)) {
 		// Add backslash
@@ -87,8 +87,10 @@ const tagsSeparator = (string) => {
 	} else {
 		inferredReg = new RegExp(inferredSeparator);
 	}
-	let notAtagReg = /\W/
-	tags = [...new Set(string.split(inferredReg))].filter(tag => !((tag.length === 1 && notAtagReg.test(tag) ) || tag.length === 0 || tag === " "));
+	let notAtagReg = /\W/;
+	tags = [...new Set(string.split(inferredReg))].filter(
+		(tag) => !((tag.length === 1 && notAtagReg.test(tag)) || tag.length === 0 || tag === ' '),
+	);
 
 	return {
 		success: true,
@@ -97,8 +99,6 @@ const tagsSeparator = (string) => {
 	};
 };
 
-
-console.log(tagsSeparator("tags1 , tag2"))
 /**
  * Number formatter for numbers
  * @param {numToFormat} string
