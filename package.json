@@ -2,11 +2,11 @@
 	"name": "enigma-x-utilities",
 	"version": "10.0.98",
 	"description": "EnigmaX NPM utilities package",
-	"main": "src/main.js",
+	"main": "dist/main.js",
 	"scripts": {
 		"test": "jest",
 		"lint": "eslint \"{src,apps,libs,test }/**/*.js\" --fix",
-		"build": "babel ./src -d ./lib"
+		"build": "babel ./src -d ./dist"
 	},
 	"keywords": [],
 	"author": "",
