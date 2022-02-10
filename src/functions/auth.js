@@ -1,5 +1,4 @@
-// const { config } = require('../config');
-import { config } from '../config';
+const { config } = require('../config');
 const { passwordStrength, isURLValid } = require('../utils/auth');
 
 /**
