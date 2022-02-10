@@ -1,12 +1,12 @@
 const { setConfig } = require('./config');
 const { tagsSeparator, numberFormatter, phoneNumberFormatter, specialCharsModifier, removeSpaces } = require('./functions/modifies');
-const { URLValidator, passwordValidation, ValidateIPaddress, checkNumberPositivity, emailDomainValidator } = require('./functions/auth');
+const { URLValidator, passwordValidation, validateIPAddress, checkNumberPositivity, emailDomainValidator } = require('./functions/auth');
 
 module.exports = {
 	setConfig,
 	URLValidator,
 	passwordValidation,
-	ValidateIPaddress,
+	validateIPAddress,
 	tagsSeparator,
 	numberFormatter,
 	phoneNumberFormatter,

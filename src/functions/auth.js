@@ -84,37 +84,37 @@ const passwordValidation = (password) => {
 		let validation = [
 			config.password.characterLen !== undefined && config.password.characterLen !== 0
 				? {
-					title: 'CharacterLen',
-					valid: false,
-					re: new RegExp('^.{' + config.password.characterLen + ',}$'),
+						title: 'CharacterLen',
+						valid: false,
+						re: new RegExp('^.{' + config.password.characterLen + ',}$'),
 				  }
 				: null,
 			config.password.upperCase !== undefined && config.password.upperCase !== 0
 				? {
-					title: 'UpperCase',
-					valid: false,
-					re: new RegExp('^(.*?[A-Z]){' + config.password.upperCase + ',}'),
+						title: 'UpperCase',
+						valid: false,
+						re: new RegExp('^(.*?[A-Z]){' + config.password.upperCase + ',}'),
 				  }
 				: null,
 			config.password.lowerCase !== undefined && config.password.lowerCase !== 0
 				? {
-					title: 'LowerCase',
-					valid: false,
-					re: new RegExp('^(.*?[a-z]){' + config.password.lowerCase + ',}'),
+						title: 'LowerCase',
+						valid: false,
+						re: new RegExp('^(.*?[a-z]){' + config.password.lowerCase + ',}'),
 				  }
 				: null,
 			config.password.num !== undefined && config.password.num !== 0
 				? {
-					title: 'Number',
-					valid: false,
-					re: new RegExp('^(.*?[0-9]){' + config.password.num + ',}'),
+						title: 'Number',
+						valid: false,
+						re: new RegExp('^(.*?[0-9]){' + config.password.num + ',}'),
 				  }
 				: null,
 			config.password.symbol !== undefined && config.password.symbol !== '' && config.password.symbol !== 0
 				? {
-					title: 'NonAlphaNumeric',
-					valid: false,
-					re: new RegExp('^(.*?[' + config.password.symbol + ',])'),
+						title: 'NonAlphaNumeric',
+						valid: false,
+						re: new RegExp('^(.*?[' + config.password.symbol + ',])'),
 				  }
 				: null,
 		];
@@ -130,10 +130,15 @@ const passwordValidation = (password) => {
 	}
 };
 
-const ValidateIPaddress = (ipaddress) => {
+/**
+ * IP validator for IP validation
+ * @param {IPAddress} string the IP adderss
+ * @returns object
+ */
+const validateIPAddress = (IPAddress) => {
 	if (
 		/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
-			ipaddress,
+			IPAddress,
 		)
 	) {
 		return { success: true, message: 'IP is valid' };
@@ -142,6 +147,11 @@ const ValidateIPaddress = (ipaddress) => {
 	return { success: false, message: 'IP is invalid' };
 };
 
+/**
+ * Check number positivity
+ * @param {number} number the number
+ * @returns object
+ */
 const checkNumberPositivity = (number) => {
 	// Check input type
 	if (typeof number !== 'number') {
@@ -179,8 +189,8 @@ const checkNumberPositivity = (number) => {
 		}
 	}
 };
+
 /**
- *
  * @param {string} email inserted by the user
  * @returns boolean of tested input
  */
@@ -229,10 +239,11 @@ const emailDomainValidator = (email) => {
 		};
 	}
 };
+
 module.exports = {
 	URLValidator,
 	passwordValidation,
-	ValidateIPaddress,
+	validateIPAddress,
 	checkNumberPositivity,
 	emailDomainValidator,
 };

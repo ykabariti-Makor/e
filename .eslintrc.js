@@ -10,7 +10,6 @@ module.exports = {
 	},
 	plugins: ['unused-imports'],
 	rules: {
-		'indent': ['error', 'tab'],
 		'quotes': ['error', 'single'],
 		'semi': ['error', 'always'],
 		'no-empty': [

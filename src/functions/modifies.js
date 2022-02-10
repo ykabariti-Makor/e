@@ -221,6 +221,7 @@ const phoneNumberFormatter = (number) => {
 		};
 	}
 };
+
 /**
  * Special characters modifier
  * @param {string} string any string

@@ -334,15 +334,15 @@ test('password_valid_fail_senario_5', async () => {
 
 // Auccess scenario
 test('ip_validation', async () => {
-	await expect(utils.ValidateIPaddress('10.0.0.36')).toStrictEqual({ success: true, message: 'IP is valid' });
+	await expect(utils.validateIPAddress('10.0.0.36')).toStrictEqual({ success: true, message: 'IP is valid' });
 });
 
 // Failed scenario - wrong input
 test('ip_validation_fail', async () => {
-	await expect(utils.ValidateIPaddress(10)).toStrictEqual({ success: false, message: 'IP is invalid' });
+	await expect(utils.validateIPAddress(10)).toStrictEqual({ success: false, message: 'IP is invalid' });
 });
 
 // Failed scenario - wrong ip
 test('ip_validation_fail', async () => {
-	await expect(utils.ValidateIPaddress('10.0.0')).toStrictEqual({ success: false, message: 'IP is invalid' });
+	await expect(utils.validateIPAddress('10.0.0')).toStrictEqual({ success: false, message: 'IP is invalid' });
 });
