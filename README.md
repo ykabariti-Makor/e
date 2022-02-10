@@ -17,7 +17,8 @@
 -   Special chars removal: Remove special chars from
 -   Handle errors with success status & detailed message
 
-### CodeSandbox Example - https://codesandbox.io/s/magical-germain-w7wjv
+### CodeSandbox Example
+https://codesandbox.io/s/magical-germain-w7wjv
 
 ## Install
 
@@ -180,7 +181,7 @@ Return sepatarted tags array.
 const { tagsSeparator, setConfig } = require('enigma-x-utilities');
 
 //Config default values
-setConfig('tags', {
+setConfig('tagsSeparator', {
 	separators: undefined,
 });
 ```
@@ -244,7 +245,7 @@ Return object after validation is succeed.
 const { passwordValidation, setConfig } = require('enigma-x-utilities');
 
 //Config default values
-setConfig('password', {
+setConfig('passwordValidation', {
 	strengthOptions: [
 		{
 			value: 1,
@@ -325,7 +326,7 @@ Feature for international phone number validation ,check if the phone number is 
 const { phoneNumberFormatter, setConfig } = require('enigma-x-utilities');
 
 // Config Default values
-setConfig('phones', {
+setConfig('phoneNumberFormatter', {
 	format: '3-3-3-4',
 	isInternational: true,
 });
@@ -365,10 +366,10 @@ const { specialCharsModifier, setConfig } = require('enigma-x-utilities');
 //you can call the function without configuration it . and then all the special chars in your string will be deleted.
 //You can config this function to filter which chars you want to still appear.
 
-setConfig('special chars', '@');
+setConfig('specialCharsModifier', '@');
 ```
 
-#### SUCCESS
+#### Success
 
 ```javascript
 specialCharsModifier('12#$3%4567');
@@ -395,7 +396,7 @@ specialCharsModifier(123$4%^&)
 const { ipValidation } = require('enigma-x-utilities');
 ```
 
-#### SUCCESS
+#### Success
 
 ```javascript
 ipValidation('130.75.164.95');
