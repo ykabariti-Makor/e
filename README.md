@@ -12,10 +12,12 @@
 -   Phone number modifier: Modify phone number
 -   Number positivity checker: Check if number is negative or positive
 -   IP address validation: Validate IP
--   Remove spaces: Remove spaces 
+-   Remove spaces: Remove spaces
 -   Email domain checker: Check email domain
 -   Special chars removal: Remove special chars from
 -   Handle errors with success status & detailed message
+
+### CodeSandbox Example - https://codesandbox.io/s/magical-germain-w7wjv
 
 ## Install
 
@@ -243,31 +245,31 @@ const { passwordValidation, setConfig } = require('enigma-x-utilities');
 
 //Config default values
 setConfig('password', {
-  strengthOptions: [
-    {
-      value: 1,
-      minDiversity: 1,
-      minLength: 8,
-    },
+	strengthOptions: [
+		{
+			value: 1,
+			minDiversity: 1,
+			minLength: 8,
+		},
 
-    {
-      value: 'Medium',
-      minDiversity: 3,
-      minLength: 10,
-    },
+		{
+			value: 'Medium',
+			minDiversity: 3,
+			minLength: 10,
+		},
 
-    {
-      value: 'Strong',
-      minDiversity: 4,
-      minLength: 12,
-    },
-  ],
-  characterLen: 12,
-  upperCase: 1,
-  lowerCase: 1,
-  num: 1,
-  symbol: '#?!@$%^&*-',
-})
+		{
+			value: 'Strong',
+			minDiversity: 4,
+			minLength: 12,
+		},
+	],
+	characterLen: 12,
+	upperCase: 1,
+	lowerCase: 1,
+	num: 1,
+	symbol: '#?!@$%^&*-',
+});
 ```
 
 #### Success
@@ -451,15 +453,13 @@ emailDomainValidator('eli@capital.com')
 Feature for removing unneeded whitespace from text. Receives a string and returns a string.
 
 ```javascript
-const { removeSpaces  } = require('enigma-x-utilities');
+const { removeSpaces } = require('enigma-x-utilities');
 ```
 
 ## Description
 
 -   removeSpaces removes whitespace of any sort before and after text; removes more than one whitespace between words and
     any whitespace between words and punctuation marks.
-
-
 
 ### Success
 
@@ -474,7 +474,3 @@ removeSpaces('user      sends empty separators array, string is split according 
   data: 'user sends empty separators array, string is split according to most frequent char'
 }
 ```
-
-## Resources
-
-codeSandbox - https://codesandbox.io/s/dry-sky-dfi7x
