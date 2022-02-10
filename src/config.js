@@ -2,7 +2,7 @@ const config = {
 	specialCharsModifier: {
 		exceptions: '',
 	},
-	password: {
+	passwordValidation: {
 		strengthOptions: [
 			{
 				id: 0,
@@ -40,7 +40,7 @@ const config = {
 		format: '3-2-3-4',
 		isInternational: true,
 	},
-	tags: {
+	tagsSeparator: {
 		separators: undefined,
 	},
 	numberFormatter: {
@@ -59,66 +59,66 @@ const config = {
 
 const setConfig = (configName, parameters) => {
 	switch (configName) {
-	case 'password':
-		config.password = {
-			characterLen:
+		case 'password':
+			config.passwordValidation = {
+				characterLen:
 					parameters.characterLen === null || parameters.characterLen === undefined || parameters.characterLen === 0
 						? undefined
 						: parameters.characterLen,
-			upperCase:
+				upperCase:
 					parameters.upperCase === null || parameters.upperCase === undefined || parameters.upperCase === 0
 						? undefined
 						: parameters.upperCase,
-			lowerCase:
+				lowerCase:
 					parameters.lowerCase === null || parameters.lowerCase === undefined || parameters.lowerCase === 0
 						? undefined
 						: parameters.lowerCase,
-			num: parameters.num === null || parameters.num === undefined || parameters.num === 0 ? undefined : parameters.num,
-			symbol:
+				num: parameters.num === null || parameters.num === undefined || parameters.num === 0 ? undefined : parameters.num,
+				symbol:
 					parameters.symbol === null || parameters.symbol === undefined || parameters.symbol === ''
 						? undefined
 						: parameters.symbol,
-			strengthOptions: parameters.strengthOptions
-				? parameters.strengthOptions.map((opt, index) => ({
-					...opt,
-					id: index,
+				strengthOptions: parameters.strengthOptions
+					? parameters.strengthOptions.map((opt, index) => ({
+							...opt,
+							id: index,
 					  }))
-				: config.password.strengthOptions.map((opt, index) => ({
-					...opt,
-					id: index,
-					minLength: parameters.characterLen + (index === 0 ? 0 : (index *= 2)),
+					: config.passwordValidation.strengthOptions.map((opt, index) => ({
+							...opt,
+							id: index,
+							minLength: parameters.characterLen + (index === 0 ? 0 : (index *= 2)),
 					  })),
-		};
-		break;
+			};
+			break;
 
-	case 'numberFormatter':
-		if (parameters.overallDigitLimit !== undefined) config.numberFormatter.overallDigitLimit = parameters.overallDigitLimit;
-		if (parameters.decimalDigitLimit !== undefined) config.numberFormatter.decimalDigitLimit = parameters.decimalDigitLimit;
-		if (parameters.useColors) {
-			config.numberFormatter.useColors = true;
-			config.numberFormatter.colors.positive = parameters.colors.positive;
-			config.numberFormatter.colors.negative = parameters.colors.negative;
-		} else {
-			config.numberFormatter.useColors = false;
-			config.numberFormatter.colors = {};
-		}
-		break;
-	case 'URLValidator' || 'urlValidator':
-		if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly;
-		if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded;
-		break;
-	case 'phoneNumberFormatter':
-		if (parameters.format !== undefined) config.phoneNumberFormatter.format = parameters.format;
-		if (parameters.isInternational !== undefined) config.phoneNumberFormatter.isInternational = parameters.isInternational;
-		break;
-	case 'tags':
-		config.tags.separators = parameters.separators;
-		break;
-	case 'emailDomainValidator':
-		if (parameters.domainList !== undefined) config.emailDomainValidator.domainList = parameters.domainList;
-	case 'specialCharsModifier':
-		config.specialCharsModifier.exceptions = parameters.exceptions;
-		break;
+		case 'numberFormatter':
+			if (parameters.overallDigitLimit !== undefined) config.numberFormatter.overallDigitLimit = parameters.overallDigitLimit;
+			if (parameters.decimalDigitLimit !== undefined) config.numberFormatter.decimalDigitLimit = parameters.decimalDigitLimit;
+			if (parameters.useColors) {
+				config.numberFormatter.useColors = true;
+				config.numberFormatter.colors.positive = parameters.colors.positive;
+				config.numberFormatter.colors.negative = parameters.colors.negative;
+			} else {
+				config.numberFormatter.useColors = false;
+				config.numberFormatter.colors = {};
+			}
+			break;
+		case 'URLValidator' || 'urlValidator':
+			if (parameters.domainOnly !== undefined) config.URLValidator.domainOnly = parameters.domainOnly;
+			if (parameters.pathIncluded !== undefined) config.URLValidator.pathIncluded = parameters.pathIncluded;
+			break;
+		case 'phoneNumberFormatter':
+			if (parameters.format !== undefined) config.phoneNumberFormatter.format = parameters.format;
+			if (parameters.isInternational !== undefined) config.phoneNumberFormatter.isInternational = parameters.isInternational;
+			break;
+		case 'tagsSeparator':
+			config.tagsSeparator.separators = parameters.separators;
+			break;
+		case 'emailDomainValidator':
+			if (parameters.domainList !== undefined) config.emailDomainValidator.domainList = parameters.domainList;
+		case 'specialCharsModifier':
+			config.specialCharsModifier.exceptions = parameters.exceptions;
+			break;
 	}
 };
 

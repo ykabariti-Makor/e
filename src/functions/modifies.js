@@ -101,11 +101,11 @@ const tagsSeparator = (string) => {
 
 /**
  * Number formatter for numbers
- * @param {numToFormat} string
+ * @param {number} string
  * @returns string
  */
-const numberFormatter = (numToFormat) => {
-	if (typeof numToFormat !== 'number')
+const numberFormatter = (number) => {
+	if (typeof number !== 'number')
 		return {
 			success: false,
 			message: 'Input is not a valid number',
@@ -114,19 +114,19 @@ const numberFormatter = (numToFormat) => {
 	let isNegative = false;
 
 	// turn positive in case negative to streamline 'numberFormatter' function use
-	if (numToFormat < 0) {
+	if (number < 0) {
 		isNegative = true;
-		numToFormat *= -1;
+		number *= -1;
 	}
 
 	const { overallDigitLimit, decimalDigitLimit, useColors, colors } = config.numberFormatter;
 	//if the number have floating point count it.
-	const hasFloatingPoint = String(numToFormat).includes('.') ? 1 : 0;
-	let processedNumber = numToFormat,
+	const hasFloatingPoint = String(number).includes('.') ? 1 : 0;
+	let processedNumber = number,
 		unitSuffix;
 
 	//if the number got floating point fixed the number accordingly
-	if (hasFloatingPoint) processedNumber = String(Number(numToFormat.toFixed(decimalDigitLimit)));
+	if (hasFloatingPoint) processedNumber = String(Number(number.toFixed(decimalDigitLimit)));
 	processedNumber = String(processedNumber);
 	// if the number exceeds the limit handle it
 	if (processedNumber.length - hasFloatingPoint > overallDigitLimit) {
