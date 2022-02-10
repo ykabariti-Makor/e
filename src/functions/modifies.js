@@ -97,6 +97,8 @@ const tagsSeparator = (string) => {
 	};
 };
 
+
+console.log(tagsSeparator("tags1 , tag2"))
 /**
  * Number formatter for numbers
  * @param {numToFormat} string
