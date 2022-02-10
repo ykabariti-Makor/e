@@ -2,20 +2,6 @@ const utils = require('../main');
 const { setConfig } = require('../config');
 const { numberFormatter } = require('../functions/modifies');
 
-test('user does not send separators, the string is split using the most frequent special char - successes', async () => {
-	await expect(utils.tagsSeparator('a,b,c,d,e,f')).toStrictEqual({
-		data: ['a', 'b', 'c', 'd', 'e', 'f'],
-		message: 'Tags array created successfully',
-		success: true,
-	});
-});
-test('user sends duplicate words, function returns only unique tags - successes', async () => {
-	await expect(utils.tagsSeparator('sea-sun-moon-sea')).toStrictEqual({
-		success: true,
-		message: 'Tags array created successfully',
-		data: ['sea', 'sun', 'moon'],
-	});
-});
 test('simple input - successes', async () => {
 	utils.setConfig('phoneNumberFormatter', {
 		format: '3-8',
@@ -68,8 +54,31 @@ test('phone number format invalid - error', async () => {
 		message: 'Phone number input is invalid',
 	});
 });
+test('user sends words with a number of separators between them; function cleans separators that might be recognized as tags', async () => {
+	await expect(utils.tagsSeparator('tag1 | tag2')).toStrictEqual({
+		success: true,
 
-test('user sends one separator - string is split according to it (even if it\'s not the most frequent) - successes', async () => {
+		message: 'Tags array created successfully',
+
+		data: ['tag1', 'tag2'],
+	});
+});
+test('user does not send separators, the string is split using the most frequent special char - successes', async () => {
+	await expect(utils.tagsSeparator('a,b,c,d,e,f')).toStrictEqual({
+		data: ['a', 'b', 'c', 'd', 'e', 'f'],
+		message: 'Tags array created successfully',
+		success: true,
+	});
+});
+test('user sends duplicate words, function returns only unique tags - successes', async () => {
+	await expect(utils.tagsSeparator('sea-sun-moon-sea')).toStrictEqual({
+		success: true,
+		message: 'Tags array created successfully',
+		data: ['sea', 'sun', 'moon'],
+	});
+});
+
+test("user sends one separator - string is split according to it (even if it's not the most frequent) - successes", async () => {
 	utils.setConfig('tags', {
 		separators: [','],
 	});
