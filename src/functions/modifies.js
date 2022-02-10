@@ -1,5 +1,5 @@
-import { config } from '../config';
-import { overallHandler } from '../utils/modifies';
+import { config } from '../config.js';
+import { overallHandler } from '../utils/modifies.js';
 
 /**
  * Tags separator for tags string

@@ -1,4 +1,4 @@
-import { specialCharsModifier, numberFormatter, tagsSeparator, phoneNumberFormatter, removeSpaces, setConfig } from '../main';
+import { specialCharsModifier, numberFormatter, tagsSeparator, phoneNumberFormatter, removeSpaces, setConfig } from '../main.js';
 
 test('simple input - successes', async () => {
 	setConfig('phoneNumberFormatter', {

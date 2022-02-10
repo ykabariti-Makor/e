@@ -1,5 +1,5 @@
-import { config } from '../config';
-import { passwordStrength, isURLValid } from '../utils/auth';
+import { config } from '../config.js';
+import { passwordStrength, isURLValid } from '../utils/auth.js';
 
 /**
  * URL validator for url validation & formatting

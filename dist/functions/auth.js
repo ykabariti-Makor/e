@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.validateIPAddress = exports.passwordValidation = exports.emailDomainValidator = exports.checkNumberPositivity = exports.URLValidator = void 0;
 
-var _config = require("../config");
+var _config = require("../config.js");
 
-var _auth = require("../utils/auth");
+var _auth = require("../utils/auth.js");
 
 /**
  * URL validator for url validation & formatting

@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.tagsSeparator = exports.specialCharsModifier = exports.removeSpaces = exports.phoneNumberFormatter = exports.numberFormatter = void 0;
 
-var _config = require("../config");
+var _config = require("../config.js");
 
-var _modifies = require("../utils/modifies");
+var _modifies = require("../utils/modifies.js");
 
 /**
  * Tags separator for tags string

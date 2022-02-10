@@ -70,8 +70,8 @@ Object.defineProperty(exports, "validateIPAddress", {
   }
 });
 
-var _config = require("./config");
+var _config = require("./config.js");
 
-var _modifies = require("./functions/modifies");
+var _modifies = require("./functions/modifies.js");
 
-var _auth = require("./functions/auth");
+var _auth = require("./functions/auth.js");

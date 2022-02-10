@@ -1,6 +1,6 @@
 "use strict";
 
-var _main = require("../main");
+var _main = require("../main.js");
 
 test('simple input - successes', async () => {
   (0, _main.setConfig)('phoneNumberFormatter', {

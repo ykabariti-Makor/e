@@ -1,4 +1,4 @@
-import { setConfig, passwordValidation, URLValidator, validateIPAddress, emailDomainValidator } from '../main';
+import { setConfig, passwordValidation, URLValidator, validateIPAddress, emailDomainValidator } from '../main.js';
 
 test('url_valid', async () => {
 	setConfig('URLValidator', {

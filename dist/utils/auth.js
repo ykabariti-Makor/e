@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.passwordStrength = exports.isURLValid = void 0;
 
-var _config = require("../config");
+var _config = require("../config.js");
 
 // Check URL validity
 const isURLValid = url => {
