@@ -1,16 +1,24 @@
 import { config } from '../config.js';
 import { overallHandler } from '../utils/modifies.js';
 
+import { IObj } from '../models/modifies.js';
+
 /**
  * Tags separator for tags string
  * @param {string} string tags
  * @param {separators} array indicator for format options, contains all special chars by default
  * @returns object
  */
-const tagsSeparator = (string) => {
+const tagsSeparator = async (string: string) => {
+	// Moving from the separator as a string to a regex that represents it correctly
+	const specialChars = ['.', '*', '?', '$', '^', '(', ')', '|'];
 	const separators = config.tagsSeparator.separators;
-	let inferredSeparator = '';
-	let options = [];
+	const notAtagReg = /\W/;
+
+	let inferredSeparator: string | undefined = '';
+	let inferredReg: string | RegExp;
+	let options: string[] = [];
+	let tags: string[];
 
 	if (separators?.length) {
 		const reg = /\W/;
@@ -47,7 +55,7 @@ const tagsSeparator = (string) => {
 
 		if (separators?.length > 1) {
 			// If user supplied legit array of separtor options (more than 1) - the candidates for selected separator will only include user options
-			specialChars = specialChars.filter((char) => options.includes(char));
+			specialChars = specialChars.filter((char) => options.includes(char!));
 			if (specialChars.length === 0) {
 				// If the separators passed by user do not exist in the passed string, push the first user separator anyway to specialChars
 				//This way, the string will not be splitted later - as should happen.
@@ -56,8 +64,8 @@ const tagsSeparator = (string) => {
 		}
 
 		// Counting frequncy for each candidate
-		const count = specialChars.reduce((accumulator, current) => {
-			accumulator[current] = accumulator[current] ? (accumulator[current] += 1) : (accumulator[current] = 1);
+		const count = specialChars.reduce((accumulator: { [key: string]: number }, current) => {
+			accumulator[current!] = accumulator[current!] ? (accumulator[current!] += 1) : (accumulator[current!] = 1);
 			return accumulator;
 		}, {});
 
@@ -71,13 +79,8 @@ const tagsSeparator = (string) => {
 		inferredSeparator = countsArr[0]?.[0];
 	}
 
-	// Moving from the separator as a string to a regex that represents it correctly
-	const specialChars = ['.', '*', '?', '$', '^', '(', ')', '|'];
-	let inferredReg;
-	let tags;
-
 	if (!inferredSeparator) {
-		//if there is no inferred separator, no special chars - there will be one tag containing the string
+		// If there is no inferred separator, no special chars - there will be one tag containing the string
 		tags = [string];
 	} else if (inferredSeparator === ' ') {
 		inferredReg = /\s/;
@@ -87,8 +90,8 @@ const tagsSeparator = (string) => {
 	} else {
 		inferredReg = new RegExp(inferredSeparator);
 	}
-	const notAtagReg = /\W/;
-	tags = [...new Set(string.split(inferredReg))].filter(
+
+	tags = [...new Set(string.split(inferredReg!))].filter(
 		(tag) => !((tag.length === 1 && notAtagReg.test(tag)) || tag.length === 0 || tag === ' '),
 	);
 
@@ -104,7 +107,7 @@ const tagsSeparator = (string) => {
  * @param {number} string
  * @returns string
  */
-const numberFormatter = (number) => {
+const numberFormatter = (number: number) => {
 	if (typeof number !== 'number')
 		return {
 			success: false,
@@ -122,8 +125,8 @@ const numberFormatter = (number) => {
 	const { overallDigitLimit, decimalDigitLimit, useColors, colors } = config.numberFormatter;
 	//if the number have floating point count it.
 	const hasFloatingPoint = String(number).includes('.') ? 1 : 0;
-	let processedNumber = number,
-		unitSuffix;
+	let processedNumber: number | string = number;
+	let unitSuffix: string;
 
 	//if the number got floating point fixed the number accordingly
 	if (hasFloatingPoint) processedNumber = String(Number(number.toFixed(decimalDigitLimit)));
@@ -138,15 +141,15 @@ const numberFormatter = (number) => {
 
 	//seperate the number by the floating point
 
-	const [left, right] = processedNumber.split('.');
+	const [left, right] = processedNumber.toString().split('.');
 
 	//returns the handled number seperated by commas, attach the right side if exist and append the letter representing the thousends sliced
 
-	const obj = {
+	const obj: IObj = {
 		success: true,
 		message: 'Successfully formatted number',
 		data: {
-			number: (isNegative ? '-' : '') + left.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (right ? '.' + right : '') + (unitSuffix ?? ''),
+			number: (isNegative ? '-' : '') + left!.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (right ? '.' + right : '') + (unitSuffix ?? ''),
 		},
 	};
 
@@ -162,26 +165,26 @@ const numberFormatter = (number) => {
  * @param {boolean} isInternational indicator for international format, true by default
  * @returns object
  */
-const phoneNumberFormatter = (number) => {
+const phoneNumberFormatter = (number: number) => {
 	const format = config.phoneNumberFormatter.format;
 	const isInternational = config.phoneNumberFormatter.isInternational;
 
 	const regexFormat = /^([\+]?[\(]?[0-9]{1,3}[\)]?)([\s.-]?[0-9]{1,12})([\s.-]?[0-9]{1,6}?)([\s.-]?[0-9]{1,4})$/;
-	const arr = format.split('-').map((str) => +str);
-	const sum = arr.reduce((acc, item) => acc + item);
+	const arr: string[] = (format as string).split('-').map((str: string) => str);
+	const sum = arr.reduce((acc: string, item: string) => acc + item);
 
 	// format the phone number to numbers only
-	const cleanNumber = number.replace(/[^0-9]/g, '');
+	const cleanNumber = number.toString().replace(/[^0-9]/g, '');
 
 	//tests if the phone number input doesn't contain letters and also accepts hyphens, whitespace and parenthesis in specific locations.
-	if (!regexFormat.test(number)) {
+	if (!regexFormat.test(number.toString())) {
 		return {
 			success: false,
 			message: 'Phone number input is invalid',
 		};
 	}
 	//tests if the phone number after removing char is equal to format sum.
-	if (sum !== cleanNumber.length) {
+	if (Number(sum) !== cleanNumber.length) {
 		return {
 			success: false,
 			message: 'Format does not match no. of digits in phone number',
@@ -194,11 +197,11 @@ const phoneNumberFormatter = (number) => {
 		// add to the clean number hyphens by the format param
 		for (let i = 0; i < arr.length; i++) {
 			if (i === 0) {
-				formattedNumber = cleanNumber.slice(0, arr[i]);
-				count += +arr[i];
+				formattedNumber = cleanNumber.slice(0, Number(arr[i]));
+				count += +arr[i]!;
 			} else {
-				formattedNumber = formattedNumber.concat('-' + cleanNumber.slice(count, count + arr[i]));
-				count += +arr[i];
+				formattedNumber = formattedNumber.concat('-' + cleanNumber.slice(count, count + Number(arr[i])));
+				count += +arr[i]!;
 			}
 		}
 		// tests for prefix off/on and then return formatted phone number
@@ -206,7 +209,7 @@ const phoneNumberFormatter = (number) => {
 			return {
 				success: true,
 				message: 'Phone number successfully formatted',
-				data: formattedNumber.slice(arr[0] + 1),
+				data: formattedNumber.slice(Number(arr[0]) + 1),
 			};
 		}
 		return {
@@ -227,7 +230,7 @@ const phoneNumberFormatter = (number) => {
  * @param {string} string any string
  * @returns object
  */
-const specialCharsModifier = (string) => {
+const specialCharsModifier = (string: string) => {
 	if (typeof string !== 'string') {
 		return {
 			success: false,
@@ -245,7 +248,7 @@ const specialCharsModifier = (string) => {
  * @param {string} string
  * @returns object
  */
-const removeSpaces = (string) => {
+const removeSpaces = (string: string) => {
 	if (typeof string !== 'string') {
 		return {
 			success: false,

@@ -1,4 +1,6 @@
-const config = {
+import { IConfig, IParameters } from './models/config';
+
+const config: IConfig = {
 	specialCharsModifier: {
 		exceptions: '',
 	},
@@ -57,7 +59,7 @@ const config = {
 	},
 };
 
-const setConfig = (configName, parameters) => {
+const setConfig = (configName: string, parameters: IParameters) => {
 	switch (configName) {
 		case 'password':
 			config.passwordValidation = {
@@ -86,7 +88,7 @@ const setConfig = (configName, parameters) => {
 					: config.passwordValidation.strengthOptions.map((opt, index) => ({
 							...opt,
 							id: index,
-							minLength: parameters.characterLen + (index === 0 ? 0 : (index *= 2)),
+							minLength: (parameters.characterLen as number) + (index === 0 ? 0 : (index *= 2)),
 					  })),
 			};
 			break;
@@ -116,6 +118,7 @@ const setConfig = (configName, parameters) => {
 			break;
 		case 'emailDomainValidator':
 			if (parameters.domainList !== undefined) config.emailDomainValidator.domainList = parameters.domainList;
+			break;
 		case 'specialCharsModifier':
 			config.specialCharsModifier.exceptions = parameters.exceptions;
 			break;

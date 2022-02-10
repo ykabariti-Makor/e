@@ -1,5 +1,7 @@
+import { IMagnitudeUnits } from '../models/modifies';
+
 // Handle the overall digit limit
-const overallHandler = (num, limit, isFloatingPoint) => {
+const overallHandler = (num: string, limit: number, isFloatingPoint: number) => {
 	// If the number contains floating point and the number is over the limit start to slice away the numbers
 	// Until it meets the limit or until reaching the floating point
 	if (isFloatingPoint)
@@ -17,8 +19,8 @@ const overallHandler = (num, limit, isFloatingPoint) => {
 		}
 
 	// Thousend sliced counter initialized with 0
-	let thousandsSliced = 0,
-		remainder;
+	let thousandsSliced = 0;
+	let remainder: string;
 
 	// The number exceeds the limit start slicing away by thousend at each time, save the sliced digits aside and count the thousends sliced
 	while (num.length > limit) {
@@ -28,7 +30,7 @@ const overallHandler = (num, limit, isFloatingPoint) => {
 		thousandsSliced++;
 	}
 
-	const magnitudeUnits = {
+	const magnitudeUnits: IMagnitudeUnits = {
 		1: 'K',
 		2: 'M',
 		3: 'B',
@@ -37,7 +39,7 @@ const overallHandler = (num, limit, isFloatingPoint) => {
 	// Return the number + floating point if needed + the chunk from the remainder the meets the limit
 	// Also return the letter that represent the number of thousends sliced
 	return {
-		num: (num ? num : '0') + (limit - num.length ? '.' : '') + remainder.substring(0, limit - num.length - (num ? 0 : 1)),
+		num: (num ? num : '0') + (limit - num.length ? '.' : '') + remainder!.substring(0, limit - num.length - (num ? 0 : 1)),
 		unitSuffix: magnitudeUnits[thousandsSliced],
 	};
 };
