@@ -1,5 +1,6 @@
 const { config } = require('../config');
 
+// Check URL validity
 const isURLValid = (url) => {
 	// Checks for URL validity
 	const pattern = new RegExp(
@@ -26,6 +27,7 @@ const isURLValid = (url) => {
 	};
 };
 
+// Check password strength
 const passwordStrength = (password) => {
 	const options = config.password.strengthOptions;
 	const allowedSymbols = config.password.symbol;

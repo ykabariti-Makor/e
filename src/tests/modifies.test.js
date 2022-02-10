@@ -54,6 +54,7 @@ test('phone number format invalid - error', async () => {
 		message: 'Phone number input is invalid',
 	});
 });
+
 test('user sends words with a number of separators between them; function cleans separators that might be recognized as tags', async () => {
 	await expect(utils.tagsSeparator('tag1 | tag2')).toStrictEqual({
 		success: true,
@@ -63,6 +64,7 @@ test('user sends words with a number of separators between them; function cleans
 		data: ['tag1', 'tag2'],
 	});
 });
+
 test('user does not send separators, the string is split using the most frequent special char - successes', async () => {
 	await expect(utils.tagsSeparator('a,b,c,d,e,f')).toStrictEqual({
 		data: ['a', 'b', 'c', 'd', 'e', 'f'],
@@ -70,6 +72,7 @@ test('user does not send separators, the string is split using the most frequent
 		success: true,
 	});
 });
+
 test('user sends duplicate words, function returns only unique tags - successes', async () => {
 	await expect(utils.tagsSeparator('sea-sun-moon-sea')).toStrictEqual({
 		success: true,
@@ -78,7 +81,7 @@ test('user sends duplicate words, function returns only unique tags - successes'
 	});
 });
 
-test('user sends one separator - string is split according to it (even if it\'s not the most frequent) - successes', async () => {
+test('user sends one separator - string is split according to it (even if it is not the most frequent) - successes', async () => {
 	utils.setConfig('tags', {
 		separators: [','],
 	});
@@ -142,34 +145,8 @@ test('seperator doesnt contains special char - error', async () => {
 	});
 });
 
-test('user sends string with unneeded spaces at the start/end of the string', () => {
-	expect(utils.removeSpaces('   user sends empty separators array, string is split according to most frequent char')).toStrictEqual({
-		data: 'user sends empty separators array, string is split according to most frequent char',
-		message: 'Spaces removed successfully',
-		success: true,
-	});
-});
-
-test('user sends string with unneeded spaces between words (more then one space)', () => {
-	expect(utils.removeSpaces('user      sends empty separators array, string is split according to most frequent char')).toStrictEqual({
-		data: 'user sends empty separators array, string is split according to most frequent char',
-
-		message: 'Spaces removed successfully',
-
-		success: true,
-	});
-});
-
-test('user sends string with unneeded spaces between words and punctuation marks (even one space is considered unneeded)', () => {
-	expect(utils.removeSpaces('user sends empty separators array , string is split according to most frequent char')).toStrictEqual({
-		data: 'user sends empty separators array, string is split according to most frequent char',
-		message: 'Spaces removed successfully',
-		success: true,
-	});
-});
-
-test('user sends string with unneeded whitespace created by tabs', () => {
-	expect(utils.removeSpaces('user sends     empty separators array , string is split according to most frequent char    ')).toStrictEqual(
+test('user sends string with unneeded spaces at the start/end of the string', async () => {
+	await expect(utils.removeSpaces('   user sends empty separators array, string is split according to most frequent char')).toStrictEqual(
 		{
 			data: 'user sends empty separators array, string is split according to most frequent char',
 			message: 'Spaces removed successfully',
@@ -178,258 +155,288 @@ test('user sends string with unneeded whitespace created by tabs', () => {
 	);
 });
 
+test('user sends string with unneeded spaces between words (more then one space)', async () => {
+	await expect(
+		utils.removeSpaces('user      sends empty separators array, string is split according to most frequent char'),
+	).toStrictEqual({
+		data: 'user sends empty separators array, string is split according to most frequent char',
+
+		message: 'Spaces removed successfully',
+
+		success: true,
+	});
+});
+
+test('user sends string with unneeded spaces between words and punctuation marks (even one space is considered unneeded)', async () => {
+	await expect(utils.removeSpaces('user sends empty separators array , string is split according to most frequent char')).toStrictEqual({
+		data: 'user sends empty separators array, string is split according to most frequent char',
+		message: 'Spaces removed successfully',
+		success: true,
+	});
+});
+
+test('user sends string with unneeded whitespace created by tabs', async () => {
+	await expect(
+		utils.removeSpaces('user sends     empty separators array , string is split according to most frequent char    '),
+	).toStrictEqual({
+		data: 'user sends empty separators array, string is split according to most frequent char',
+		message: 'Spaces removed successfully',
+		success: true,
+	});
+});
+
 describe(`~~~~~~~~~~~ ~ ~ ~ ### @ @ @                                  @ @ @ ### ~ ~ ~ ~~~~~~~~~~~
 ~~~~~~~~~~~ ~ ~ ~ ### @ @ @     Testing Number Formatter     @ @ @ ### ~ ~ ~ ~~~~~~~~~~~
 ~~~~~~~~~~~ ~ ~ ~ ### @ @ @                                  @ @ @ ### ~ ~ ~ ~~~~~~~~~~~\n`, () => {
-	test('Test No. 1', () => {
-		expect(numberFormatter('234')).toEqual(
+	test('Test No. 1', async () => {
+		await expect(numberFormatter('234')).toEqual(
 			expect.objectContaining({
 				success: false,
 			}),
 		);
 	});
 
-	test('Test No. 2', () => {
+	test('Test No. 2', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 10,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(234)).toEqual(
+		await expect(numberFormatter(234)).toEqual(
 			expect.objectContaining({
 				data: { number: '234' },
 			}),
 		);
 	});
 
-	test('Test No. 3', () => {
+	test('Test No. 3', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 2,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(234)).toEqual(
+		await expect(numberFormatter(234)).toEqual(
 			expect.objectContaining({
 				data: { number: '0.2K' },
 			}),
 		);
 	});
 
-	test('Test No. 4', () => {
+	test('Test No. 4', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 3,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(234234)).toEqual(
+		await expect(numberFormatter(234234)).toEqual(
 			expect.objectContaining({
 				data: { number: '234K' },
 			}),
 		);
 	});
 
-	test('Test No. 5', () => {
+	test('Test No. 5', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 2,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(234234)).toEqual(
+		await expect(numberFormatter(234234)).toEqual(
 			expect.objectContaining({
 				data: { number: '0.2M' },
 			}),
 		);
 	});
 
-	test('Test No. 6', () => {
+	test('Test No. 6', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 3,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(234234)).toEqual(
+		await expect(numberFormatter(234234)).toEqual(
 			expect.objectContaining({
 				data: { number: '234K' },
 			}),
 		);
 	});
 
-	test('Test No. 7', () => {
+	test('Test No. 7', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 10,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(234.234)).toEqual(
+		await expect(numberFormatter(234.234)).toEqual(
 			expect.objectContaining({
 				data: { number: '234.23' },
 			}),
 		);
 	});
 
-	test('Test No. 8', () => {
+	test('Test No. 8', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 1,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(0.234)).toEqual(
+		await expect(numberFormatter(0.234)).toEqual(
 			expect.objectContaining({
 				data: { number: '0' },
 			}),
 		);
 	});
 
-	test('Test No. 9', () => {
+	test('Test No. 9', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 2,
 			decimalDigitLimit: 1,
 		});
 
-		expect(numberFormatter(0.234)).toEqual(
+		await expect(numberFormatter(0.234)).toEqual(
 			expect.objectContaining({
 				data: { number: '0.2' },
 			}),
 		);
 	});
 
-	test('Test No. 10', () => {
+	test('Test No. 10', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 1,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(1000000000)).toEqual(
+		await expect(numberFormatter(1000000000)).toEqual(
 			expect.objectContaining({
 				data: { number: '1G' },
 			}),
 		);
 	});
 
-	test('Test No. 11', () => {
+	test('Test No. 11', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 2,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(100000000)).toEqual(
+		await expect(numberFormatter(100000000)).toEqual(
 			expect.objectContaining({
 				data: { number: '0.1G' },
 			}),
 		);
 	});
 
-	test('Test No. 12', () => {
+	test('Test No. 12', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 2,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(10000000)).toEqual(
+		await expect(numberFormatter(10000000)).toEqual(
 			expect.objectContaining({
 				data: { number: '10M' },
 			}),
 		);
 	});
 
-	test('Test No. 13', () => {
+	test('Test No. 13', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 2,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(1000000)).toEqual(
+		await expect(numberFormatter(1000000)).toEqual(
 			expect.objectContaining({
 				data: { number: '1.0M' },
 			}),
 		);
 	});
 
-	test('Test No. 14', () => {
+	test('Test No. 14', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 10,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(234234.234)).toEqual(
+		await expect(numberFormatter(234234.234)).toEqual(
 			expect.objectContaining({
 				data: { number: '234,234.23' },
 			}),
 		);
 	});
 
-	test('Test No. 15', () => {
+	test('Test No. 15', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 10,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(234)).toEqual(
+		await expect(numberFormatter(234)).toEqual(
 			expect.objectContaining({
 				data: { number: '234' },
 			}),
 		);
 	});
 
-	test('Test No. 16', () => {
+	test('Test No. 16', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 2,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(-1234)).toEqual(
+		await expect(numberFormatter(-1234)).toEqual(
 			expect.objectContaining({
 				data: { number: '-1.2K' },
 			}),
 		);
 	});
 
-	test('Test No. 17', () => {
+	test('Test No. 17', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 2,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(-0.5)).toEqual(
+		await expect(numberFormatter(-0.5)).toEqual(
 			expect.objectContaining({
 				data: { number: '-0.5' },
 			}),
 		);
 	});
 
-	test('Test No. 18', () => {
+	test('Test No. 18', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 2,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(-0.5)).toEqual(
+		await expect(numberFormatter(-0.5)).toEqual(
 			expect.objectContaining({
 				data: { number: '-0.5' },
 			}),
 		);
 	});
 
-	test('Test No. 19', () => {
+	test('Test No. 19', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 10,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(5000000000)).toEqual(
+		await expect(numberFormatter(5000000000)).toEqual(
 			expect.objectContaining({
 				data: { number: '5,000,000,000' },
 			}),
 		);
 	});
 
-	test('Test No. 20', () => {
+	test('Test No. 20', async () => {
 		setConfig('numberFormatter', {
 			overallDigitLimit: 2,
 			decimalDigitLimit: 2,
 		});
 
-		expect(numberFormatter(-0.5)).toEqual(
+		await expect(numberFormatter(-0.5)).toEqual(
 			expect.objectContaining({
 				data: { number: '-0.5' },
 			}),
@@ -437,7 +444,7 @@ describe(`~~~~~~~~~~~ ~ ~ ~ ### @ @ @                                  @ @ @ ###
 	});
 });
 
-//success situation when no configuration function.
+// Success situation when no configuration function.
 test('specialCharModifier', async () => {
 	await expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({
 		success: true,
@@ -445,7 +452,8 @@ test('specialCharModifier', async () => {
 		data: 'aviv  avisrur  ',
 	});
 });
-//success situation when config the function.
+
+// Success situation when config the function.
 test('specialCharModifier', async () => {
 	utils.setConfig('specialCharsModifier', { exceptions: '@#$' });
 	await expect(utils.specialCharsModifier('av!iv @ avisrur $# !&*')).toStrictEqual({
@@ -455,7 +463,7 @@ test('specialCharModifier', async () => {
 	});
 });
 
-//success situation when no configuration function.
+// Success situation when no configuration function.
 test('specialCharModifier', async () => {
 	await expect(utils.specialCharsModifier(12345)).toStrictEqual({ success: false, message: '12345 should be string' });
 });

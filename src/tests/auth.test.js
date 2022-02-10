@@ -13,7 +13,7 @@ test('url_valid', async () => {
 });
 
 test('password_valid', async () => {
-	//arrange
+	// Arrange
 	utils.setConfig('password', {
 		strengthOptions: [
 			{
@@ -62,7 +62,6 @@ test('password_valid', async () => {
 	});
 });
 
-//****************************************************/
 test('domain list is undefined - error', async () => {
 	await expect(utils.emailDomainValidator('ortal0166@gmail.com')).toStrictEqual({
 		success: false,
@@ -112,7 +111,7 @@ test('Domain list is array of numbers - error', async () => {
 	});
 });
 
-test('email input doesn\'t match the domain value single string - error', async () => {
+test('email input does not match the domain value single string - error', async () => {
 	utils.setConfig('emailDomainValidator', {
 		domainList: 'enigma.com',
 	});
@@ -122,7 +121,7 @@ test('email input doesn\'t match the domain value single string - error', async 
 	});
 });
 
-test('email input doesn\'t match domain list values inside array of strings - error', async () => {
+test('email input does not match domain list values inside array of strings - error', async () => {
 	utils.setConfig('emailDomainValidator', {
 		domainList: ['makor-capital.com', 'enigma-securities.com'],
 	});
@@ -131,9 +130,10 @@ test('email input doesn\'t match domain list values inside array of strings - er
 		message: 'Email inserted is not in domain list',
 	});
 });
-//fail password scenarios
+
+// Fail password scenarios
 test('password_valid_fail_senario_1', async () => {
-	//arrange
+	// Arrange
 	utils.setConfig('password', {
 		strengthOptions: [
 			{
@@ -162,10 +162,10 @@ test('password_valid_fail_senario_1', async () => {
 		symbol: '#?!@$%^&*-',
 	});
 
-	//act
+	// Act
 	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
 
-	//assent
+	// Assent
 	await expect(passwordResult).toStrictEqual({
 		success: false,
 		message: ['characterLen must be type of number'],
@@ -173,7 +173,7 @@ test('password_valid_fail_senario_1', async () => {
 });
 
 test('password_valid_fail_senario_2', async () => {
-	//arrange
+	// Arrange
 	utils.setConfig('password', {
 		strengthOptions: [
 			{
@@ -202,10 +202,10 @@ test('password_valid_fail_senario_2', async () => {
 		symbol: '#?!@$%^&*-',
 	});
 
-	//act
+	// Act
 	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
 
-	//assent
+	// Assent
 	await expect(passwordResult).toStrictEqual({
 		success: false,
 		message: ['upperCase must be type of number'],
@@ -213,7 +213,7 @@ test('password_valid_fail_senario_2', async () => {
 });
 
 test('password_valid_fail_senario_3', async () => {
-	//arrange
+	// Arrange
 	utils.setConfig('password', {
 		strengthOptions: [
 			{
@@ -242,10 +242,10 @@ test('password_valid_fail_senario_3', async () => {
 		symbol: '#?!@$%^&*-',
 	});
 
-	//act
+	// Act
 	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
 
-	//assent
+	// Assent
 	await expect(passwordResult).toStrictEqual({
 		success: false,
 		message: ['lowerCase must be type of number'],
@@ -253,7 +253,7 @@ test('password_valid_fail_senario_3', async () => {
 });
 
 test('password_valid_fail_senario_4', async () => {
-	//arrange
+	// Arrange
 	utils.setConfig('password', {
 		strengthOptions: [
 			{
@@ -282,10 +282,10 @@ test('password_valid_fail_senario_4', async () => {
 		symbol: '#?!@$%^&*-',
 	});
 
-	//act
+	// Act
 	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
 
-	//assent
+	// Assent
 	await expect(passwordResult).toStrictEqual({
 		success: false,
 		message: ['num must be type of number'],
@@ -293,7 +293,7 @@ test('password_valid_fail_senario_4', async () => {
 });
 
 test('password_valid_fail_senario_5', async () => {
-	//arrange
+	// Arrange
 	utils.setConfig('password', {
 		strengthOptions: [
 			{
@@ -322,27 +322,27 @@ test('password_valid_fail_senario_5', async () => {
 		symbol: 1,
 	});
 
-	//act
+	// Act
 	const passwordResult = utils.passwordValidation('123Aa4@5@#!678');
 
-	//assent
+	// Assent
 	await expect(passwordResult).toStrictEqual({
 		success: false,
 		message: ['symbol must be type of string'],
 	});
 });
 
-//success scenario
+// Auccess scenario
 test('ip_validation', async () => {
 	await expect(utils.ValidateIPaddress('10.0.0.36')).toStrictEqual({ success: true, message: 'IP is valid' });
 });
 
-//failed scenario - wrong input
+// Failed scenario - wrong input
 test('ip_validation_fail', async () => {
 	await expect(utils.ValidateIPaddress(10)).toStrictEqual({ success: false, message: 'IP is invalid' });
 });
 
-//failed scenario - wrong ip
+// Failed scenario - wrong ip
 test('ip_validation_fail', async () => {
 	await expect(utils.ValidateIPaddress('10.0.0')).toStrictEqual({ success: false, message: 'IP is invalid' });
 });

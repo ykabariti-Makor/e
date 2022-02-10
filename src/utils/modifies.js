@@ -1,8 +1,7 @@
-// handle the overall digit limit
+// Handle the overall digit limit
 const overallHandler = (num, limit, isFloatingPoint) => {
-	//if the number contains floating point and the number is over the limit start to slice away the numbers
-	// until it meets the limit or until reaching the floating point
-
+	// If the number contains floating point and the number is over the limit start to slice away the numbers
+	// Until it meets the limit or until reaching the floating point
 	if (isFloatingPoint)
 		while (num.length - isFloatingPoint > limit) {
 			num = num.substring(0, num.length - 1);
@@ -16,11 +15,12 @@ const overallHandler = (num, limit, isFloatingPoint) => {
 				break;
 			}
 		}
-	//thousend sliced counter initialized with 0
+
+	// Thousend sliced counter initialized with 0
 	let thousandsSliced = 0,
 		remainder;
 
-	//the number exceeds the limit start slicing away by thousend at each time, save the sliced digits aside and count the thousends sliced
+	// The number exceeds the limit start slicing away by thousend at each time, save the sliced digits aside and count the thousends sliced
 	while (num.length > limit) {
 		remainder = num.substring(num.length - 3);
 		num = num.substring(0, num.length - 3);
@@ -34,8 +34,8 @@ const overallHandler = (num, limit, isFloatingPoint) => {
 		3: 'G',
 	};
 
-	//return the number + floating point if needed + the chunk from the remainder the meets the limit
-	//also return the letter that represent the number of thousends sliced
+	// Return the number + floating point if needed + the chunk from the remainder the meets the limit
+	// Also return the letter that represent the number of thousends sliced
 	return {
 		num: (num ? num : '0') + (limit - num.length ? '.' : '') + remainder.substring(0, limit - num.length - (num ? 0 : 1)),
 		unitSuffix: magnitudeUnits[thousandsSliced],
